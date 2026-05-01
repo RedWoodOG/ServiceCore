@@ -1,0 +1,2317 @@
+﻿Folder PATH listing for volume New Volume
+Volume serial number is B841-E807
+H:.
+|   .flutter-plugins-dependencies
+|   .gitignore
+|   .metadata
+|   AI_CONTEXT.md
+|   analysis_options.yaml
+|   AUDIT_REPORT.md
+|   BACKUP_MANIFEST.md
+|   BASELINE_AUDIT.md
+|   BASELINE_FINDINGS.json
+|   build_optimized.ps1
+|   BUILD_SUCCESS.md
+|   CHANGELOG.md
+|   CLONE_STATUS.md
+|   CODE_QUALITY_AUDIT_2026_01.md
+|   CODE_VERIFICATION_REPORT.md
+|   DATABASE_BACKUP_INFO.md
+|   DEPLOYMENT_AUDIT.md
+|   DESIGN_SYSTEM_2026.md
+|   DEVELOPMENT_GUIDE.md
+|   devtools_options.yaml
+|   enhanced_eva_service.dart
+|   FINAL_STATUS_REPORT.md
+|   FINISH_LINE.md
+|   FIXES_AND_IMPROVEMENTS_2025-01-XX.md
+|   FSC-Portal.code-workspace
+|   FSC_BRAND_GUIDE.md
+|   FSC_LOGO2.webp
+|   fsc_portal_dev_backup.sqlite
+|   fsc_portal_phase1_working.exe
+|   GIT_REPOSITORY_SETUP.md
+|   HOME_DASHBOARD_WIRING_AUDIT.md
+|   HOW_TO_LAUNCH.md
+|   IMPLEMENTATION_STATUS.md
+|   IMPORT_NEWSLETTER.bat
+|   KNOWLEDGE_INTEGRATION_COMPLETE.md
+|   LIGHT_THEME_VERIFICATION.md
+|   MIGRATION_FIX.md
+|   modern_components.dart
+|   MVP_AUDIT_2025-01-03.md
+|   NEWSLETTER_IMPORT_GUIDE.md
+|   OFFLINE_FIRST_WIRING_COMPLETE.md
+|   OPERATIONS_MODEL_COMPLETE.md
+|   PHASE_1_AND_2_COMPLETE.md
+|   PHASE_1_COMPLETE.md
+|   PHASE_1_LOCKED.md
+|   PHASE_1_PROGRESS.md
+|   PHASE_1_VALIDATED.md
+|   PHASE_2A1_REACTIVE_KPI_COMPLETE.md
+|   PHASE_2_IMPLEMENTATION_PLAN.md
+|   PHASE_2_INTEGRATION_COMPLETE.md
+|   PHASE_2_PROGRESS.md
+|   PHASE_2_SAFETY_RULES.md
+|   PHASE_3_BRANDING_UPGRADE.md
+|   PHASE_3_COMPLETE.md
+|   Picture1.png
+|   portal_offline.iml
+|   PORTAL_WIRING_AUDIT.md
+|   PORTAL_WIRING_PLAN.md
+|   PROJECT_RECOVERY_MANIFEST_2026.md
+|   PROJECT_STATUS_REPORT_2026.md
+|   GulfCoast_branches.md
+|   GulfCoast_combined.md
+|   pubspec.lock
+|   pubspec.yaml
+|   QUICK_ACTIONS_SPEC.md
+|   QUICK_TEST_GUIDE.md
+|   QUICK_WINS_COMPLETE.md
+|   README.md
+|   REPO_TREE.txt
+|   RUNTIME_TEST_SUCCESS.md
+|   run_build.ps1
+|   SECURITY_AUDIT_2026_01.md
+|   SESSION_AUDIT_EXAMPLE.md
+|   SESSION_AUDIT_TEMPLATE.md
+|   SOTU.md
+|   SOTU_2025-01-XX.md
+|   START_HERE.md
+|   STATUS_CONFIRMED.md
+|   STRUCTURED_MVP_AUDIT.md
+|   TEST_REPORT.md
+|   THEME_COMPLETE_FINAL.md
+|   THEME_SWITCHER_COMPLETE.md
+|   THEME_SYSTEM_FIXED.md
+|   UI_AUDIT_REPORT.md
+|   UPDATE_STARTING_POINTS.md
+|   VALIDATION_GUIDE.md
+|   VERIFICATION_COMPLETE.md
+|   VERIFICATION_TESTING.md
+|   
++---.agent
+|   \---workflows
+|           install_modular_features.md
+|           
++---.claude
+|       settings.local.json
+|       
++---.dart_tool
+|   |   package_config.json
+|   |   package_graph.json
+|   |   version
+|   |   
+|   +---extension_discovery
+|   |       vs_code.json
+|   |       
+|   \---flutter_build
+|       |   dart_plugin_registrant.dart
+|       |   
+|       +---004248cef7f3c3290c49f546e4dff030
+|       |       .filecache
+|       |       app.dill
+|       |       dart_build.d
+|       |       dart_build.stamp
+|       |       dart_build_result.json
+|       |       debug_bundle_windows-x64_assets.stamp
+|       |       flutter_assets.d
+|       |       gen_dart_plugin_registrant.stamp
+|       |       gen_localizations.stamp
+|       |       install_code_assets.d
+|       |       install_code_assets.stamp
+|       |       kernel_snapshot_program.d
+|       |       kernel_snapshot_program.stamp
+|       |       native_assets.json
+|       |       outputs.json
+|       |       unpack_windows.stamp
+|       |       windows_engine_sources.d
+|       |       
+|       +---14cbe0585079a2ede1fdd43e9c177dbd
+|       |       .filecache
+|       |       app.dill
+|       |       dart_build.d
+|       |       dart_build.stamp
+|       |       dart_build_result.json
+|       |       debug_bundle_windows-x64_assets.stamp
+|       |       flutter_assets.d
+|       |       gen_dart_plugin_registrant.stamp
+|       |       gen_localizations.stamp
+|       |       install_code_assets.d
+|       |       install_code_assets.stamp
+|       |       kernel_snapshot_program.d
+|       |       kernel_snapshot_program.stamp
+|       |       native_assets.json
+|       |       outputs.json
+|       |       unpack_windows.stamp
+|       |       windows_engine_sources.d
+|       |       
+|       +---2fc0891a35486d108647d4b361668bb8
+|       |       .filecache
+|       |       app.dill
+|       |       dart_build.d
+|       |       dart_build.stamp
+|       |       dart_build_result.json
+|       |       debug_bundle_windows-x64_assets.stamp
+|       |       flutter_assets.d
+|       |       gen_dart_plugin_registrant.stamp
+|       |       gen_localizations.stamp
+|       |       install_code_assets.d
+|       |       install_code_assets.stamp
+|       |       kernel_snapshot_program.d
+|       |       kernel_snapshot_program.stamp
+|       |       native_assets.json
+|       |       outputs.json
+|       |       unpack_windows.stamp
+|       |       windows_engine_sources.d
+|       |       
+|       +---628b3ae330fe5174c68925a83ab82af1
+|       |       .filecache
+|       |       app.dill
+|       |       dart_build.d
+|       |       dart_build.stamp
+|       |       dart_build_result.json
+|       |       gen_dart_plugin_registrant.stamp
+|       |       gen_localizations.stamp
+|       |       install_code_assets.d
+|       |       install_code_assets.stamp
+|       |       kernel_snapshot_program.d
+|       |       native_assets.json
+|       |       outputs.json
+|       |       unpack_windows.stamp
+|       |       windows_engine_sources.d
+|       |       
+|       +---8ffdec849c92907a103f0471ab4bc8f2
+|       |       .filecache
+|       |       app.dill
+|       |       dart_build.d
+|       |       dart_build.stamp
+|       |       dart_build_result.json
+|       |       gen_dart_plugin_registrant.stamp
+|       |       gen_localizations.stamp
+|       |       install_code_assets.d
+|       |       install_code_assets.stamp
+|       |       kernel_snapshot_program.d
+|       |       native_assets.json
+|       |       outputs.json
+|       |       unpack_windows.stamp
+|       |       windows_engine_sources.d
+|       |       
+|       \---9428e080ed32686d78129a4b4db1def2
+|               .filecache
+|               app.dill
+|               dart_build.d
+|               dart_build.stamp
+|               dart_build_result.json
+|               gen_dart_plugin_registrant.stamp
+|               gen_localizations.stamp
+|               install_code_assets.d
+|               install_code_assets.stamp
+|               kernel_snapshot_program.d
+|               native_assets.json
+|               outputs.json
+|               unpack_windows.stamp
+|               windows_engine_sources.d
+|               
++---.idea
+|   |   modules.xml
+|   |   workspace.xml
+|   |   
+|   +---libraries
+|   |       Dart_SDK.xml
+|   |       KotlinJavaRuntime.xml
+|   |       
+|   \---runConfigurations
+|           main_dart.xml
+|           
++---.tmp
+|       categorization_audit.md
+|       categorization_results.json
+|       kb_files.txt
+|       
++---.vscode
+|       launch.json
+|       
++---android
+|   |   .gitignore
+|   |   build.gradle.kts
+|   |   gradle.properties
+|   |   gradlew
+|   |   gradlew.bat
+|   |   local.properties
+|   |   portal_offline_android.iml
+|   |   settings.gradle.kts
+|   |   
+|   +---.gradle
+|   |   |   file-system.probe
+|   |   |   
+|   |   +---8.14
+|   |   |   |   gc.properties
+|   |   |   |   
+|   |   |   +---checksums
+|   |   |   |       checksums.lock
+|   |   |   |       md5-checksums.bin
+|   |   |   |       sha1-checksums.bin
+|   |   |   |       
+|   |   |   +---executionHistory
+|   |   |   |       executionHistory.bin
+|   |   |   |       executionHistory.lock
+|   |   |   |       
+|   |   |   +---expanded
+|   |   |   +---fileChanges
+|   |   |   |       last-build.bin
+|   |   |   |       
+|   |   |   +---fileHashes
+|   |   |   |       fileHashes.bin
+|   |   |   |       fileHashes.lock
+|   |   |   |       resourceHashesCache.bin
+|   |   |   |       
+|   |   |   \---vcsMetadata
+|   |   +---buildOutputCleanup
+|   |   |       buildOutputCleanup.lock
+|   |   |       cache.properties
+|   |   |       outputFiles.bin
+|   |   |       
+|   |   +---kotlin
+|   |   |   \---errors
+|   |   |           errors-1768316163719.log
+|   |   |           
+|   |   +---noVersion
+|   |   |       buildLogic.lock
+|   |   |       
+|   |   \---vcs-1
+|   |           gc.properties
+|   |           
+|   +---.kotlin
+|   |   +---errors
+|   |   |       errors-1768316163719.log
+|   |   |       
+|   |   \---sessions
+|   +---app
+|   |   |   build.gradle.kts
+|   |   |   proguard-rules.pro
+|   |   |   
+|   |   \---src
+|   |       +---debug
+|   |       |       AndroidManifest.xml
+|   |       |       
+|   |       +---main
+|   |       |   |   AndroidManifest.xml
+|   |       |   |   
+|   |       |   +---java
+|   |       |   |   \---io
+|   |       |   |       \---flutter
+|   |       |   |           \---plugins
+|   |       |   |                   GeneratedPluginRegistrant.java
+|   |       |   |                   
+|   |       |   +---kotlin
+|   |       |   |   \---com
+|   |       |   |       \---example
+|   |       |   |           \---portal_offline
+|   |       |   |                   MainActivity.kt
+|   |       |   |                   
+|   |       |   \---res
+|   |       |       +---drawable
+|   |       |       |       launch_background.xml
+|   |       |       |       
+|   |       |       +---drawable-v21
+|   |       |       |       launch_background.xml
+|   |       |       |       
+|   |       |       +---mipmap-hdpi
+|   |       |       |       ic_launcher.png
+|   |       |       |       
+|   |       |       +---mipmap-mdpi
+|   |       |       |       ic_launcher.png
+|   |       |       |       
+|   |       |       +---mipmap-xhdpi
+|   |       |       |       ic_launcher.png
+|   |       |       |       
+|   |       |       +---mipmap-xxhdpi
+|   |       |       |       ic_launcher.png
+|   |       |       |       
+|   |       |       +---mipmap-xxxhdpi
+|   |       |       |       ic_launcher.png
+|   |       |       |       
+|   |       |       +---values
+|   |       |       |       styles.xml
+|   |       |       |       
+|   |       |       \---values-night
+|   |       |               styles.xml
+|   |       |               
+|   |       \---profile
+|   |               AndroidManifest.xml
+|   |               
+|   \---gradle
+|       \---wrapper
+|               gradle-wrapper.jar
+|               gradle-wrapper.properties
+|               
++---assets
+|   |   FSC_Logo.svg
+|   |   logo-dark.svg
+|   |   logo-light.svg
+|   |   logo.webp
+|   |   
+|   +---config
+|   |       model_config.json
+|   |       
+|   \---images
+|           fsc_logo.png
+|           news_AV.png
+|           news_AV_2.webp
+|           news_hyosung.png
+|           news_hyosung_2.png
+|           news_kisan.jpg
+|           news_kisan_2.svg
+|           README.md
+|           
++---audit
+|   |   BEHAVIORAL_FINDINGS.json
+|   |   CORRELATION_LINKS.json
+|   |   LCE_FINDINGS.json
+|   |   PROTOCOL_AUDIT_REPORT.md
+|   |   PROTOCOL_SUMMARY.md
+|   |   RLDF_VISUAL_FINDINGS.json
+|   |   STRUCTURAL_FINDINGS.json
+|   |   VCE_FINDINGS.json
+|   |   
+|   \---artifacts
+|       +---manifests
+|       |       AUDIT-2026-02-06T19-19-35__manifest.json
+|       |       AUDIT-2026-02-06T19-26-14__manifest.json
+|       |       AUDIT-2026-02-06T19-31-46__manifest.json
+|       |       
+|       +---screenshots
+|       +---semantics
+|       |       01_login_screen_initial__semantics.txt
+|       |       nav_0_home__semantics.txt
+|       |       nav_1_work__semantics.txt
+|       |       nav_2_operations__semantics.txt
+|       |       nav_3_locations__semantics.txt
+|       |       nav_4_people__semantics.txt
+|       |       nav_5_knowledge__semantics.txt
+|       |       nav_6_training__semantics.txt
+|       |       nav_7_equipment__semantics.txt
+|       |       nav_8_expenses__semantics.txt
+|       |       
+|       +---traces
+|       |       AUDIT-2026-02-06T19-19-35__trace.jsonl
+|       |       AUDIT-2026-02-06T19-26-14__trace.jsonl
+|       |       AUDIT-2026-02-06T19-31-46__trace.jsonl
+|       |       
+|       \---vce_sources
+|               01_login_screen_initial__vce.json
+|               nav_0_home__vce.json
+|               nav_1_work__vce.json
+|               nav_2_operations__vce.json
+|               nav_3_locations__vce.json
+|               nav_4_people__vce.json
+|               nav_5_knowledge__vce.json
+|               nav_6_training__vce.json
+|               nav_7_equipment__vce.json
+|               nav_8_expenses__vce.json
+|               
++---backups
+|       fsc_portal_dev_working_v13.sqlite
+|       
++---build
+|   |   .last_build_id
+|   |   3db25abb13e29dfd86c6b9b67f5bf79a.cache.dill.track.dill
+|   |   flutter_driver_commands_0.log
+|   |   
+|   +---e53ae8f09c1b036470b5583882a4908c
+|   |       .filecache
+|   |       dart_build.d
+|   |       dart_build.stamp
+|   |       dart_build_result.json
+|   |       gen_dart_plugin_registrant.stamp
+|   |       gen_localizations.stamp
+|   |       outputs.json
+|   |       _composite.stamp
+|   |       
+|   +---flutter_assets
+|   |   |   AssetManifest.bin
+|   |   |   FontManifest.json
+|   |   |   kernel_blob.bin
+|   |   |   NativeAssetsManifest.json
+|   |   |   NOTICES.Z
+|   |   |   
+|   |   +---assets
+|   |   |   |   FSC_Logo.svg
+|   |   |   |   logo-dark.svg
+|   |   |   |   logo-light.svg
+|   |   |   |   logo.webp
+|   |   |   |   
+|   |   |   +---config
+|   |   |   |       model_config.json
+|   |   |   |       
+|   |   |   \---images
+|   |   |           fsc_logo.png
+|   |   |           news_AV.png
+|   |   |           news_AV_2.webp
+|   |   |           news_hyosung.png
+|   |   |           news_hyosung_2.png
+|   |   |           news_kisan.jpg
+|   |   |           news_kisan_2.svg
+|   |   |           README.md
+|   |   |           
+|   |   +---fonts
+|   |   |       MaterialIcons-Regular.otf
+|   |   |       
+|   |   +---packages
+|   |   |   \---flutter_map
+|   |   |       \---lib
+|   |   |           \---assets
+|   |   |                   flutter_map_logo.png
+|   |   |                   
+|   |   \---shaders
+|   |           ink_sparkle.frag
+|   |           stretch_effect.frag
+|   |           
+|   +---native_assets
+|   |   +---flutter-tester
+|   |   \---windows
+|   |           native_assets.json
+|   |           
+|   +---native_hooks
+|   |       .last_build_id
+|   |       
+|   +---unit_test_assets
+|   |   |   AssetManifest.bin
+|   |   |   FontManifest.json
+|   |   |   NOTICES.Z
+|   |   |   
+|   |   +---assets
+|   |   |   |   FSC_Logo.svg
+|   |   |   |   logo-dark.svg
+|   |   |   |   logo-light.svg
+|   |   |   |   logo.webp
+|   |   |   |   
+|   |   |   +---config
+|   |   |   |       model_config.json
+|   |   |   |       
+|   |   |   \---images
+|   |   |           fsc_logo.png
+|   |   |           news_AV.png
+|   |   |           news_AV_2.webp
+|   |   |           news_hyosung.png
+|   |   |           news_hyosung_2.png
+|   |   |           news_kisan.jpg
+|   |   |           news_kisan_2.svg
+|   |   |           README.md
+|   |   |           
+|   |   +---fonts
+|   |   |       MaterialIcons-Regular.otf
+|   |   |       
+|   |   +---packages
+|   |   |   \---flutter_map
+|   |   |       \---lib
+|   |   |           \---assets
+|   |   |                   flutter_map_logo.png
+|   |   |                   
+|   |   \---shaders
+|   |           ink_sparkle.frag
+|   |           stretch_effect.frag
+|   |           
+|   \---windows
+|       \---x64
+|           |   ALL_BUILD.vcxproj
+|           |   ALL_BUILD.vcxproj.filters
+|           |   CMakeCache.txt
+|           |   cmake_install.cmake
+|           |   fsc_portal.sln
+|           |   INSTALL.vcxproj
+|           |   INSTALL.vcxproj.filters
+|           |   install_manifest.txt
+|           |   ZERO_CHECK.vcxproj
+|           |   ZERO_CHECK.vcxproj.filters
+|           |   
+|           +---CMakeFiles
+|           |   |   cmake.check_cache
+|           |   |   CMakeConfigureLog.yaml
+|           |   |   generate.stamp
+|           |   |   generate.stamp.depend
+|           |   |   generate.stamp.list
+|           |   |   TargetDirectories.txt
+|           |   |   
+|           |   +---0aa4820ba1a197bf33be207211b645bb
+|           |   |       INSTALL_force.rule
+|           |   |       
+|           |   +---2b07889d4dc1434ce9d0b76b253fc5a8
+|           |   |       INSTALL_force.rule
+|           |   |       
+|           |   +---3.31.6-msvc6
+|           |   |   |   CMakeCCompiler.cmake
+|           |   |   |   CMakeCXXCompiler.cmake
+|           |   |   |   CMakeDetermineCompilerABI_C.bin
+|           |   |   |   CMakeDetermineCompilerABI_CXX.bin
+|           |   |   |   CMakeRCCompiler.cmake
+|           |   |   |   CMakeSystem.cmake
+|           |   |   |   VCTargetsPath.txt
+|           |   |   |   VCTargetsPath.vcxproj
+|           |   |   |   
+|           |   |   +---CompilerIdC
+|           |   |   |   |   CMakeCCompilerId.c
+|           |   |   |   |   CompilerIdC.exe
+|           |   |   |   |   CompilerIdC.vcxproj
+|           |   |   |   |   
+|           |   |   |   +---Debug
+|           |   |   |   |   |   CMakeCCompilerId.obj
+|           |   |   |   |   |   CompilerIdC.exe.recipe
+|           |   |   |   |   |   
+|           |   |   |   |   \---CompilerIdC.tlog
+|           |   |   |   |           CL.command.1.tlog
+|           |   |   |   |           Cl.items.tlog
+|           |   |   |   |           CL.read.1.tlog
+|           |   |   |   |           CL.write.1.tlog
+|           |   |   |   |           CompilerIdC.lastbuildstate
+|           |   |   |   |           link.command.1.tlog
+|           |   |   |   |           link.read.1.tlog
+|           |   |   |   |           link.secondary.1.tlog
+|           |   |   |   |           link.write.1.tlog
+|           |   |   |   |           
+|           |   |   |   \---tmp
+|           |   |   +---CompilerIdCXX
+|           |   |   |   |   CMakeCXXCompilerId.cpp
+|           |   |   |   |   CompilerIdCXX.exe
+|           |   |   |   |   CompilerIdCXX.vcxproj
+|           |   |   |   |   
+|           |   |   |   +---Debug
+|           |   |   |   |   |   CMakeCXXCompilerId.obj
+|           |   |   |   |   |   CompilerIdCXX.exe.recipe
+|           |   |   |   |   |   
+|           |   |   |   |   \---CompilerIdCXX.tlog
+|           |   |   |   |           CL.command.1.tlog
+|           |   |   |   |           Cl.items.tlog
+|           |   |   |   |           CL.read.1.tlog
+|           |   |   |   |           CL.write.1.tlog
+|           |   |   |   |           CompilerIdCXX.lastbuildstate
+|           |   |   |   |           link.command.1.tlog
+|           |   |   |   |           link.read.1.tlog
+|           |   |   |   |           link.secondary.1.tlog
+|           |   |   |   |           link.write.1.tlog
+|           |   |   |   |           
+|           |   |   |   \---tmp
+|           |   |   +---VCTargetsPath
+|           |   |   |   \---x64
+|           |   |   |       \---Debug
+|           |   |   |           |   VCTargetsPath.recipe
+|           |   |   |           |   
+|           |   |   |           \---VCTargetsPath.tlog
+|           |   |   |                   VCTargetsPath.lastbuildstate
+|           |   |   |                   
+|           |   |   \---x64
+|           |   |       \---Debug
+|           |   +---78ded48bca259ba460c09cd1b0a83b78
+|           |   |       flutter_assemble.rule
+|           |   |       INSTALL_force.rule
+|           |   |       
+|           |   +---acdf76120b4ea30ac0de1144e71e8956
+|           |   |       INSTALL_force.rule
+|           |   |       
+|           |   +---bddb82739b67fed1c7363d672d402517
+|           |   |       generate.stamp.rule
+|           |   |       INSTALL_force.rule
+|           |   |       
+|           |   +---e8dc60a76889930fff1982192be7b59c
+|           |   |       flutter_windows.dll.rule
+|           |   |       
+|           |   +---f5401e11953f0bb1ebca5fbb5decc0d9
+|           |   |       INSTALL_force.rule
+|           |   |       
+|           |   +---fc8405947eca07354f0258cdd213e663
+|           |   |       INSTALL_force.rule
+|           |   |       
+|           |   \---pkgRedirects
+|           +---flutter
+|           |   |   cmake_install.cmake
+|           |   |   flutter_assemble.vcxproj
+|           |   |   flutter_assemble.vcxproj.filters
+|           |   |   flutter_wrapper_app.vcxproj
+|           |   |   flutter_wrapper_app.vcxproj.filters
+|           |   |   flutter_wrapper_plugin.vcxproj
+|           |   |   flutter_wrapper_plugin.vcxproj.filters
+|           |   |   INSTALL.vcxproj
+|           |   |   INSTALL.vcxproj.filters
+|           |   |   
+|           |   +---CMakeFiles
+|           |   |       generate.stamp
+|           |   |       generate.stamp.depend
+|           |   |       
+|           |   +---Debug
+|           |   |       flutter_wrapper_app.lib
+|           |   |       flutter_wrapper_app.pdb
+|           |   |       flutter_wrapper_plugin.lib
+|           |   |       flutter_wrapper_plugin.pdb
+|           |   |       
+|           |   +---flutter_wrapper_app.dir
+|           |   |   \---Debug
+|           |   |       |   core_implementations.obj
+|           |   |       |   flutter_engine.obj
+|           |   |       |   flutter_view_controller.obj
+|           |   |       |   flutter_wrapper_app.lib.recipe
+|           |   |       |   standard_codec.obj
+|           |   |       |   
+|           |   |       \---flutter_.77712C3A.tlog
+|           |   |               CL.command.1.tlog
+|           |   |               Cl.items.tlog
+|           |   |               CL.read.1.tlog
+|           |   |               CL.write.1.tlog
+|           |   |               CustomBuild.command.1.tlog
+|           |   |               CustomBuild.read.1.tlog
+|           |   |               CustomBuild.write.1.tlog
+|           |   |               flutter_wrapper_app.lastbuildstate
+|           |   |               Lib-link.read.1.tlog
+|           |   |               Lib-link.write.1.tlog
+|           |   |               Lib.command.1.tlog
+|           |   |               
+|           |   +---flutter_wrapper_plugin.dir
+|           |   |   \---Debug
+|           |   |       |   core_implementations.obj
+|           |   |       |   flutter_wrapper_plugin.lib.recipe
+|           |   |       |   plugin_registrar.obj
+|           |   |       |   standard_codec.obj
+|           |   |       |   
+|           |   |       \---flutter_.FEE68E14.tlog
+|           |   |               CL.command.1.tlog
+|           |   |               Cl.items.tlog
+|           |   |               CL.read.1.tlog
+|           |   |               CL.write.1.tlog
+|           |   |               CustomBuild.command.1.tlog
+|           |   |               CustomBuild.read.1.tlog
+|           |   |               CustomBuild.write.1.tlog
+|           |   |               flutter_wrapper_plugin.lastbuildstate
+|           |   |               Lib-link.read.1.tlog
+|           |   |               Lib-link.write.1.tlog
+|           |   |               Lib.command.1.tlog
+|           |   |               
+|           |   \---x64
+|           |       \---Debug
+|           |           \---flutter_assemble
+|           |               |   flutter_assemble.recipe
+|           |               |   
+|           |               \---flutter_assemble.tlog
+|           |                       CustomBuild.command.1.tlog
+|           |                       CustomBuild.read.1.tlog
+|           |                       CustomBuild.write.1.tlog
+|           |                       flutter_assemble.lastbuildstate
+|           |                       
+|           +---plugins
+|           |   +---file_selector_windows
+|           |   |   |   ALL_BUILD.vcxproj
+|           |   |   |   ALL_BUILD.vcxproj.filters
+|           |   |   |   cmake_install.cmake
+|           |   |   |   file_selector_windows.sln
+|           |   |   |   file_selector_windows_plugin.vcxproj
+|           |   |   |   file_selector_windows_plugin.vcxproj.filters
+|           |   |   |   INSTALL.vcxproj
+|           |   |   |   INSTALL.vcxproj.filters
+|           |   |   |   
+|           |   |   +---CMakeFiles
+|           |   |   |       generate.stamp
+|           |   |   |       generate.stamp.depend
+|           |   |   |       
+|           |   |   +---Debug
+|           |   |   |       file_selector_windows_plugin.dll
+|           |   |   |       file_selector_windows_plugin.exp
+|           |   |   |       file_selector_windows_plugin.lib
+|           |   |   |       file_selector_windows_plugin.pdb
+|           |   |   |       
+|           |   |   \---file_selector_windows_plugin.dir
+|           |   |       \---Debug
+|           |   |           |   file_dialog_controller.obj
+|           |   |           |   file_selector_plugin.obj
+|           |   |           |   file_selector_windows.obj
+|           |   |           |   file_selector_windows_plugin.dll.recipe
+|           |   |           |   file_selector_windows_plugin.ilk
+|           |   |           |   messages.g.obj
+|           |   |           |   string_utils.obj
+|           |   |           |   vc143.pdb
+|           |   |           |   
+|           |   |           \---file_sel.00F5B37D.tlog
+|           |   |                   CL.command.1.tlog
+|           |   |                   Cl.items.tlog
+|           |   |                   CL.read.1.tlog
+|           |   |                   CL.write.1.tlog
+|           |   |                   CustomBuild.command.1.tlog
+|           |   |                   CustomBuild.read.1.tlog
+|           |   |                   CustomBuild.write.1.tlog
+|           |   |                   file_selector_windows_plugin.lastbuildstate
+|           |   |                   link.command.1.tlog
+|           |   |                   link.read.1.tlog
+|           |   |                   link.secondary.1.tlog
+|           |   |                   link.write.1.tlog
+|           |   |                   
+|           |   +---flutter_secure_storage_windows
+|           |   |   |   ALL_BUILD.vcxproj
+|           |   |   |   ALL_BUILD.vcxproj.filters
+|           |   |   |   cmake_install.cmake
+|           |   |   |   flutter_secure_storage_windows.sln
+|           |   |   |   flutter_secure_storage_windows_plugin.vcxproj
+|           |   |   |   flutter_secure_storage_windows_plugin.vcxproj.filters
+|           |   |   |   INSTALL.vcxproj
+|           |   |   |   INSTALL.vcxproj.filters
+|           |   |   |   
+|           |   |   +---CMakeFiles
+|           |   |   |       generate.stamp
+|           |   |   |       generate.stamp.depend
+|           |   |   |       
+|           |   |   +---Debug
+|           |   |   |       flutter_secure_storage_windows_plugin.dll
+|           |   |   |       flutter_secure_storage_windows_plugin.exp
+|           |   |   |       flutter_secure_storage_windows_plugin.lib
+|           |   |   |       flutter_secure_storage_windows_plugin.pdb
+|           |   |   |       
+|           |   |   \---flutter_secure_storage_windows_plugin.dir
+|           |   |       \---Debug
+|           |   |           |   flutter_secure_storage_windows_plugin.dll.recipe
+|           |   |           |   flutter_secure_storage_windows_plugin.ilk
+|           |   |           |   flutter_secure_storage_windows_plugin.obj
+|           |   |           |   vc143.pdb
+|           |   |           |   
+|           |   |           \---flutter_.C9FFCBD2.tlog
+|           |   |                   CL.command.1.tlog
+|           |   |                   Cl.items.tlog
+|           |   |                   CL.read.1.tlog
+|           |   |                   CL.write.1.tlog
+|           |   |                   CustomBuild.command.1.tlog
+|           |   |                   CustomBuild.read.1.tlog
+|           |   |                   CustomBuild.write.1.tlog
+|           |   |                   flutter_secure_storage_windows_plugin.lastbuildstate
+|           |   |                   link.command.1.tlog
+|           |   |                   link.read.1.tlog
+|           |   |                   link.secondary.1.tlog
+|           |   |                   link.write.1.tlog
+|           |   |                   
+|           |   +---sqlite3_flutter_libs
+|           |   |   |   ALL_BUILD.vcxproj
+|           |   |   |   ALL_BUILD.vcxproj.filters
+|           |   |   |   cmake_install.cmake
+|           |   |   |   INSTALL.vcxproj
+|           |   |   |   INSTALL.vcxproj.filters
+|           |   |   |   sqlite3.vcxproj
+|           |   |   |   sqlite3.vcxproj.filters
+|           |   |   |   sqlite3_flutter_libs.sln
+|           |   |   |   sqlite3_flutter_libs_plugin.vcxproj
+|           |   |   |   sqlite3_flutter_libs_plugin.vcxproj.filters
+|           |   |   |   
+|           |   |   +---CMakeFiles
+|           |   |   |       generate.stamp
+|           |   |   |       generate.stamp.depend
+|           |   |   |       
+|           |   |   +---Debug
+|           |   |   |       sqlite3.dll
+|           |   |   |       sqlite3.exp
+|           |   |   |       sqlite3.lib
+|           |   |   |       sqlite3.pdb
+|           |   |   |       sqlite3_flutter_libs_plugin.dll
+|           |   |   |       sqlite3_flutter_libs_plugin.exp
+|           |   |   |       sqlite3_flutter_libs_plugin.lib
+|           |   |   |       sqlite3_flutter_libs_plugin.pdb
+|           |   |   |       
+|           |   |   +---sqlite3.dir
+|           |   |   |   \---Debug
+|           |   |   |       |   sqlite3.dll.recipe
+|           |   |   |       |   sqlite3.ilk
+|           |   |   |       |   sqlite3_flutter.obj
+|           |   |   |       |   vc143.pdb
+|           |   |   |       |   
+|           |   |   |       \---sqlite3.tlog
+|           |   |   |               CL.command.1.tlog
+|           |   |   |               Cl.items.tlog
+|           |   |   |               CL.read.1.tlog
+|           |   |   |               CL.write.1.tlog
+|           |   |   |               CustomBuild.command.1.tlog
+|           |   |   |               CustomBuild.read.1.tlog
+|           |   |   |               CustomBuild.write.1.tlog
+|           |   |   |               link.command.1.tlog
+|           |   |   |               link.read.1.tlog
+|           |   |   |               link.secondary.1.tlog
+|           |   |   |               link.write.1.tlog
+|           |   |   |               sqlite3.lastbuildstate
+|           |   |   |               
+|           |   |   \---sqlite3_flutter_libs_plugin.dir
+|           |   |       \---Debug
+|           |   |           |   sqlite3_flutter_libs_plugin.dll.recipe
+|           |   |           |   sqlite3_flutter_libs_plugin.ilk
+|           |   |           |   sqlite3_flutter_libs_plugin.obj
+|           |   |           |   vc143.pdb
+|           |   |           |   
+|           |   |           \---sqlite3_.136B94BD.tlog
+|           |   |                   CL.command.1.tlog
+|           |   |                   Cl.items.tlog
+|           |   |                   CL.read.1.tlog
+|           |   |                   CL.write.1.tlog
+|           |   |                   CustomBuild.command.1.tlog
+|           |   |                   CustomBuild.read.1.tlog
+|           |   |                   CustomBuild.write.1.tlog
+|           |   |                   link.command.1.tlog
+|           |   |                   link.read.1.tlog
+|           |   |                   link.secondary.1.tlog
+|           |   |                   link.write.1.tlog
+|           |   |                   sqlite3_flutter_libs_plugin.lastbuildstate
+|           |   |                   
+|           |   \---url_launcher_windows
+|           |       |   ALL_BUILD.vcxproj
+|           |       |   ALL_BUILD.vcxproj.filters
+|           |       |   cmake_install.cmake
+|           |       |   INSTALL.vcxproj
+|           |       |   INSTALL.vcxproj.filters
+|           |       |   url_launcher_windows.sln
+|           |       |   url_launcher_windows_plugin.vcxproj
+|           |       |   url_launcher_windows_plugin.vcxproj.filters
+|           |       |   
+|           |       +---CMakeFiles
+|           |       |       generate.stamp
+|           |       |       generate.stamp.depend
+|           |       |       
+|           |       +---Debug
+|           |       |       url_launcher_windows_plugin.dll
+|           |       |       url_launcher_windows_plugin.exp
+|           |       |       url_launcher_windows_plugin.lib
+|           |       |       url_launcher_windows_plugin.pdb
+|           |       |       
+|           |       \---url_launcher_windows_plugin.dir
+|           |           \---Debug
+|           |               |   messages.g.obj
+|           |               |   system_apis.obj
+|           |               |   url_launcher_plugin.obj
+|           |               |   url_launcher_windows.obj
+|           |               |   url_launcher_windows_plugin.dll.recipe
+|           |               |   url_launcher_windows_plugin.ilk
+|           |               |   vc143.pdb
+|           |               |   
+|           |               \---url_laun.17A10ED7.tlog
+|           |                       CL.command.1.tlog
+|           |                       Cl.items.tlog
+|           |                       CL.read.1.tlog
+|           |                       CL.write.1.tlog
+|           |                       CustomBuild.command.1.tlog
+|           |                       CustomBuild.read.1.tlog
+|           |                       CustomBuild.write.1.tlog
+|           |                       link.command.1.tlog
+|           |                       link.read.1.tlog
+|           |                       link.secondary.1.tlog
+|           |                       link.write.1.tlog
+|           |                       url_launcher_windows_plugin.lastbuildstate
+|           |                       
+|           +---runner
+|           |   |   ALL_BUILD.vcxproj
+|           |   |   ALL_BUILD.vcxproj.filters
+|           |   |   cmake_install.cmake
+|           |   |   fsc_portal.vcxproj
+|           |   |   fsc_portal.vcxproj.filters
+|           |   |   INSTALL.vcxproj
+|           |   |   INSTALL.vcxproj.filters
+|           |   |   runner.sln
+|           |   |   
+|           |   +---CMakeFiles
+|           |   |       generate.stamp
+|           |   |       generate.stamp.depend
+|           |   |       
+|           |   +---Debug
+|           |   |   |   file_selector_windows_plugin.dll
+|           |   |   |   flutter_secure_storage_windows_plugin.dll
+|           |   |   |   flutter_windows.dll
+|           |   |   |   fsc_portal.exe
+|           |   |   |   fsc_portal.pdb
+|           |   |   |   native_assets.json
+|           |   |   |   sqlite3.dll
+|           |   |   |   sqlite3_flutter_libs_plugin.dll
+|           |   |   |   url_launcher_windows_plugin.dll
+|           |   |   |   
+|           |   |   \---data
+|           |   |       |   icudtl.dat
+|           |   |       |   
+|           |   |       \---flutter_assets
+|           |   |           |   AssetManifest.bin
+|           |   |           |   FontManifest.json
+|           |   |           |   kernel_blob.bin
+|           |   |           |   NativeAssetsManifest.json
+|           |   |           |   NOTICES.Z
+|           |   |           |   
+|           |   |           +---assets
+|           |   |           |   |   FSC_Logo.svg
+|           |   |           |   |   logo-dark.svg
+|           |   |           |   |   logo-light.svg
+|           |   |           |   |   logo.webp
+|           |   |           |   |   
+|           |   |           |   +---config
+|           |   |           |   |       model_config.json
+|           |   |           |   |       
+|           |   |           |   \---images
+|           |   |           |           fsc_logo.png
+|           |   |           |           news_AV.png
+|           |   |           |           news_AV_2.webp
+|           |   |           |           news_hyosung.png
+|           |   |           |           news_hyosung_2.png
+|           |   |           |           news_kisan.jpg
+|           |   |           |           news_kisan_2.svg
+|           |   |           |           README.md
+|           |   |           |           
+|           |   |           +---fonts
+|           |   |           |       MaterialIcons-Regular.otf
+|           |   |           |       
+|           |   |           +---packages
+|           |   |           |   \---flutter_map
+|           |   |           |       \---lib
+|           |   |           |           \---assets
+|           |   |           |                   flutter_map_logo.png
+|           |   |           |                   
+|           |   |           \---shaders
+|           |   |                   ink_sparkle.frag
+|           |   |                   stretch_effect.frag
+|           |   |                   
+|           |   \---fsc_portal.dir
+|           |       \---Debug
+|           |           |   flutter_window.obj
+|           |           |   fsc_portal.exe.recipe
+|           |           |   fsc_portal.ilk
+|           |           |   generated_plugin_registrant.obj
+|           |           |   main.obj
+|           |           |   Runner.res
+|           |           |   utils.obj
+|           |           |   vc143.pdb
+|           |           |   win32_window.obj
+|           |           |   
+|           |           \---fsc_portal.tlog
+|           |                   CL.command.1.tlog
+|           |                   Cl.items.tlog
+|           |                   CL.read.1.tlog
+|           |                   CL.write.1.tlog
+|           |                   CustomBuild.command.1.tlog
+|           |                   CustomBuild.read.1.tlog
+|           |                   CustomBuild.write.1.tlog
+|           |                   fsc_portal.lastbuildstate
+|           |                   link.command.1.tlog
+|           |                   link.read.1.tlog
+|           |                   link.secondary.1.tlog
+|           |                   link.write.1.tlog
+|           |                   rc.command.1.tlog
+|           |                   rc.read.1.tlog
+|           |                   rc.write.1.tlog
+|           |                   
+|           +---x64
+|           |   \---Debug
+|           |       +---ALL_BUILD
+|           |       |   |   ALL_BUILD.recipe
+|           |       |   |   
+|           |       |   \---ALL_BUILD.tlog
+|           |       |           ALL_BUILD.lastbuildstate
+|           |       |           CustomBuild.command.1.tlog
+|           |       |           CustomBuild.read.1.tlog
+|           |       |           CustomBuild.write.1.tlog
+|           |       |           
+|           |       +---INSTALL
+|           |       |   |   INSTALL.recipe
+|           |       |   |   
+|           |       |   \---INSTALL.tlog
+|           |       |           CustomBuild.command.1.tlog
+|           |       |           CustomBuild.read.1.tlog
+|           |       |           CustomBuild.write.1.tlog
+|           |       |           INSTALL.lastbuildstate
+|           |       |           
+|           |       \---ZERO_CHECK
+|           |           |   ZERO_CHECK.recipe
+|           |           |   
+|           |           \---ZERO_CHECK.tlog
+|           |                   CustomBuild.command.1.tlog
+|           |                   CustomBuild.read.1.tlog
+|           |                   CustomBuild.write.1.tlog
+|           |                   ZERO_CHECK.lastbuildstate
+|           |                   
+|           \---_deps
+|               +---sqlite3-build
+|               +---sqlite3-src
+|               |   |   auto.def
+|               |   |   configure
+|               |   |   Makefile.fallback
+|               |   |   Makefile.in
+|               |   |   Makefile.msc
+|               |   |   README.txt
+|               |   |   Replace.cs
+|               |   |   shell.c
+|               |   |   sqlite3.1
+|               |   |   sqlite3.c
+|               |   |   sqlite3.h
+|               |   |   sqlite3.pc.in
+|               |   |   sqlite3.rc
+|               |   |   sqlite3ext.h
+|               |   |   sqlite3rc.h
+|               |   |   VERSION
+|               |   |   
+|               |   +---autosetup
+|               |   |   |   autosetup
+|               |   |   |   autosetup-config.guess
+|               |   |   |   autosetup-config.sub
+|               |   |   |   autosetup-find-tclsh
+|               |   |   |   autosetup-test-tclsh
+|               |   |   |   cc-db.tcl
+|               |   |   |   cc-lib.tcl
+|               |   |   |   cc-shared.tcl
+|               |   |   |   cc.tcl
+|               |   |   |   find_tclconfig.tcl
+|               |   |   |   jimsh0.c
+|               |   |   |   LICENSE
+|               |   |   |   pkg-config.tcl
+|               |   |   |   proj.tcl
+|               |   |   |   README.autosetup
+|               |   |   |   README.md
+|               |   |   |   sqlite-config.tcl
+|               |   |   |   system.tcl
+|               |   |   |   
+|               |   |   \---teaish
+|               |   |           core.tcl
+|               |   |           feature.tcl
+|               |   |           README.txt
+|               |   |           tester.tcl
+|               |   |           
+|               |   \---tea
+|               |       |   auto.def
+|               |       |   configure
+|               |       |   license.terms
+|               |       |   Makefile.in
+|               |       |   pkgIndex.tcl.in
+|               |       |   README.txt
+|               |       |   teaish.tcl
+|               |       |   teaish.test.tcl
+|               |       |   _teaish.tester.tcl.in
+|               |       |   
+|               |       \---generic
+|               |               tclsqlite3.c
+|               |               
+|               \---sqlite3-subbuild
+|                   |   ALL_BUILD.vcxproj
+|                   |   ALL_BUILD.vcxproj.filters
+|                   |   CMakeCache.txt
+|                   |   CMakeLists.txt
+|                   |   cmake_install.cmake
+|                   |   sqlite3-populate.sln
+|                   |   sqlite3-populate.vcxproj
+|                   |   sqlite3-populate.vcxproj.filters
+|                   |   ZERO_CHECK.vcxproj
+|                   |   ZERO_CHECK.vcxproj.filters
+|                   |   
+|                   +---CMakeFiles
+|                   |   |   cmake.check_cache
+|                   |   |   CMakeConfigureLog.yaml
+|                   |   |   generate.stamp
+|                   |   |   generate.stamp.depend
+|                   |   |   generate.stamp.list
+|                   |   |   TargetDirectories.txt
+|                   |   |   
+|                   |   +---3.31.6-msvc6
+|                   |   |   |   CMakeSystem.cmake
+|                   |   |   |   VCTargetsPath.txt
+|                   |   |   |   VCTargetsPath.vcxproj
+|                   |   |   |   
+|                   |   |   +---VCTargetsPath
+|                   |   |   |   \---x64
+|                   |   |   |       \---Debug
+|                   |   |   |           |   VCTargetsPath.recipe
+|                   |   |   |           |   
+|                   |   |   |           \---VCTargetsPath.tlog
+|                   |   |   |                   VCTargetsPath.lastbuildstate
+|                   |   |   |                   
+|                   |   |   \---x64
+|                   |   |       \---Debug
+|                   |   +---8437b10a1c0937e0196621ad7af07e8e
+|                   |   |       sqlite3-populate-build.rule
+|                   |   |       sqlite3-populate-configure.rule
+|                   |   |       sqlite3-populate-download.rule
+|                   |   |       sqlite3-populate-install.rule
+|                   |   |       sqlite3-populate-mkdir.rule
+|                   |   |       sqlite3-populate-patch.rule
+|                   |   |       sqlite3-populate-test.rule
+|                   |   |       sqlite3-populate-update.rule
+|                   |   |       
+|                   |   +---86709916f88855ce99625ac139697f99
+|                   |   |       generate.stamp.rule
+|                   |   |       sqlite3-populate.rule
+|                   |   |       
+|                   |   +---c1229d428c1f02e8d24072527513502e
+|                   |   |       sqlite3-populate-complete.rule
+|                   |   |       
+|                   |   +---Debug
+|                   |   |       sqlite3-populate-complete
+|                   |   |       
+|                   |   +---pkgRedirects
+|                   |   \---sqlite3-populate.dir
+|                   |           Labels.json
+|                   |           Labels.txt
+|                   |           
+|                   +---sqlite3-populate-prefix
+|                   |   +---src
+|                   |   |   |   sqlite-autoconf-3510100.tar.gz
+|                   |   |   |   
+|                   |   |   \---sqlite3-populate-stamp
+|                   |   |       |   download-sqlite3-populate.cmake
+|                   |   |       |   extract-sqlite3-populate.cmake
+|                   |   |       |   sqlite3-populate-patch-info.txt
+|                   |   |       |   sqlite3-populate-update-info.txt
+|                   |   |       |   sqlite3-populate-urlinfo.txt
+|                   |   |       |   verify-sqlite3-populate.cmake
+|                   |   |       |   
+|                   |   |       \---Debug
+|                   |   |               sqlite3-populate-build
+|                   |   |               sqlite3-populate-configure
+|                   |   |               sqlite3-populate-done
+|                   |   |               sqlite3-populate-download
+|                   |   |               sqlite3-populate-install
+|                   |   |               sqlite3-populate-mkdir
+|                   |   |               sqlite3-populate-patch
+|                   |   |               sqlite3-populate-test
+|                   |   |               sqlite3-populate-update
+|                   |   |               
+|                   |   \---tmp
+|                   |           sqlite3-populate-cfgcmd.txt
+|                   |           sqlite3-populate-mkdirs.cmake
+|                   |           
+|                   \---x64
+|                       \---Debug
+|                           +---ALL_BUILD
+|                           |   |   ALL_BUILD.recipe
+|                           |   |   
+|                           |   \---ALL_BUILD.tlog
+|                           |           ALL_BUILD.lastbuildstate
+|                           |           CustomBuild.command.1.tlog
+|                           |           CustomBuild.read.1.tlog
+|                           |           CustomBuild.write.1.tlog
+|                           |           
+|                           +---sqlite3-populate
+|                           |   |   sqlite3-populate.recipe
+|                           |   |   
+|                           |   \---sqlite3-populate.tlog
+|                           |           CustomBuild.command.1.tlog
+|                           |           CustomBuild.read.1.tlog
+|                           |           CustomBuild.write.1.tlog
+|                           |           sqlite3-populate.lastbuildstate
+|                           |           
+|                           \---ZERO_CHECK
+|                               |   ZERO_CHECK.recipe
+|                               |   
+|                               \---ZERO_CHECK.tlog
+|                                       CustomBuild.command.1.tlog
+|                                       CustomBuild.read.1.tlog
+|                                       CustomBuild.write.1.tlog
+|                                       ZERO_CHECK.lastbuildstate
+|                                       
++---debug-info
+|       app.android-arm.symbols
+|       app.android-arm64.symbols
+|       app.android-x64.symbols
+|       
++---directives
+|       categorize_knowledge.md
+|       README.md
+|       update_weather.md
+|       
++---docs
+|       PHI3_SETUP_GUIDE.md
+|       WORK_ORDER_MANAGEMENT.md
+|       
++---execution
+|       categorize_entries_rules.py
+|       fetch_weather_wttr.py
+|       inject_metadata.py
+|       README.md
+|       requirements.txt
+|       
++---integration_test
+|       audit_harness_test.dart
+|       
++---inventory_temp
+|   \---Inventory
+|       |   Inventory Template.xlsx
+|       |   
+|       \---San Antonio
+|               Demo Technician 1 Truck Inventory 12-31-2023.xlsx
+|               San Antonio Office Inventory 12-31-2023 - IN PROGRESS.xlsx
+|               
++---lib
+|   |   LOGIN_SYSTEM.md
+|   |   main.dart
+|   |   
+|   +---app_shell
+|   |       eva_collapse_rail.dart
+|   |       eva_panel.dart
+|   |       eva_state.dart
+|   |       navigation_state.dart
+|   |       portal_shell.dart
+|   |       
+|   +---config
+|   |       app_constants.dart
+|   |       llm_config.dart
+|   |       
+|   +---database
+|   |       app_database.dart
+|   |       app_database.g.dart
+|   |       app_database_standalone.dart
+|   |       app_database_standalone.g.dart
+|   |       seed_service.dart
+|   |       
+|   +---features
+|   |   +---admin
+|   |   |       knowledge_import_screen.dart
+|   |   |       
+|   |   +---auth
+|   |   |       login_screen.dart
+|   |   |       
+|   |   +---chat
+|   |   |   |   chat_view.dart
+|   |   |   |   
+|   |   |   +---models
+|   |   |   |       portal_chat_models.dart
+|   |   |   |       
+|   |   |   \---services
+|   |   |           portal_chat_service.dart
+|   |   |           
+|   |   +---continuing_education
+|   |   |       continuing_education_home_view.dart
+|   |   |       course_card.dart
+|   |   |       course_detail_view.dart
+|   |   |       
+|   |   +---equipment
+|   |   |       equipment_card.dart
+|   |   |       equipment_detail_sheet.dart
+|   |   |       equipment_home_view.dart
+|   |   |       
+|   |   +---expenses
+|   |   |       expenses_home_view.dart
+|   |   |       
+|   |   +---home
+|   |   |       create_announcement_sheet.dart
+|   |   |       edit_weather_sheet.dart
+|   |   |       home_view.dart
+|   |   |       import_newsletter_sheet.dart
+|   |   |       new_note_sheet.dart
+|   |   |       scan_receipt_sheet.dart
+|   |   |       
+|   |   +---knowledge
+|   |   |       knowledge_category_view.dart
+|   |   |       knowledge_entry_view.dart
+|   |   |       knowledge_equipment_view.dart
+|   |   |       knowledge_home_view.dart
+|   |   |       
+|   |   +---locations
+|   |   |       add_location_sheet.dart
+|   |   |       locations_view.dart
+|   |   |       site_detail_sheet.dart
+|   |   |       
+|   |   +---operations
+|   |   |       operations_view.dart
+|   |   |       
+|   |   +---people
+|   |   |       people_view.dart
+|   |   |       user_card.dart
+|   |   |       user_details_dialog.dart
+|   |   |       
+|   |   +---settings
+|   |   |       settings_view.dart
+|   |   |       
+|   |   \---work
+|   |           create_work_order_sheet.dart
+|   |           edit_work_order_sheet.dart
+|   |           work_order_status_badge.dart
+|   |           work_view.dart
+|   |           
+|   +---ffi
+|   |       onnxruntime_native.dart
+|   |       
+|   +---models
+|   |       work_order_enums.dart
+|   |       
+|   +---providers
+|   |       auth_provider.dart
+|   |       theme_provider.dart
+|   |       
+|   +---scripts
+|   |       count_knowledge.dart
+|   |       fix_starting_points.dart
+|   |       force_ingest_knowledge.dart
+|   |       import_newsletter.dart
+|   |       ingest_knowledge_entries.dart
+|   |       ingest_knowledge_flutter.dart
+|   |       update_starting_points.dart
+|   |       verify_knowledge_entries.dart
+|   |       
+|   +---services
+|   |       Agents.md
+|   |       auth_service.dart
+|   |       encryption_service.dart
+|   |       eva_service.dart
+|   |       local_llm_provider.dart
+|   |       newsletter_import_service.dart
+|   |       Offline-Portal.code-workspace
+|   |       onnxruntime_ffi.dart
+|   |       provenance_service.dart
+|   |       security_service.dart
+|   |       storage_service.dart
+|   |       weather_service.dart
+|   |       weather_update_manager.dart
+|   |       work_order_workflow_service.dart
+|   |       
+|   +---theme
+|   |       app_theme.dart
+|   |       asset_resolver.dart
+|   |       semantic_tokens.dart
+|   |       settings_schema.dart
+|   |       THEME_FIX_GUIDE.md
+|   |       theme_provider.dart
+|   |       ui_specification.dart
+|   |       
+|   +---util
+|   |       error_handler.dart
+|   |       knowledge_categorizer.dart
+|   |       knowledge_import_utility.dart
+|   |       log.dart
+|   |       
+|   \---widgets
+|           fsc_logo.dart
+|           glass_card.dart
+|           news_card.dart
+|           news_feed.dart
+|           Offline-Portal.code-workspace
+|           priority_badge.dart
+|           
++---login-files
+|       auth_provider.dart
+|       LOGIN_INSTALLATION_GUIDE.md
+|       login_screen.dart
+|       main_with_login.dart
+|       
++---models
+|   \---phi-3-mini-4k-onnx
++---onnxruntime
++---Phi-3-mini-4k-instruct
+|       .gitattributes
+|       added_tokens.json
+|       CODE_OF_CONDUCT.md
+|       config.json
+|       configuration_phi3.py
+|       data_summary_card.md
+|       generation_config.json
+|       LICENSE
+|       model-00001-of-00002.safetensors
+|       model-00002-of-00002.safetensors
+|       model.safetensors.index.json
+|       modeling_phi3.py
+|       NOTICE.md
+|       README.md
+|       sample_finetune.py
+|       SECURITY.md
+|       special_tokens_map.json
+|       tokenizer.json
+|       tokenizer.model
+|       tokenizer_config.json
+|       
++---scripts
+|       convert_phi3_to_onnx.py
+|       install_onnx_runtime.ps1
+|       setup_llm.ps1
+|       smoke_test_llm.ps1
+|       
++---test
+|   |   widget_test.dart
+|   |   
+|   +---performance
+|   |       work_order_performance_test.dart
+|   |       
+|   \---services
+|           work_order_workflow_service_test.dart
+|           
++---test_driver
+|       integration_test.dart
+|       
++---windows
+|   |   .gitignore
+|   |   CMakeLists.txt
+|   |   fix_plugin_symlinks.ps1
+|   |   
+|   +---flutter
+|   |   |   CMakeLists.txt
+|   |   |   generated_plugins.cmake
+|   |   |   generated_plugin_registrant.cc
+|   |   |   generated_plugin_registrant.h
+|   |   |   
+|   |   \---ephemeral
+|   |       |   flutter_export.h
+|   |       |   flutter_messenger.h
+|   |       |   flutter_plugin_registrar.h
+|   |       |   flutter_texture_registrar.h
+|   |       |   flutter_windows.dll
+|   |       |   flutter_windows.dll.exp
+|   |       |   flutter_windows.dll.lib
+|   |       |   flutter_windows.dll.pdb
+|   |       |   flutter_windows.h
+|   |       |   generated_config.cmake
+|   |       |   icudtl.dat
+|   |       |   
+|   |       +---.plugin_symlinks
+|   |       |   +---file_picker
+|   |       |   |   |   analysis_options.yaml
+|   |       |   |   |   CHANGELOG.md
+|   |       |   |   |   CONTRIBUTING.md
+|   |       |   |   |   LICENSE
+|   |       |   |   |   pubspec.yaml
+|   |       |   |   |   README.md
+|   |       |   |   |   
+|   |       |   |   +---android
+|   |       |   |   |   |   build.gradle
+|   |       |   |   |   |   proguard-rules.pro
+|   |       |   |   |   |   settings.gradle
+|   |       |   |   |   |   
+|   |       |   |   |   +---gradle
+|   |       |   |   |   |   \---wrapper
+|   |       |   |   |   |           gradle-wrapper.properties
+|   |       |   |   |   |           
+|   |       |   |   |   \---src
+|   |       |   |   |       \---main
+|   |       |   |   |           |   AndroidManifest.xml
+|   |       |   |   |           |   
+|   |       |   |   |           \---kotlin
+|   |       |   |   |               \---com
+|   |       |   |   |                   \---mr
+|   |       |   |   |                       \---flutter
+|   |       |   |   |                           \---plugin
+|   |       |   |   |                               \---filepicker
+|   |       |   |   |                                       FileInfo.kt
+|   |       |   |   |                                       FilePickerDelegate.kt
+|   |       |   |   |                                       FilePickerPlugin.kt
+|   |       |   |   |                                       FileUtils.kt
+|   |       |   |   |                                       MethodResultWrapper.kt
+|   |       |   |   |                                       
+|   |       |   |   +---example
+|   |       |   |   |   |   analysis_options.yaml
+|   |       |   |   |   |   pubspec.yaml
+|   |       |   |   |   |   README.md
+|   |       |   |   |   |   
+|   |       |   |   |   +---android
+|   |       |   |   |   |   |   build.gradle.kts
+|   |       |   |   |   |   |   gradle.properties
+|   |       |   |   |   |   |   settings.gradle.kts
+|   |       |   |   |   |   |   
+|   |       |   |   |   |   +---app
+|   |       |   |   |   |   |   |   build.gradle.kts
+|   |       |   |   |   |   |   |   
+|   |       |   |   |   |   |   \---src
+|   |       |   |   |   |   |       +---debug
+|   |       |   |   |   |   |       |       AndroidManifest.xml
+|   |       |   |   |   |   |       |       
+|   |       |   |   |   |   |       +---main
+|   |       |   |   |   |   |       |   |   AndroidManifest.xml
+|   |       |   |   |   |   |       |   |   
+|   |       |   |   |   |   |       |   +---kotlin
+|   |       |   |   |   |   |       |   |   \---com
+|   |       |   |   |   |   |       |   |       \---mr
+|   |       |   |   |   |   |       |   |           \---flutter
+|   |       |   |   |   |   |       |   |               \---plugin
+|   |       |   |   |   |   |       |   |                   \---filepicker
+|   |       |   |   |   |   |       |   |                       \---file_picker_example
+|   |       |   |   |   |   |       |   |                               MainActivity.kt
+|   |       |   |   |   |   |       |   |                               
+|   |       |   |   |   |   |       |   \---res
+|   |       |   |   |   |   |       |       +---drawable
+|   |       |   |   |   |   |       |       |       launch_background.xml
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       +---drawable-v21
+|   |       |   |   |   |   |       |       |       launch_background.xml
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       +---mipmap-hdpi
+|   |       |   |   |   |   |       |       |       ic_launcher.png
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       +---mipmap-mdpi
+|   |       |   |   |   |   |       |       |       ic_launcher.png
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       +---mipmap-xhdpi
+|   |       |   |   |   |   |       |       |       ic_launcher.png
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       +---mipmap-xxhdpi
+|   |       |   |   |   |   |       |       |       ic_launcher.png
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       +---mipmap-xxxhdpi
+|   |       |   |   |   |   |       |       |       ic_launcher.png
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       +---values
+|   |       |   |   |   |   |       |       |       styles.xml
+|   |       |   |   |   |   |       |       |       
+|   |       |   |   |   |   |       |       \---values-night
+|   |       |   |   |   |   |       |               styles.xml
+|   |       |   |   |   |   |       |               
+|   |       |   |   |   |   |       \---profile
+|   |       |   |   |   |   |               AndroidManifest.xml
+|   |       |   |   |   |   |               
+|   |       |   |   |   |   \---gradle
+|   |       |   |   |   |       \---wrapper
+|   |       |   |   |   |               gradle-wrapper.properties
+|   |       |   |   |   |               
+|   |       |   |   |   +---ios
+|   |       |   |   |   |   |   gpxgenerator_path.gpx
+|   |       |   |   |   |   |   
+|   |       |   |   |   |   +---Flutter
+|   |       |   |   |   |   |       AppFrameworkInfo.plist
+|   |       |   |   |   |   |       Debug.xcconfig
+|   |       |   |   |   |   |       Release.xcconfig
+|   |       |   |   |   |   |       
+|   |       |   |   |   |   +---Runner
+|   |       |   |   |   |   |   |   AppDelegate.h
+|   |       |   |   |   |   |   |   AppDelegate.m
+|   |       |   |   |   |   |   |   AppDelegate.swift
+|   |       |   |   |   |   |   |   File.swift
+|   |       |   |   |   |   |   |   Info.plist
+|   |       |   |   |   |   |   |   main.m
+|   |       |   |   |   |   |   |   Runner-Bridging-Header.h
+|   |       |   |   |   |   |   |   
+|   |       |   |   |   |   |   +---Assets.xcassets
+|   |       |   |   |   |   |   |   +---AppIcon.appiconset
+|   |       |   |   |   |   |   |   |       Contents.json
+|   |       |   |   |   |   |   |   |       Icon-App-1024x1024@1x.png
+|   |       |   |   |   |   |   |   |       Icon-App-20x20@1x.png
+|   |       |   |   |   |   |   |   |       Icon-App-20x20@2x.png
+|   |       |   |   |   |   |   |   |       Icon-App-20x20@3x.png
+|   |       |   |   |   |   |   |   |       Icon-App-29x29@1x.png
+|   |       |   |   |   |   |   |   |       Icon-App-29x29@2x.png
+|   |       |   |   |   |   |   |   |       Icon-App-29x29@3x.png
+|   |       |   |   |   |   |   |   |       Icon-App-40x40@1x.png
+|   |       |   |   |   |   |   |   |       Icon-App-40x40@2x.png
+|   |       |   |   |   |   |   |   |       Icon-App-40x40@3x.png
+|   |       |   |   |   |   |   |   |       Icon-App-60x60@2x.png
+|   |       |   |   |   |   |   |   |       Icon-App-60x60@3x.png
+|   |       |   |   |   |   |   |   |       Icon-App-76x76@1x.png
+|   |       |   |   |   |   |   |   |       Icon-App-76x76@2x.png
+|   |       |   |   |   |   |   |   |       Icon-App-83.5x83.5@2x.png
+|   |       |   |   |   |   |   |   |       
+|   |       |   |   |   |   |   |   \---LaunchImage.imageset
+|   |       |   |   |   |   |   |           Contents.json
+|   |       |   |   |   |   |   |           LaunchImage.png
+|   |       |   |   |   |   |   |           LaunchImage@2x.png
+|   |       |   |   |   |   |   |           LaunchImage@3x.png
+|   |       |   |   |   |   |   |           README.md
+|   |       |   |   |   |   |   |           
+|   |       |   |   |   |   |   \---Base.lproj
+|   |       |   |   |   |   |           LaunchScreen.storyboard
+|   |       |   |   |   |   |           Main.storyboard
+|   |       |   |   |   |   |           
+|   |       |   |   |   |   +---Runner.xcodeproj
+|   |       |   |   |   |   |   |   project.pbxproj
+|   |       |   |   |   |   |   |   
+|   |       |   |   |   |   |   +---project.xcworkspace
+|   |       |   |   |   |   |   |   |   contents.xcworkspacedata
+|   |       |   |   |   |   |   |   |   
+|   |       |   |   |   |   |   |   \---xcshareddata
+|   |       |   |   |   |   |   |       |   IDEWorkspaceChecks.plist
+|   |       |   |   |   |   |   |       |   WorkspaceSettings.xcsettings
+|   |       |   |   |   |   |   |       |   
+|   |       |   |   |   |   |   |       \---swiftpm
+|   |       |   |   |   |   |   |               Package.resolved
+|   |       |   |   |   |   |   |               
+|   |       |   |   |   |   |   \---xcshareddata
+|   |       |   |   |   |   |       \---xcschemes
+|   |       |   |   |   |   |               Runner.xcscheme
+|   |       |   |   |   |   |               
+|   |       |   |   |   |   \---Runner.xcworkspace
+|   |       |   |   |   |       |   contents.xcworkspacedata
+|   |       |   |   |   |       |   
+|   |       |   |   |   |       \---xcshareddata
+|   |       |   |   |   |           |   IDEWorkspaceChecks.plist
+|   |       |   |   |   |           |   WorkspaceSettings.xcsettings
+|   |       |   |   |   |           |   
+|   |       |   |   |   |           \---swiftpm
+|   |       |   |   |   |                   Package.resolved
+|   |       |   |   |   |                   
+|   |       |   |   |   +---lib
+|   |       |   |   |   |   |   main.dart
+|   |       |   |   |   |   |   
+|   |       |   |   |   |   \---src
+|   |       |   |   |   |           file_picker_demo.dart
+|   |       |   |   |   |           
+|   |       |   |   |   +---linux
+|   |       |   |   |   |   |   CMakeLists.txt
+|   |       |   |   |   |   |   main.cc
+|   |       |   |   |   |   |   my_application.cc
+|   |       |   |   |   |   |   my_application.h
+|   |       |   |   |   |   |   
+|   |       |   |   |   |   \---flutter
+|   |       |   |   |   |           CMakeLists.txt
+|   |       |   |   |   |           generated_plugins.cmake
+|   |       |   |   |   |           generated_plugin_registrant.cc
+|   |       |   |   |   |           generated_plugin_registrant.h
+|   |       |   |   |   |           
+|   |       |   |   |   +---macos
+|   |       |   |   |   |   +---Flutter
+|   |       |   |   |   |   |       Flutter-Debug.xcconfig
+|   |       |   |   |   |   |       Flutter-Release.xcconfig
+|   |       |   |   |   |   |       
+|   |       |   |   |   |   +---Runner
+|   |       |   |   |   |   |   |   AppDelegate.swift
+|   |       |   |   |   |   |   |   DebugProfile.entitlements
+|   |       |   |   |   |   |   |   Info.plist
+|   |       |   |   |   |   |   |   MainFlutterWindow.swift
+|   |       |   |   |   |   |   |   Release.entitlements
+|   |       |   |   |   |   |   |   
+|   |       |   |   |   |   |   +---Assets.xcassets
+|   |       |   |   |   |   |   |   \---AppIcon.appiconset
+|   |       |   |   |   |   |   |           app_icon_1024.png
+|   |       |   |   |   |   |   |           app_icon_128.png
+|   |       |   |   |   |   |   |           app_icon_16.png
+|   |       |   |   |   |   |   |           app_icon_256.png
+|   |       |   |   |   |   |   |           app_icon_32.png
+|   |       |   |   |   |   |   |           app_icon_512.png
+|   |       |   |   |   |   |   |           app_icon_64.png
+|   |       |   |   |   |   |   |           Contents.json
+|   |       |   |   |   |   |   |           
+|   |       |   |   |   |   |   +---Base.lproj
+|   |       |   |   |   |   |   |       MainMenu.xib
+|   |       |   |   |   |   |   |       
+|   |       |   |   |   |   |   \---Configs
+|   |       |   |   |   |   |           AppInfo.xcconfig
+|   |       |   |   |   |   |           Debug.xcconfig
+|   |       |   |   |   |   |           Release.xcconfig
+|   |       |   |   |   |   |           Warnings.xcconfig
+|   |       |   |   |   |   |           
+|   |       |   |   |   |   +---Runner.xcodeproj
+|   |       |   |   |   |   |   |   project.pbxproj
+|   |       |   |   |   |   |   |   
+|   |       |   |   |   |   |   +---project.xcworkspace
+|   |       |   |   |   |   |   |   \---xcshareddata
+|   |       |   |   |   |   |   |           IDEWorkspaceChecks.plist
+|   |       |   |   |   |   |   |           
+|   |       |   |   |   |   |   \---xcshareddata
+|   |       |   |   |   |   |       \---xcschemes
+|   |       |   |   |   |   |               Runner.xcscheme
+|   |       |   |   |   |   |               
+|   |       |   |   |   |   +---Runner.xcworkspace
+|   |       |   |   |   |   |   |   contents.xcworkspacedata
+|   |       |   |   |   |   |   |   
+|   |       |   |   |   |   |   \---xcshareddata
+|   |       |   |   |   |   |           IDEWorkspaceChecks.plist
+|   |       |   |   |   |   |           
+|   |       |   |   |   |   \---RunnerTests
+|   |       |   |   |   |           RunnerTests.swift
+|   |       |   |   |   |           
+|   |       |   |   |   +---screenshots
+|   |       |   |   |   |       example_android.gif
+|   |       |   |   |   |       example_ios.gif
+|   |       |   |   |   |       example_linux.gif
+|   |       |   |   |   |       example_macos.gif
+|   |       |   |   |   |       example_windows.gif
+|   |       |   |   |   |       
+|   |       |   |   |   +---web
+|   |       |   |   |   |   |   favicon.png
+|   |       |   |   |   |   |   index.html
+|   |       |   |   |   |   |   manifest.json
+|   |       |   |   |   |   |   
+|   |       |   |   |   |   \---icons
+|   |       |   |   |   |           Icon-192.png
+|   |       |   |   |   |           Icon-512.png
+|   |       |   |   |   |           
+|   |       |   |   |   \---windows
+|   |       |   |   |       |   CMakeLists.txt
+|   |       |   |   |       |   
+|   |       |   |   |       +---flutter
+|   |       |   |   |       |       CMakeLists.txt
+|   |       |   |   |       |       generated_plugins.cmake
+|   |       |   |   |       |       generated_plugin_registrant.cc
+|   |       |   |   |       |       generated_plugin_registrant.h
+|   |       |   |   |       |       
+|   |       |   |   |       \---runner
+|   |       |   |   |           |   CMakeLists.txt
+|   |       |   |   |           |   flutter_window.cpp
+|   |       |   |   |           |   flutter_window.h
+|   |       |   |   |           |   main.cpp
+|   |       |   |   |           |   resource.h
+|   |       |   |   |           |   runner.exe.manifest
+|   |       |   |   |           |   Runner.rc
+|   |       |   |   |           |   utils.cpp
+|   |       |   |   |           |   utils.h
+|   |       |   |   |           |   win32_window.cpp
+|   |       |   |   |           |   win32_window.h
+|   |       |   |   |           |   
+|   |       |   |   |           \---resources
+|   |       |   |   |                   app_icon.ico
+|   |       |   |   |                   
+|   |       |   |   +---ios
+|   |       |   |   |   |   file_picker.podspec
+|   |       |   |   |   |   
+|   |       |   |   |   \---file_picker
+|   |       |   |   |       |   Package.resolved
+|   |       |   |   |       |   Package.swift
+|   |       |   |   |       |   
+|   |       |   |   |       \---Sources
+|   |       |   |   |           \---file_picker
+|   |       |   |   |               |   FileInfo.m
+|   |       |   |   |               |   FilePickerPlugin.m
+|   |       |   |   |               |   FilePickerUtils.m
+|   |       |   |   |               |   ImageUtils.m
+|   |       |   |   |               |   PrivacyInfo.xcprivacy
+|   |       |   |   |               |   
+|   |       |   |   |               \---include
+|   |       |   |   |                   |   file_picker-umbrella.h
+|   |       |   |   |                   |   file_picker.modulemap
+|   |       |   |   |                   |   
+|   |       |   |   |                   \---file_picker
+|   |       |   |   |                           FileInfo.h
+|   |       |   |   |                           FilePickerPlugin.h
+|   |       |   |   |                           FilePickerUtils.h
+|   |       |   |   |                           ImageUtils.h
+|   |       |   |   |                           
+|   |       |   |   +---lib
+|   |       |   |   |   |   file_picker.dart
+|   |       |   |   |   |   
+|   |       |   |   |   +---src
+|   |       |   |   |   |   |   exceptions.dart
+|   |       |   |   |   |   |   file_picker.dart
+|   |       |   |   |   |   |   file_picker_io.dart
+|   |       |   |   |   |   |   file_picker_macos.dart
+|   |       |   |   |   |   |   file_picker_result.dart
+|   |       |   |   |   |   |   platform_file.dart
+|   |       |   |   |   |   |   utils.dart
+|   |       |   |   |   |   |   
+|   |       |   |   |   |   +---linux
+|   |       |   |   |   |   |       file_picker_linux.dart
+|   |       |   |   |   |   |       filters.dart
+|   |       |   |   |   |   |       xdp_filechooser.dart
+|   |       |   |   |   |   |       xdp_request.dart
+|   |       |   |   |   |   |       
+|   |       |   |   |   |   \---windows
+|   |       |   |   |   |           file_picker_windows.dart
+|   |       |   |   |   |           file_picker_windows_ffi_types.dart
+|   |       |   |   |   |           file_picker_windows_stub.dart
+|   |       |   |   |   |           
+|   |       |   |   |   \---_internal
+|   |       |   |   |           file_picker_web.dart
+|   |       |   |   |           
+|   |       |   |   +---macos
+|   |       |   |   |   |   file_picker.podspec
+|   |       |   |   |   |   
+|   |       |   |   |   \---file_picker
+|   |       |   |   |       |   Package.swift
+|   |       |   |   |       |   
+|   |       |   |   |       \---Sources
+|   |       |   |   |           \---file_picker
+|   |       |   |   |                   FilePickerPlugin.swift
+|   |       |   |   |                   PrivacyInfo.xcprivacy
+|   |       |   |   |                   
+|   |       |   |   \---test
+|   |       |   |       |   common.dart
+|   |       |   |       |   file_picker_macos_test.dart
+|   |       |   |       |   file_picker_utils_test.dart
+|   |       |   |       |   file_picker_windows_test.dart
+|   |       |   |       |   
+|   |       |   |       +---linux
+|   |       |   |       |       xdp_filter_test.dart
+|   |       |   |       |       
+|   |       |   |       \---test_files
+|   |       |   |               franz-michael-schneeberger-unsplash.jpg
+|   |       |   |               test.pdf
+|   |       |   |               test.yml
+|   |       |   |               
+|   |       |   +---file_selector_windows
+|   |       |   |   |   AUTHORS
+|   |       |   |   |   CHANGELOG.md
+|   |       |   |   |   LICENSE
+|   |       |   |   |   pubspec.yaml
+|   |       |   |   |   README.md
+|   |       |   |   |   
+|   |       |   |   +---example
+|   |       |   |   |   |   pubspec.yaml
+|   |       |   |   |   |   README.md
+|   |       |   |   |   |   
+|   |       |   |   |   +---lib
+|   |       |   |   |   |       get_directory_page.dart
+|   |       |   |   |   |       get_multiple_directories_page.dart
+|   |       |   |   |   |       home_page.dart
+|   |       |   |   |   |       main.dart
+|   |       |   |   |   |       open_image_page.dart
+|   |       |   |   |   |       open_multiple_images_page.dart
+|   |       |   |   |   |       open_text_page.dart
+|   |       |   |   |   |       save_text_page.dart
+|   |       |   |   |   |       
+|   |       |   |   |   \---windows
+|   |       |   |   |       |   CMakeLists.txt
+|   |       |   |   |       |   
+|   |       |   |   |       +---flutter
+|   |       |   |   |       |       CMakeLists.txt
+|   |       |   |   |       |       generated_plugins.cmake
+|   |       |   |   |       |       
+|   |       |   |   |       \---runner
+|   |       |   |   |           |   CMakeLists.txt
+|   |       |   |   |           |   flutter_window.cpp
+|   |       |   |   |           |   flutter_window.h
+|   |       |   |   |           |   main.cpp
+|   |       |   |   |           |   resource.h
+|   |       |   |   |           |   runner.exe.manifest
+|   |       |   |   |           |   Runner.rc
+|   |       |   |   |           |   utils.cpp
+|   |       |   |   |           |   utils.h
+|   |       |   |   |           |   win32_window.cpp
+|   |       |   |   |           |   win32_window.h
+|   |       |   |   |           |   
+|   |       |   |   |           \---resources
+|   |       |   |   |                   app_icon.ico
+|   |       |   |   |                   
+|   |       |   |   +---lib
+|   |       |   |   |   |   file_selector_windows.dart
+|   |       |   |   |   |   
+|   |       |   |   |   \---src
+|   |       |   |   |           messages.g.dart
+|   |       |   |   |           
+|   |       |   |   +---pigeons
+|   |       |   |   |       copyright.txt
+|   |       |   |   |       messages.dart
+|   |       |   |   |       
+|   |       |   |   +---test
+|   |       |   |   |       file_selector_windows_test.dart
+|   |       |   |   |       
+|   |       |   |   \---windows
+|   |       |   |       |   CMakeLists.txt
+|   |       |   |       |   file_dialog_controller.cpp
+|   |       |   |       |   file_dialog_controller.h
+|   |       |   |       |   file_selector_plugin.cpp
+|   |       |   |       |   file_selector_plugin.h
+|   |       |   |       |   file_selector_windows.cpp
+|   |       |   |       |   messages.g.cpp
+|   |       |   |       |   messages.g.h
+|   |       |   |       |   string_utils.cpp
+|   |       |   |       |   string_utils.h
+|   |       |   |       |   
+|   |       |   |       +---include
+|   |       |   |       |   \---file_selector_windows
+|   |       |   |       |           file_selector_windows.h
+|   |       |   |       |           
+|   |       |   |       \---test
+|   |       |   |               file_selector_plugin_test.cpp
+|   |       |   |               test_file_dialog_controller.cpp
+|   |       |   |               test_file_dialog_controller.h
+|   |       |   |               test_main.cpp
+|   |       |   |               test_utils.cpp
+|   |       |   |               test_utils.h
+|   |       |   |               
+|   |       |   +---flutter_secure_storage_windows
+|   |       |   |   |   LICENSE
+|   |       |   |   |   pubspec.yaml
+|   |       |   |   |   README.md
+|   |       |   |   |   
+|   |       |   |   +---example
+|   |       |   |   |   |   pubspec.yaml
+|   |       |   |   |   |   README.md
+|   |       |   |   |   |   
+|   |       |   |   |   +---integration_test
+|   |       |   |   |   +---lib
+|   |       |   |   |   |       main.dart
+|   |       |   |   |   |       
+|   |       |   |   |   \---windows
+|   |       |   |   |       |   CMakeLists.txt
+|   |       |   |   |       |   
+|   |       |   |   |       +---flutter
+|   |       |   |   |       |       CMakeLists.txt
+|   |       |   |   |       |       generated_plugins.cmake
+|   |       |   |   |       |       generated_plugin_registrant.cc
+|   |       |   |   |       |       generated_plugin_registrant.h
+|   |       |   |   |       |       
+|   |       |   |   |       \---runner
+|   |       |   |   |           |   CMakeLists.txt
+|   |       |   |   |           |   flutter_window.cpp
+|   |       |   |   |           |   flutter_window.h
+|   |       |   |   |           |   main.cpp
+|   |       |   |   |           |   resource.h
+|   |       |   |   |           |   runner.exe.manifest
+|   |       |   |   |           |   Runner.rc
+|   |       |   |   |           |   utils.cpp
+|   |       |   |   |           |   utils.h
+|   |       |   |   |           |   win32_window.cpp
+|   |       |   |   |           |   win32_window.h
+|   |       |   |   |           |   
+|   |       |   |   |           \---resources
+|   |       |   |   |                   app_icon.ico
+|   |       |   |   |                   
+|   |       |   |   +---lib
+|   |       |   |   |   |   flutter_secure_storage_windows.dart
+|   |       |   |   |   |   
+|   |       |   |   |   \---src
+|   |       |   |   |           flutter_secure_storage_windows_ffi.dart
+|   |       |   |   |           flutter_secure_storage_windows_stub.dart
+|   |       |   |   |           
+|   |       |   |   +---test
+|   |       |   |   |       unit_test.dart
+|   |       |   |   |       
+|   |       |   |   \---windows
+|   |       |   |       |   CMakeLists.txt
+|   |       |   |       |   flutter_secure_storage_windows_plugin.cpp
+|   |       |   |       |   
+|   |       |   |       \---include
+|   |       |   |           \---flutter_secure_storage_windows
+|   |       |   |                   flutter_secure_storage_windows_plugin.h
+|   |       |   |                   
+|   |       |   +---image_picker_windows
+|   |       |   |   |   AUTHORS
+|   |       |   |   |   CHANGELOG.md
+|   |       |   |   |   LICENSE
+|   |       |   |   |   pubspec.yaml
+|   |       |   |   |   README.md
+|   |       |   |   |   
+|   |       |   |   +---example
+|   |       |   |   |   |   pubspec.yaml
+|   |       |   |   |   |   README.md
+|   |       |   |   |   |   
+|   |       |   |   |   +---lib
+|   |       |   |   |   |       main.dart
+|   |       |   |   |   |       
+|   |       |   |   |   \---windows
+|   |       |   |   |       |   CMakeLists.txt
+|   |       |   |   |       |   
+|   |       |   |   |       +---flutter
+|   |       |   |   |       |       CMakeLists.txt
+|   |       |   |   |       |       generated_plugins.cmake
+|   |       |   |   |       |       
+|   |       |   |   |       \---runner
+|   |       |   |   |           |   CMakeLists.txt
+|   |       |   |   |           |   flutter_window.cpp
+|   |       |   |   |           |   flutter_window.h
+|   |       |   |   |           |   main.cpp
+|   |       |   |   |           |   resource.h
+|   |       |   |   |           |   runner.exe.manifest
+|   |       |   |   |           |   Runner.rc
+|   |       |   |   |           |   utils.cpp
+|   |       |   |   |           |   utils.h
+|   |       |   |   |           |   win32_window.cpp
+|   |       |   |   |           |   win32_window.h
+|   |       |   |   |           |   
+|   |       |   |   |           \---resources
+|   |       |   |   |                   app_icon.ico
+|   |       |   |   |                   
+|   |       |   |   +---lib
+|   |       |   |   |       image_picker_windows.dart
+|   |       |   |   |       
+|   |       |   |   \---test
+|   |       |   |           image_picker_windows_test.dart
+|   |       |   |           image_picker_windows_test.mocks.dart
+|   |       |   |           
+|   |       |   +---path_provider_windows
+|   |       |   |   |   LICENSE
+|   |       |   |   |   pubspec.yaml
+|   |       |   |   |   README.md
+|   |       |   |   |   
+|   |       |   |   +---example
+|   |       |   |   |   |   pubspec.yaml
+|   |       |   |   |   |   README.md
+|   |       |   |   |   |   
+|   |       |   |   |   +---integration_test
+|   |       |   |   |   +---lib
+|   |       |   |   |   |       main.dart
+|   |       |   |   |   |       
+|   |       |   |   |   +---test_driver
+|   |       |   |   |   |       integration_test.dart
+|   |       |   |   |   |       
+|   |       |   |   |   \---windows
+|   |       |   |   |       |   CMakeLists.txt
+|   |       |   |   |       |   
+|   |       |   |   |       +---flutter
+|   |       |   |   |       |       CMakeLists.txt
+|   |       |   |   |       |       generated_plugins.cmake
+|   |       |   |   |       |       
+|   |       |   |   |       \---runner
+|   |       |   |   |           |   CMakeLists.txt
+|   |       |   |   |           |   flutter_window.cpp
+|   |       |   |   |           |   flutter_window.h
+|   |       |   |   |           |   main.cpp
+|   |       |   |   |           |   resource.h
+|   |       |   |   |           |   runner.exe.manifest
+|   |       |   |   |           |   Runner.rc
+|   |       |   |   |           |   run_loop.cpp
+|   |       |   |   |           |   run_loop.h
+|   |       |   |   |           |   utils.cpp
+|   |       |   |   |           |   utils.h
+|   |       |   |   |           |   win32_window.cpp
+|   |       |   |   |           |   win32_window.h
+|   |       |   |   |           |   
+|   |       |   |   |           \---resources
+|   |       |   |   |                   app_icon.ico
+|   |       |   |   |                   
+|   |       |   |   +---lib
+|   |       |   |   |   |   path_provider_windows.dart
+|   |       |   |   |   |   
+|   |       |   |   |   \---src
+|   |       |   |   |           folders.dart
+|   |       |   |   |           folders_stub.dart
+|   |       |   |   |           guid.dart
+|   |       |   |   |           path_provider_windows_real.dart
+|   |       |   |   |           path_provider_windows_stub.dart
+|   |       |   |   |           win32_wrappers.dart
+|   |       |   |   |           
+|   |       |   |   \---test
+|   |       |   |           guid_test.dart
+|   |       |   |           path_provider_windows_test.dart
+|   |       |   |           
+|   |       |   +---shared_preferences_windows
+|   |       |   |   |   LICENSE
+|   |       |   |   |   pubspec.yaml
+|   |       |   |   |   README.md
+|   |       |   |   |   
+|   |       |   |   +---example
+|   |       |   |   |   |   LICENSE
+|   |       |   |   |   |   pubspec.yaml
+|   |       |   |   |   |   README.md
+|   |       |   |   |   |   
+|   |       |   |   |   +---integration_test
+|   |       |   |   |   +---lib
+|   |       |   |   |   |       main.dart
+|   |       |   |   |   |       
+|   |       |   |   |   +---test_driver
+|   |       |   |   |   |       integration_test.dart
+|   |       |   |   |   |       
+|   |       |   |   |   \---windows
+|   |       |   |   |       |   CMakeLists.txt
+|   |       |   |   |       |   
+|   |       |   |   |       +---flutter
+|   |       |   |   |       |       CMakeLists.txt
+|   |       |   |   |       |       generated_plugins.cmake
+|   |       |   |   |       |       
+|   |       |   |   |       \---runner
+|   |       |   |   |           |   CMakeLists.txt
+|   |       |   |   |           |   flutter_window.cpp
+|   |       |   |   |           |   flutter_window.h
+|   |       |   |   |           |   main.cpp
+|   |       |   |   |           |   resource.h
+|   |       |   |   |           |   runner.exe.manifest
+|   |       |   |   |           |   Runner.rc
+|   |       |   |   |           |   run_loop.cpp
+|   |       |   |   |           |   run_loop.h
+|   |       |   |   |           |   utils.cpp
+|   |       |   |   |           |   utils.h
+|   |       |   |   |           |   win32_window.cpp
+|   |       |   |   |           |   win32_window.h
+|   |       |   |   |           |   
+|   |       |   |   |           \---resources
+|   |       |   |   |                   app_icon.ico
+|   |       |   |   |                   
+|   |       |   |   +---lib
+|   |       |   |   |       shared_preferences_windows.dart
+|   |       |   |   |       
+|   |       |   |   \---test
+|   |       |   |           fake_path_provider_windows.dart
+|   |       |   |           legacy_shared_preferences_windows_test.dart
+|   |       |   |           shared_preferences_windows_async_test.dart
+|   |       |   |           
+|   |       |   +---sqlite3_flutter_libs
+|   |       |   |   |   CHANGELOG.md
+|   |       |   |   |   LICENSE
+|   |       |   |   |   pubspec.yaml
+|   |       |   |   |   README.md
+|   |       |   |   |   
+|   |       |   |   +---android
+|   |       |   |   |   |   build.gradle
+|   |       |   |   |   |   settings.gradle
+|   |       |   |   |   |   
+|   |       |   |   |   \---src
+|   |       |   |   |       \---main
+|   |       |   |   |           |   AndroidManifest.xml
+|   |       |   |   |           |   
+|   |       |   |   |           \---java
+|   |       |   |   |               \---eu
+|   |       |   |   |                   \---simonbinder
+|   |       |   |   |                       \---sqlite3_flutter_libs
+|   |       |   |   |                               Sqlite3FlutterLibsPlugin.java
+|   |       |   |   |                               
+|   |       |   |   +---darwin
+|   |       |   |   |   |   sqlite3_flutter_libs.podspec
+|   |       |   |   |   |   
+|   |       |   |   |   \---sqlite3_flutter_libs
+|   |       |   |   |       |   Package.resolved
+|   |       |   |   |       |   Package.swift
+|   |       |   |   |       |   
+|   |       |   |   |       \---Sources
+|   |       |   |   |           \---sqlite3_flutter_libs
+|   |       |   |   |                   Sqlite3FlutterLibsPlugin.swift
+|   |       |   |   |                   
+|   |       |   |   +---example
+|   |       |   |   |   |   pubspec.yaml
+|   |       |   |   |   |   README.md
+|   |       |   |   |   |   
+|   |       |   |   |   \---android
+|   |       |   |   |       \---gradle
+|   |       |   |   |           \---wrapper
+|   |       |   |   |                   gradle-wrapper.properties
+|   |       |   |   |                   
+|   |       |   |   +---lib
+|   |       |   |   |       sqlite3_flutter_libs.dart
+|   |       |   |   |       
+|   |       |   |   +---linux
+|   |       |   |   |   |   CMakeLists.txt
+|   |       |   |   |   |   sqlite3_flutter_libs_plugin.cc
+|   |       |   |   |   |   
+|   |       |   |   |   \---include
+|   |       |   |   |       \---sqlite3_flutter_libs
+|   |       |   |   |               sqlite3_flutter_libs_plugin.h
+|   |       |   |   |               
+|   |       |   |   \---windows
+|   |       |   |       |   CMakeLists.txt
+|   |       |   |       |   sqlite3_flutter.c
+|   |       |   |       |   sqlite3_flutter_libs_plugin.cpp
+|   |       |   |       |   
+|   |       |   |       \---include
+|   |       |   |           \---sqlite3_flutter_libs
+|   |       |   |                   sqlite3_flutter_libs_plugin.h
+|   |       |   |                   
+|   |       |   \---url_launcher_windows
+|   |       |       |   AUTHORS
+|   |       |       |   CHANGELOG.md
+|   |       |       |   LICENSE
+|   |       |       |   pubspec.yaml
+|   |       |       |   README.md
+|   |       |       |   
+|   |       |       +---example
+|   |       |       |   |   pubspec.yaml
+|   |       |       |   |   README.md
+|   |       |       |   |   
+|   |       |       |   +---integration_test
+|   |       |       |   |       url_launcher_test.dart
+|   |       |       |   |       
+|   |       |       |   +---lib
+|   |       |       |   |       main.dart
+|   |       |       |   |       
+|   |       |       |   +---test_driver
+|   |       |       |   |       integration_test.dart
+|   |       |       |   |       
+|   |       |       |   \---windows
+|   |       |       |       |   CMakeLists.txt
+|   |       |       |       |   
+|   |       |       |       +---flutter
+|   |       |       |       |       CMakeLists.txt
+|   |       |       |       |       generated_plugins.cmake
+|   |       |       |       |       
+|   |       |       |       \---runner
+|   |       |       |           |   CMakeLists.txt
+|   |       |       |           |   flutter_window.cpp
+|   |       |       |           |   flutter_window.h
+|   |       |       |           |   main.cpp
+|   |       |       |           |   resource.h
+|   |       |       |           |   runner.exe.manifest
+|   |       |       |           |   Runner.rc
+|   |       |       |           |   run_loop.cpp
+|   |       |       |           |   run_loop.h
+|   |       |       |           |   utils.cpp
+|   |       |       |           |   utils.h
+|   |       |       |           |   win32_window.cpp
+|   |       |       |           |   win32_window.h
+|   |       |       |           |   
+|   |       |       |           \---resources
+|   |       |       |                   app_icon.ico
+|   |       |       |                   
+|   |       |       +---lib
+|   |       |       |   |   url_launcher_windows.dart
+|   |       |       |   |   
+|   |       |       |   \---src
+|   |       |       |           messages.g.dart
+|   |       |       |           
+|   |       |       +---pigeons
+|   |       |       |       copyright.txt
+|   |       |       |       messages.dart
+|   |       |       |       
+|   |       |       +---test
+|   |       |       |       url_launcher_windows_test.dart
+|   |       |       |       
+|   |       |       \---windows
+|   |       |           |   CMakeLists.txt
+|   |       |           |   messages.g.cpp
+|   |       |           |   messages.g.h
+|   |       |           |   system_apis.cpp
+|   |       |           |   system_apis.h
+|   |       |           |   url_launcher_plugin.cpp
+|   |       |           |   url_launcher_plugin.h
+|   |       |           |   url_launcher_windows.cpp
+|   |       |           |   
+|   |       |           +---include
+|   |       |           |   \---url_launcher_windows
+|   |       |           |           url_launcher_windows.h
+|   |       |           |           
+|   |       |           \---test
+|   |       |                   url_launcher_windows_test.cpp
+|   |       |                   
+|   |       \---cpp_client_wrapper
+|   |           |   binary_messenger_impl.h
+|   |           |   byte_buffer_streams.h
+|   |           |   core_implementations.cc
+|   |           |   engine_method_result.cc
+|   |           |   flutter_engine.cc
+|   |           |   flutter_view_controller.cc
+|   |           |   plugin_registrar.cc
+|   |           |   readme
+|   |           |   standard_codec.cc
+|   |           |   texture_registrar_impl.h
+|   |           |   
+|   |           \---include
+|   |               \---flutter
+|   |                       basic_message_channel.h
+|   |                       binary_messenger.h
+|   |                       byte_streams.h
+|   |                       dart_project.h
+|   |                       encodable_value.h
+|   |                       engine_method_result.h
+|   |                       event_channel.h
+|   |                       event_sink.h
+|   |                       event_stream_handler.h
+|   |                       event_stream_handler_functions.h
+|   |                       flutter_engine.h
+|   |                       flutter_view.h
+|   |                       flutter_view_controller.h
+|   |                       message_codec.h
+|   |                       method_call.h
+|   |                       method_channel.h
+|   |                       method_codec.h
+|   |                       method_result.h
+|   |                       method_result_functions.h
+|   |                       plugin_registrar.h
+|   |                       plugin_registrar_windows.h
+|   |                       plugin_registry.h
+|   |                       standard_codec_serializer.h
+|   |                       standard_message_codec.h
+|   |                       standard_method_codec.h
+|   |                       texture_registrar.h
+|   |                       
+|   \---runner
+|       |   CMakeLists.txt
+|       |   flutter_window.cpp
+|       |   flutter_window.h
+|       |   main.cpp
+|       |   resource.h
+|       |   runner.exe.manifest
+|       |   Runner.rc
+|       |   utils.cpp
+|       |   utils.h
+|       |   win32_window.cpp
+|       |   win32_window.h
+|       |   
+|       \---resources
+|               app_icon.ico
+|               
+\---xlsx_temp
+    |   [Content_Types].xml
+    |   
+    +---docProps
+    |       app.xml
+    |       core.xml
+    |       
+    +---xl
+    |   |   sharedStrings.xml
+    |   |   styles.xml
+    |   |   workbook.xml
+    |   |   
+    |   +---printerSettings
+    |   |       printerSettings1.bin
+    |   |       
+    |   +---theme
+    |   |       theme1.xml
+    |   |       
+    |   +---worksheets
+    |   |   |   sheet1.xml
+    |   |   |   
+    |   |   \---_rels
+    |   |           sheet1.xml.rels
+    |   |           
+    |   \---_rels
+    |           workbook.xml.rels
+    |           
+    \---_rels
+            .rels
+            

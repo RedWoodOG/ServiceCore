@@ -1,0 +1,110 @@
+[
+  {
+    "finding_id": "BEHAV-GAP-001",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "BEHAVIORAL",
+    "domain": "action → state transition → render updates over time",
+    "claim": "Interaction traces not available; no runtime behavioral observation performed.",
+    "scope": "entire application",
+    "inferred_intent": null,
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Behavioral Coherence protocol requires interaction traces with state snapshots before/after actions. No runtime execution was performed during this audit."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "BEHAV-GAP-002",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "BEHAVIORAL",
+    "domain": "action → state transition → render updates over time",
+    "claim": "Login flow state transitions cannot be verified without interaction trace.",
+    "scope": "lib/features/auth/login_screen.dart, lib/providers/auth_provider.dart",
+    "inferred_intent": "Submit credentials → validate → update auth state → navigate to home",
+    "support_set_refs": [
+      "lib/providers/auth_provider.dart:53-88 (login method)"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Source code defines login flow but runtime verification of state_before → action → state_after → render_after requires execution trace."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "BEHAV-GAP-003",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "BEHAVIORAL",
+    "domain": "action → state transition → render updates over time",
+    "claim": "Work order status transition UI feedback cannot be verified without interaction trace.",
+    "scope": "lib/features/work/*, lib/services/work_order_workflow_service.dart",
+    "inferred_intent": "Status button tap → validate transition → update database → refresh UI",
+    "support_set_refs": [
+      "lib/services/work_order_workflow_service.dart:40-115 (transitionStatus)"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "WorkOrderWorkflowService defines state machine but UI render update timing and error feedback require runtime behavioral trace."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "BEHAV-GAP-004",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "BEHAVIORAL",
+    "domain": "action → state transition → render updates over time",
+    "claim": "EVA chat response streaming behavior cannot be verified without interaction trace.",
+    "scope": "lib/services/eva_service.dart, lib/app_shell/eva_panel.dart",
+    "inferred_intent": "User query → stream tokens → progressive UI update",
+    "support_set_refs": [
+      "lib/services/eva_service.dart:101-139 (_synthesizeWithLLM)"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "LLM streaming implementation exists in code but actual token-by-token UI update behavior requires runtime observation."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "BEHAV-GAP-005",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "BEHAVIORAL",
+    "domain": "action → state transition → render updates over time",
+    "claim": "Weather auto-refresh cycle cannot be verified without timed interaction trace.",
+    "scope": "lib/services/weather_update_manager.dart",
+    "inferred_intent": "Timer tick → fetch weather → update database → notify listeners → refresh UI",
+    "support_set_refs": [
+      "lib/services/weather_update_manager.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "WeatherUpdateManager implements periodic refresh but actual timer behavior, network call timing, and UI update sequence require runtime trace."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  }
+]

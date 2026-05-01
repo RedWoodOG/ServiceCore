@@ -1,0 +1,82 @@
+[
+  {
+    "finding_id": "STRUCT-GAP-001",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "STRUCTURAL",
+    "domain": "DOM + accessibility tree + computed properties",
+    "claim": "DOM/accessibility tree not available for Flutter desktop application without runtime inspection.",
+    "scope": "entire application",
+    "inferred_intent": null,
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Structural Coherence requires DOM or accessibility tree dump with computed properties. Flutter uses its own rendering pipeline; accessibility tree requires runtime inspection via Accessibility Insights or similar tooling."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "STRUCT-GAP-002",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "STRUCTURAL",
+    "domain": "DOM + accessibility tree + computed properties",
+    "claim": "Keyboard focus traversal order cannot be verified without running application.",
+    "scope": "lib/features/*, lib/app_shell/*",
+    "inferred_intent": "Keyboard navigation should follow logical reading order",
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Focus traversal in Flutter depends on widget tree order and FocusNode configuration. Runtime testing required to verify actual focus sequence."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "STRUCT-GAP-003",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "STRUCTURAL",
+    "domain": "DOM + accessibility tree + computed properties",
+    "claim": "Semantic labels for screen readers cannot be verified without accessibility tree inspection.",
+    "scope": "lib/features/*",
+    "inferred_intent": "Interactive elements should have accessible names",
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Flutter Semantics widget usage in source code does not guarantee runtime accessibility; actual semantic tree inspection required."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "STRUCT-GAP-004",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "STRUCTURAL",
+    "domain": "DOM + accessibility tree + computed properties",
+    "claim": "Heading level hierarchy cannot be verified without accessibility tree dump.",
+    "scope": "lib/features/*, lib/app_shell/*",
+    "inferred_intent": "Heading levels should not skip (e.g., h1 → h3)",
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Flutter does not use HTML heading elements; semantic heading roles require runtime accessibility tree inspection."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  }
+]

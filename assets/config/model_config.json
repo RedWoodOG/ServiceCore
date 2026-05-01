@@ -1,0 +1,57 @@
+{
+  "model_name": "Phi-3-mini-4k-instruct",
+  "model_version": "v1.0.0",
+  "model_format": "onnx-genai",
+  
+  "paths": {
+    "model_cache_dir": "%DOCUMENTS%/fsc_portal/models",
+    "model_name_in_cache": "phi-3-mini-4k-instruct-onnx",
+    "fallback_paths": [
+      "./models/phi-3-mini-4k-onnx",
+      "./Phi-3-mini-4k-instruct"
+    ]
+  },
+  
+  "inference_settings": {
+    "max_tokens": 200,
+    "temperature": 0.3,
+    "top_p": 0.9,
+    "top_k": 40,
+    "repetition_penalty": 1.1,
+    "context_window": 4096
+  },
+  
+  "device_preferences": {
+    "prefer_directml": true,
+    "fallback_to_cpu": true,
+    "cpu_threads": 4
+  },
+  
+  "rag_settings": {
+    "max_context_entries": 5,
+    "context_max_tokens": 1500,
+    "enable_semantic_search": true
+  },
+  
+  "behavior": {
+    "enable_streaming": true,
+    "graceful_fallback": true,
+    "log_queries": true,
+    "cache_responses": false
+  },
+  
+  "system_prompts": {
+    "default": "You are EVA, an embedded field service assistant. Answer questions about field service operations, equipment, procedures, and troubleshooting. Base your answers ONLY on the provided context. If uncertain, say: 'I don't have information about that in the knowledge base.' Keep responses under 200 words. Use a professional, helpful tone.",
+    
+    "troubleshooting": "You are EVA, a technical troubleshooting assistant. Help diagnose and resolve equipment issues. Provide step-by-step guidance based on the knowledge base context. Be clear and specific about safety precautions.",
+    
+    "procedure": "You are EVA, a procedural guide assistant. Provide clear, step-by-step instructions for field service tasks. Emphasize safety and best practices. Reference specific equipment models when relevant."
+  },
+  
+  "feature_flags": {
+    "enable_llm": true,
+    "enable_conversation_history": false,
+    "enable_multi_turn": false,
+    "enable_model_download": false
+  }
+}

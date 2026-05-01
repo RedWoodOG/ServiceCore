@@ -1,0 +1,34 @@
+[
+  {
+    "link_id": "LINK-001",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "finding_ids": ["LCE-007", "RLDF-GAP-003"],
+    "link_basis": "Shared element: color system - LCE identifies raw color bypass, RLDF would verify rendered contrast",
+    "confidence": "Medium",
+    "note": "Co-occurrence only. Raw colors in code (LCE-007) would manifest as visual contrast issues detectable by RLDF if screenshots were available."
+  },
+  {
+    "link_id": "LINK-002",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "finding_ids": ["LCE-008", "RLDF-GAP-002"],
+    "link_basis": "Shared element: spacing/layout system - unused UILayout constants would affect visual spacing rhythm",
+    "confidence": "Medium",
+    "note": "Co-occurrence only. Unused specification classes (LCE finding on UILayout) correlate with inability to verify spacing consistency (RLDF gap)."
+  },
+  {
+    "link_id": "LINK-003",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "finding_ids": ["LCE-001", "BEHAV-GAP-001"],
+    "link_basis": "Shared screen: login flow - auth_provider logging deviation overlaps with login behavioral gap",
+    "confidence": "Low",
+    "note": "Co-occurrence only. The logging inconsistency in auth_provider.dart (LCE-001) is in same module as login flow that cannot be behaviorally verified (BEHAV-GAP-001)."
+  },
+  {
+    "link_id": "LINK-004",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "finding_ids": ["LCE-006", "VCE-GAP-002"],
+    "link_basis": "Shared domain: database/work orders - migration flaw affects same tables as unverifiable status claims",
+    "confidence": "Medium",
+    "note": "Co-occurrence only. Migration logic flaw (LCE-006) affects work_orders table; VCE cannot verify status display accuracy without runtime (VCE-GAP-002)."
+  }
+]

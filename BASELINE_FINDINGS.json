@@ -1,0 +1,237 @@
+[
+  {
+    "id": "F-001",
+    "category": "Security",
+    "claim": "Password authentication uses plaintext string comparison instead of secure hashing.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/providers/auth_provider.dart",
+          "lines": "62-63",
+          "snippet": "if (user.password.isEmpty || user.password == password) {\n  // Valid login"
+        }
+      ]
+    },
+    "impact": "Stored passwords in database are not hashed; any database access exposes all user credentials in cleartext.",
+    "confidence": "High",
+    "repro": "1. Create user via admin panel\n2. Query database: SELECT password FROM users\n3. Observe plaintext password"
+  },
+  {
+    "id": "F-002",
+    "category": "Correctness",
+    "claim": "Widget test imports non-existent package causing test suite failure.",
+    "evidence": {
+      "files": [
+        {
+          "path": "test/widget_test.dart",
+          "lines": "11",
+          "snippet": "import 'package:portal_offline/main.dart';"
+        }
+      ]
+    },
+    "impact": "Default widget test cannot execute; flutter test fails with 'Couldn't resolve the package portal_offline'.",
+    "confidence": "High",
+    "repro": "Run: flutter test test/widget_test.dart"
+  },
+  {
+    "id": "F-003",
+    "category": "Maintainability",
+    "claim": "Multiple catch blocks swallow exceptions without logging, hiding error details.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/services/eva_service.dart",
+          "lines": "182-184",
+          "snippet": "} catch (e) {\n  return 'I encountered an error processing your request.';\n}"
+        },
+        {
+          "path": "lib/services/work_order_workflow_service.dart",
+          "lines": "177-179",
+          "snippet": "} catch (e) {\n  throw WorkOrderException('Failed to transition status: $e');\n}"
+        }
+      ]
+    },
+    "impact": "Debugging production issues requires reproducing errors; original stack traces and error context are lost.",
+    "confidence": "High",
+    "repro": null
+  },
+  {
+    "id": "F-004",
+    "category": "Observability",
+    "claim": "All application logging is disabled in release builds; only prints in debug mode.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/util/log.dart",
+          "lines": "5-11",
+          "snippet": "void logDebug(String message) {\n  if (kDebugMode) {\n    print('[DEBUG] $message');\n  }\n}"
+        }
+      ]
+    },
+    "impact": "No diagnostic information available in production deployments; cannot investigate crashes or anomalies without reproduction.",
+    "confidence": "High",
+    "repro": "1. Build release: flutter build windows --release\n2. Run application\n3. Observe no log output regardless of errors"
+  },
+  {
+    "id": "F-005",
+    "category": "Reliability",
+    "claim": "ONNX Runtime FFI bindings are completely unimplemented; all methods throw UnimplementedError.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/ffi/onnxruntime_native.dart",
+          "lines": "57-63",
+          "snippet": "static Pointer<OrtSession> createSession(...) {\n  throw UnimplementedError('ONNX Runtime FFI not implemented');\n}"
+        },
+        {
+          "path": "lib/ffi/onnxruntime_native.dart",
+          "lines": "90-96",
+          "snippet": "static void runSession(...) {\n  throw UnimplementedError('ONNX Runtime FFI not implemented');\n}"
+        }
+      ]
+    },
+    "impact": "Local LLM inference via ONNX is non-functional; LocalLlmProvider correctly disables itself but dead code remains.",
+    "confidence": "High",
+    "repro": "1. Attempt to call OnnxRuntimeNative.createSession()\n2. Observe UnimplementedError thrown"
+  },
+  {
+    "id": "F-006",
+    "category": "Security",
+    "claim": "Database encryption key store table stores encrypted keys but master key derivation is not audited.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/database/app_database.dart",
+          "lines": "472-481",
+          "snippet": "class EncryptionKeyStore extends Table {\n  TextColumn get encryptedKey => text()(); // Encrypted with master key\n  TextColumn get keyFingerprint => text()(); // SHA-256 of key"
+        }
+      ]
+    },
+    "impact": "Key management implementation not verified; if master key is weakly derived or stored insecurely, encrypted keys are compromised.",
+    "confidence": "Medium",
+    "repro": null
+  },
+  {
+    "id": "F-007",
+    "category": "Correctness",
+    "claim": "Database migration from version 2 to 3 uses else-if causing conditional skip.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/database/app_database.dart",
+          "lines": "540-548",
+          "snippet": "if (from < 2) {\n  await m.createTable(users);\n} else if (from < 3) {\n  await m.addColumn(users, users.password);"
+        }
+      ]
+    },
+    "impact": "Fresh installs (from=0) execute version 2 migration but skip version 3 column additions due to else-if; password column not added on fresh install unless schema recreated.",
+    "confidence": "High",
+    "repro": "1. Delete app_database.db\n2. Start application (creates fresh schema from onCreate)\n3. Verify users table has password column (it should via createAll, but migration path is incorrect)"
+  },
+  {
+    "id": "F-008",
+    "category": "Reliability",
+    "claim": "LocalLlmProvider is permanently disabled with hardcoded _available = false.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/services/local_llm_provider.dart",
+          "lines": "58",
+          "snippet": "_available = false; // TODO: Enable when ONNX is ready"
+        }
+      ]
+    },
+    "impact": "Local LLM feature cannot be enabled without code change; feature is effectively dead code.",
+    "confidence": "High",
+    "repro": "1. Instantiate LocalLlmProvider\n2. Call isAvailable getter\n3. Observe always returns false"
+  },
+  {
+    "id": "F-009",
+    "category": "Reliability",
+    "claim": "Weather service falls back to mock data on any HTTP error without retry.",
+    "evidence": {
+      "files": [
+        {
+          "path": "lib/services/weather_service.dart",
+          "lines": "45-58",
+          "snippet": "final response = await http.get(url).timeout(Duration(seconds: 30));\nif (response.statusCode == 200) { ... }\nreturn _mockWeatherData();"
+        }
+      ]
+    },
+    "impact": "Transient network failures cause immediate fallback to mock data; no retry before degradation.",
+    "confidence": "Medium",
+    "repro": "1. Disconnect network\n2. Request weather update\n3. Observe mock data returned immediately"
+  },
+  {
+    "id": "F-010",
+    "category": "Correctness",
+    "claim": "Package name mismatch between pubspec.yaml and test import.",
+    "evidence": {
+      "files": [
+        {
+          "path": "pubspec.yaml",
+          "lines": "1",
+          "snippet": "name: fsc_portal"
+        },
+        {
+          "path": "test/widget_test.dart",
+          "lines": "11",
+          "snippet": "import 'package:portal_offline/main.dart';"
+        }
+      ]
+    },
+    "impact": "Test file references stale package name from earlier project iteration; indicates incomplete rename refactor.",
+    "confidence": "High",
+    "repro": null
+  },
+  {
+    "id": "F-011",
+    "category": "Maintainability",
+    "claim": "Multiple orphaned theme and configuration files exist at root level.",
+    "evidence": {
+      "files": [
+        {
+          "path": "themes.dart",
+          "lines": "1-50",
+          "snippet": "(root-level file duplicating lib/themes/ content)"
+        },
+        {
+          "path": "text_theme.dart",
+          "lines": "1-30",
+          "snippet": "(root-level file duplicating lib/themes/ content)"
+        }
+      ]
+    },
+    "impact": "Duplicate theme definitions may cause confusion; unclear which is authoritative.",
+    "confidence": "Medium",
+    "repro": "Compare root themes.dart with lib/themes/app_themes.dart"
+  },
+  {
+    "id": "F-012",
+    "category": "Build/CI",
+    "claim": "No CI/CD pipeline configuration exists in repository.",
+    "evidence": {
+      "files": []
+    },
+    "impact": "No automated build, test, or deployment pipeline; all builds are manual.",
+    "confidence": "High",
+    "repro": "Search for: .github/workflows/, azure-pipelines.yml, .gitlab-ci.yml, Jenkinsfile"
+  },
+  {
+    "id": "F-013",
+    "category": "Build/CI",
+    "claim": "Build scripts target Android APK but project is described as Windows desktop application.",
+    "evidence": {
+      "files": [
+        {
+          "path": "build_optimized.ps1",
+          "lines": "1-5",
+          "snippet": "flutter build apk --release --obfuscate --split-debug-info=./debug-info"
+        }
+      ]
+    },
+    "impact": "Build script does not match stated deployment target; no Windows build script present.",
+    "confidence": "Medium",
+    "repro": "Run build_optimized.ps1; observe APK output, not Windows executable"
+  }
+]

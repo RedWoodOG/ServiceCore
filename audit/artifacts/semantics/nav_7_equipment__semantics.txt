@@ -1,0 +1,72 @@
+=== Semantics Tree Dump ===
+Capture ID: nav_7_equipment
+Timestamp: 2026-02-06T19:32:12.237981
+
+SemanticsNode(id: 0)
+  rect: Rect.fromLTRB(178.0, 0.0, 1086.0, 681.0)
+  label: ""
+  hint: ""
+  value: ""
+  actions: 0
+  flags: 0
+  SemanticsNode(id: 1)
+    rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+    label: ""
+    hint: ""
+    value: ""
+    actions: 0
+    flags: 0
+    SemanticsNode(id: 149)
+      rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+      label: ""
+      hint: ""
+      value: ""
+      actions: 0
+      flags: 0
+    SemanticsNode(id: 150)
+      rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+      label: ""
+      hint: ""
+      value: ""
+      actions: 0
+      flags: 0
+      SemanticsNode(id: 151)
+        rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+        label: ""
+        hint: ""
+        value: ""
+        actions: 0
+        flags: 2048
+        SemanticsNode(id: 152)
+          rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+          label: "j
+jwhit
+TECH
+USERNAME
+jwhit
+EMAIL ADDRESS
+jwhit@local
+CONTACT PHONE
+None
+ACTIVE DUTY STATION
+In Field
+EXPERT PROFILE & BIO
+Technical expert profile not yet drafted."
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+          SemanticsNode(id: 153)
+            rect: Rect.fromLTRB(0.0, 0.0, 86.4, 32.0)
+            label: "DISMISS"
+            hint: ""
+            value: ""
+            actions: 4194305
+            flags: 2097352
+          SemanticsNode(id: 154)
+            rect: Rect.fromLTRB(0.0, 0.0, 169.2, 36.0)
+            label: "EDIT PROFILE"
+            hint: ""
+            value: ""
+            actions: 4194305
+            flags: 2097352

@@ -1,0 +1,18 @@
+{
+  "capture_id": "nav_4_people",
+  "timestamp": "2026-02-06T19:32:06.102058",
+  "source": "AppDatabase",
+  "queries": {
+    "work_orders_count": 2,
+    "work_orders_by_status": {
+      "open": 1,
+      "completed": 1,
+      "in_progress": 0
+    },
+    "users_count": 10,
+    "equipment_count": 1,
+    "sites_count": 26,
+    "knowledge_entries_count": 197,
+    "announcements_count": 3
+  }
+}

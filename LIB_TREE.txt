@@ -1,0 +1,148 @@
+﻿Folder PATH listing for volume New Volume
+Volume serial number is B841-E807
+H:\FSC_PORTAL\FSC-PORTAL\LIB
+|   LOGIN_SYSTEM.md
+|   main.dart
+|   
++---app_shell
+|       eva_collapse_rail.dart
+|       eva_panel.dart
+|       eva_state.dart
+|       navigation_state.dart
+|       portal_shell.dart
+|       
++---config
+|       app_constants.dart
+|       llm_config.dart
+|       
++---database
+|       app_database.dart
+|       app_database.g.dart
+|       app_database_standalone.dart
+|       app_database_standalone.g.dart
+|       seed_service.dart
+|       
++---features
+|   +---admin
+|   |       knowledge_import_screen.dart
+|   |       
+|   +---auth
+|   |       login_screen.dart
+|   |       
+|   +---chat
+|   |   |   chat_view.dart
+|   |   |   
+|   |   +---models
+|   |   |       portal_chat_models.dart
+|   |   |       
+|   |   \---services
+|   |           portal_chat_service.dart
+|   |           
+|   +---continuing_education
+|   |       continuing_education_home_view.dart
+|   |       course_card.dart
+|   |       course_detail_view.dart
+|   |       
+|   +---equipment
+|   |       equipment_card.dart
+|   |       equipment_detail_sheet.dart
+|   |       equipment_home_view.dart
+|   |       
+|   +---expenses
+|   |       expenses_home_view.dart
+|   |       
+|   +---home
+|   |       create_announcement_sheet.dart
+|   |       edit_weather_sheet.dart
+|   |       home_view.dart
+|   |       import_newsletter_sheet.dart
+|   |       new_note_sheet.dart
+|   |       scan_receipt_sheet.dart
+|   |       
+|   +---knowledge
+|   |       knowledge_category_view.dart
+|   |       knowledge_entry_view.dart
+|   |       knowledge_equipment_view.dart
+|   |       knowledge_home_view.dart
+|   |       
+|   +---locations
+|   |       add_location_sheet.dart
+|   |       locations_view.dart
+|   |       site_detail_sheet.dart
+|   |       
+|   +---operations
+|   |       operations_view.dart
+|   |       
+|   +---people
+|   |       people_view.dart
+|   |       user_card.dart
+|   |       user_details_dialog.dart
+|   |       
+|   +---settings
+|   |       settings_view.dart
+|   |       
+|   \---work
+|           create_work_order_sheet.dart
+|           edit_work_order_sheet.dart
+|           work_order_status_badge.dart
+|           work_view.dart
+|           
++---ffi
+|       onnxruntime_native.dart
+|       
++---models
+|       work_order_enums.dart
+|       
++---providers
+|       auth_provider.dart
+|       theme_provider.dart
+|       
++---scripts
+|       count_knowledge.dart
+|       fix_starting_points.dart
+|       force_ingest_knowledge.dart
+|       import_newsletter.dart
+|       ingest_knowledge_entries.dart
+|       ingest_knowledge_flutter.dart
+|       update_starting_points.dart
+|       verify_knowledge_entries.dart
+|       
++---services
+|       Agents.md
+|       auth_service.dart
+|       encryption_service.dart
+|       eva_service.dart
+|       local_llm_provider.dart
+|       newsletter_import_service.dart
+|       Offline-Portal.code-workspace
+|       onnxruntime_ffi.dart
+|       provenance_service.dart
+|       security_service.dart
+|       storage_service.dart
+|       weather_service.dart
+|       weather_update_manager.dart
+|       work_order_workflow_service.dart
+|       
++---theme
+|       app_theme.dart
+|       asset_resolver.dart
+|       semantic_tokens.dart
+|       settings_schema.dart
+|       THEME_FIX_GUIDE.md
+|       theme_provider.dart
+|       ui_specification.dart
+|       
++---util
+|       error_handler.dart
+|       knowledge_categorizer.dart
+|       knowledge_import_utility.dart
+|       log.dart
+|       
+\---widgets
+        fsc_logo.dart
+        glass_card.dart
+        news_card.dart
+        news_feed.dart
+        Offline-Portal.code-workspace
+        priority_badge.dart
+        

@@ -1,0 +1,90 @@
+[
+  {
+    "finding_id": "VCE-GAP-001",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "VCE",
+    "domain": "UI truth claims vs system-accessible source-of-truth",
+    "claim": "UI content claims cannot be evaluated without runtime UI capture and queryable data sources.",
+    "scope": "entire application",
+    "inferred_intent": null,
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "VCE protocol requires UI content capture with timestamps and queryable source-of-truth. No runtime UI was captured; database state is not observable without application execution."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "VCE-GAP-002",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "VCE",
+    "domain": "UI truth claims vs system-accessible source-of-truth",
+    "claim": "Weather data staleness claims in UI cannot be verified against actual API response timestamps.",
+    "scope": "lib/features/home/*, lib/services/weather_service.dart",
+    "inferred_intent": "WeatherSnapshot.fetchedAt should reflect actual API response time",
+    "support_set_refs": [
+      "lib/database/app_database.dart:63-72 (WeatherSnapshot table)",
+      "lib/services/weather_service.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Source code stores fetchedAt timestamp but runtime verification of UI display accuracy vs actual fetch time requires application execution with observable state."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "VCE-GAP-003",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "VCE",
+    "domain": "UI truth claims vs system-accessible source-of-truth",
+    "claim": "Work order status displayed in UI cannot be verified against database state without runtime observation.",
+    "scope": "lib/features/work/*",
+    "inferred_intent": "Displayed work order status should match database work_orders.status column",
+    "support_set_refs": [
+      "lib/database/app_database.dart:117-180 (WorkOrders table)",
+      "lib/features/work/work_view.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "VCE requires UI capture + database query to verify status label matches persisted state. No runtime state available."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "VCE-GAP-004",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "VCE",
+    "domain": "UI truth claims vs system-accessible source-of-truth",
+    "claim": "User authentication state displayed cannot be verified against SharedPreferences storage.",
+    "scope": "lib/providers/auth_provider.dart, lib/features/auth/*",
+    "inferred_intent": "Displayed user name/role should match stored session data",
+    "support_set_refs": [
+      "lib/providers/auth_provider.dart:30-49"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Auth state is derived from SharedPreferences and database query; UI display verification requires runtime capture."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  }
+]

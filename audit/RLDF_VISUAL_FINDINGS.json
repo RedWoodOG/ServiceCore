@@ -1,0 +1,62 @@
+[
+  {
+    "finding_id": "RLDF-GAP-001",
+"run_id": "FULL-AUDIT-2026-02-07-001"
+    "protocol": "RLDF_VISUAL",
+    "domain": "rendered screenshots as perceived spatial composition",
+    "claim": "No rendered screenshots available for visual composition analysis.",
+    "scope": "entire application",
+    "inferred_intent": null,
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "RLDF Visual protocol requires rendered screenshots with bounding box measurements. This is a Flutter desktop application; no screenshots were provided or captured during this audit session."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "RLDF-GAP-002",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "protocol": "RLDF_VISUAL",
+    "domain": "rendered screenshots as perceived spatial composition",
+    "claim": "Visual rhythm and spacing consistency cannot be evaluated without rendered output.",
+    "scope": "lib/features/*, lib/app_shell/*",
+    "inferred_intent": null,
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Source code contains EdgeInsets, Padding, and SizedBox definitions but these cannot be correlated to actual visual output without screenshot measurement primitives."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  },
+  {
+    "finding_id": "RLDF-GAP-003",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "protocol": "RLDF_VISUAL",
+    "domain": "rendered screenshots as perceived spatial composition",
+    "claim": "Color contrast and visual hierarchy cannot be evaluated without rendered screenshots.",
+    "scope": "lib/themes/*",
+    "inferred_intent": null,
+    "support_set_refs": [],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 0,
+      "frequency_ratio": "0/0"
+    },
+    "evidence": {
+      "note": "Theme files define color values but actual rendered contrast ratios require screenshot-based measurement."
+    },
+    "confidence": "High",
+    "audit_gap": true
+  }
+]

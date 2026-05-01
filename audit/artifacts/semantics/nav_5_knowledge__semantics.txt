@@ -1,0 +1,321 @@
+=== Semantics Tree Dump ===
+Capture ID: nav_5_knowledge
+Timestamp: 2026-02-06T19:32:08.137146
+
+SemanticsNode(id: 0)
+  rect: Rect.fromLTRB(178.0, 0.0, 1086.0, 681.0)
+  label: ""
+  hint: ""
+  value: ""
+  actions: 0
+  flags: 0
+  SemanticsNode(id: 1)
+    rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+    label: ""
+    hint: ""
+    value: ""
+    actions: 0
+    flags: 0
+    SemanticsNode(id: 2)
+      rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+      label: ""
+      hint: ""
+      value: ""
+      actions: 0
+      flags: 0
+      SemanticsNode(id: 3)
+        rect: Rect.fromLTRB(0.0, 0.0, 800.0, 600.0)
+        label: ""
+        hint: ""
+        value: ""
+        actions: 0
+        flags: 2048
+        SemanticsNode(id: 5)
+          rect: Rect.fromLTRB(0.0, 0.0, 85.7, 48.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 16384
+        SemanticsNode(id: 6)
+          rect: Rect.fromLTRB(0.0, 0.0, 62.3, 28.0)
+          label: "Portal"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 7)
+          rect: Rect.fromLTRB(0.0, 0.0, 240.0, 382.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+          SemanticsNode(id: 18)
+            rect: Rect.fromLTRB(0.0, 0.0, 240.0, 382.0)
+            label: ""
+            hint: ""
+            value: ""
+            actions: 8388624
+            flags: 262144
+            SemanticsNode(id: 8)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Home"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 9)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Work"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 10)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Operations"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 11)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Locations"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 12)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "People"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 13)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Knowledge"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 14)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Training"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 15)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 10.0)
+              label: "Equipment"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 16)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Expenses"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2105344
+            SemanticsNode(id: 17)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Settings"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2105344
+        SemanticsNode(id: 19)
+          rect: Rect.fromLTRB(0.0, 0.0, 240.0, 72.0)
+          label: "j
+jwhit
+TECH"
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 2097152
+        SemanticsNode(id: 20)
+          rect: Rect.fromLTRB(0.0, 0.0, 240.0, 48.0)
+          label: "Logout"
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 2097152
+        SemanticsNode(id: 107)
+          rect: Rect.fromLTRB(0.0, 0.0, 472.0, 48.0)
+          label: "Search knowledge..."
+          hint: ""
+          value: ""
+          actions: 4292609
+          flags: 2097360
+        SemanticsNode(id: 108)
+          rect: Rect.fromLTRB(0.0, 0.0, 147.1, 34.0)
+          label: "By Equipment"
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 270532812
+        SemanticsNode(id: 109)
+          rect: Rect.fromLTRB(0.0, 0.0, 107.1, 34.0)
+          label: "By Function"
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 270532808
+        SemanticsNode(id: 114)
+          rect: Rect.fromLTRB(0.0, 0.0, 504.0, 430.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+          SemanticsNode(id: 129)
+            rect: Rect.fromLTRB(0.0, 0.0, 504.0, 430.0)
+            label: ""
+            hint: ""
+            value: ""
+            actions: 8388624
+            flags: 262144
+            SemanticsNode(id: 115)
+              rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+              label: ""
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 0
+              SemanticsNode(id: 116)
+                rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+                label: "Check Scanner"
+                hint: ""
+                value: ""
+                actions: 4194305
+                flags: 270532808
+            SemanticsNode(id: 117)
+              rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+              label: ""
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 0
+              SemanticsNode(id: 118)
+                rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+                label: "Coin Sorter"
+                hint: ""
+                value: ""
+                actions: 4194305
+                flags: 270532808
+            SemanticsNode(id: 119)
+              rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+              label: ""
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 0
+              SemanticsNode(id: 120)
+                rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+                label: "Currency Counter"
+                hint: ""
+                value: ""
+                actions: 4194305
+                flags: 270532808
+            SemanticsNode(id: 121)
+              rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+              label: ""
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 0
+              SemanticsNode(id: 122)
+                rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+                label: "Other Equipment"
+                hint: ""
+                value: ""
+                actions: 4194305
+                flags: 270532808
+            SemanticsNode(id: 123)
+              rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+              label: ""
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 0
+              SemanticsNode(id: 124)
+                rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+                label: "Security Locks"
+                hint: ""
+                value: ""
+                actions: 4194305
+                flags: 270532808
+            SemanticsNode(id: 125)
+              rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+              label: ""
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 0
+              SemanticsNode(id: 126)
+                rect: Rect.fromLTRB(0.0, 0.0, 472.0, 60.0)
+                label: "Surveillance"
+                hint: ""
+                value: ""
+                actions: 4194305
+                flags: 270532808
+            SemanticsNode(id: 127)
+              rect: Rect.fromLTRB(0.0, 0.0, 472.0, 54.0)
+              label: ""
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 0
+              SemanticsNode(id: 128)
+                rect: Rect.fromLTRB(0.0, 0.0, 472.0, 54.0)
+                label: "Validator"
+                hint: ""
+                value: ""
+                actions: 4194305
+                flags: 270532808
+        SemanticsNode(id: 110)
+          rect: Rect.fromLTRB(0.0, 0.0, 504.0, 56.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+          SemanticsNode(id: 111)
+            rect: Rect.fromLTRB(0.0, 0.0, 504.0, 56.0)
+            label: ""
+            hint: ""
+            value: ""
+            actions: 0
+            flags: 0
+          SemanticsNode(id: 112)
+            rect: Rect.fromLTRB(0.0, 0.0, 504.0, 56.0)
+            label: ""
+            hint: ""
+            value: ""
+            actions: 0
+            flags: 0
+            SemanticsNode(id: 113)
+              rect: Rect.fromLTRB(0.0, 0.0, 250.6, 24.0)
+              label: "Knowledge Base (197 entries)"
+              hint: ""
+              value: ""
+              actions: 0
+              flags: 4608
+        SemanticsNode(id: 42)
+          rect: Rect.fromLTRB(0.0, 0.0, 48.0, 48.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 2097152
+        SemanticsNode(id: 43)
+          rect: Rect.fromLTRB(0.0, 0.0, 23.1, 14.0)
+          label: "EVA"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0

@@ -1,0 +1,452 @@
+[
+  {
+    "finding_id": "LCE-001",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "Logging utility functions use Log.info/warn/error/debug pattern but auth_provider.dart and theme_provider.dart deviate by using debugPrint() directly.",
+    "scope": "lib/providers/*.dart",
+    "inferred_intent": "All application logging should use the centralized Log utility class for consistent logging behavior",
+    "support_set_refs": [
+      "lib/services/eva_service.dart",
+      "lib/services/encryption_service.dart",
+      "lib/services/storage_service.dart",
+      "lib/services/work_order_workflow_service.dart",
+      "lib/services/weather_service.dart",
+      "lib/services/auth_service.dart",
+      "lib/services/provenance_service.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 7,
+      "deviation_instances": 2,
+      "frequency_ratio": "7/9"
+    },
+    "evidence": {
+      "pattern": "Log.info/warn/error/debug for application logging",
+      "instances": [
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "35-37",
+          "snippet": "Log.info('EVA: LLM provider initialized (available: $_llmInitialized)');\n} catch (e) {\n  Log.warn('EVA: Failed to initialize LLM provider: $e');"
+        },
+        {
+          "file_path": "lib/services/encryption_service.dart",
+          "line_range": "30-31",
+          "snippet": "Log.info('Deriving master key from SID + Machine ID');"
+        },
+        {
+          "file_path": "lib/services/storage_service.dart",
+          "line_range": "62-66",
+          "snippet": "Log.info('Photo saved to: $savedPath');\n} catch (e) {\n  Log.error('Error picking/saving photo: $e');"
+        },
+        {
+          "file_path": "lib/services/work_order_workflow_service.dart",
+          "line_range": "113-114",
+          "snippet": "Log.info(\n  'Work order ${workOrder.id} transitioned from ${workOrder.status} to $newStatus',"
+        }
+      ],
+      "deviation": [
+        {
+          "file_path": "lib/providers/auth_provider.dart",
+          "line_range": "45",
+          "snippet": "debugPrint('Error checking session: $e');"
+        },
+        {
+          "file_path": "lib/providers/auth_provider.dart",
+          "line_range": "86",
+          "snippet": "debugPrint('Login error: $e');"
+        },
+        {
+          "file_path": "lib/providers/theme_provider.dart",
+          "line_range": "86",
+          "snippet": "debugPrint('Error loading settings: $e');"
+        },
+        {
+          "file_path": "lib/providers/theme_provider.dart",
+          "line_range": "98",
+          "snippet": "debugPrint('Error saving settings: $e');"
+        }
+      ],
+      "frequency_ratio": "7/9 services use Log.*, 2 providers use debugPrint"
+    },
+    "confidence": "High",
+    "audit_gap": false
+  },
+  {
+    "finding_id": "LCE-002",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "Custom exception classes follow 'message' field + toString() pattern but EncryptionException deviates by not including stack trace parameter in constructor.",
+    "scope": "lib/services/*.dart",
+    "inferred_intent": "Custom exception classes define a message field and override toString() to return the message",
+    "support_set_refs": [
+      "lib/services/work_order_workflow_service.dart:InvalidStatusTransitionException",
+      "lib/services/work_order_workflow_service.dart:WorkOrderNotFoundException",
+      "lib/services/work_order_workflow_service.dart:ConcurrentModificationException",
+      "lib/services/work_order_workflow_service.dart:ValidationException"
+    ],
+    "support_strength": {
+      "pattern_instances": 4,
+      "deviation_instances": 1,
+      "frequency_ratio": "4/5"
+    },
+    "evidence": {
+      "pattern": "Exception with message field and toString() override",
+      "instances": [
+        {
+          "file_path": "lib/services/work_order_workflow_service.dart",
+          "line_range": "168-173",
+          "snippet": "class InvalidStatusTransitionException implements Exception {\n  final String message;\n  InvalidStatusTransitionException(this.message);\n  @override\n  String toString() => message;\n}"
+        },
+        {
+          "file_path": "lib/services/work_order_workflow_service.dart",
+          "line_range": "175-180",
+          "snippet": "class WorkOrderNotFoundException implements Exception {\n  final String message;\n  WorkOrderNotFoundException(this.message);\n  @override\n  String toString() => message;\n}"
+        },
+        {
+          "file_path": "lib/services/work_order_workflow_service.dart",
+          "line_range": "182-187",
+          "snippet": "class ConcurrentModificationException implements Exception {\n  final String message;\n  ConcurrentModificationException(this.message);\n  @override\n  String toString() => message;\n}"
+        },
+        {
+          "file_path": "lib/services/work_order_workflow_service.dart",
+          "line_range": "189-194",
+          "snippet": "class ValidationException implements Exception {\n  final String message;\n  ValidationException(this.message);\n  @override\n  String toString() => message;\n}"
+        }
+      ],
+      "deviation": [
+        {
+          "file_path": "lib/services/encryption_service.dart",
+          "line_range": "272-277",
+          "snippet": "class EncryptionException implements Exception {\n  final String message;\n  EncryptionException(this.message);\n  @override\n  String toString() => 'EncryptionException: $message';\n}"
+        }
+      ],
+      "frequency_ratio": "4/5 exceptions use bare message in toString(), 1 prefixes class name"
+    },
+    "confidence": "Medium",
+    "audit_gap": false
+  },
+  {
+    "finding_id": "LCE-003",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "Error catch blocks with Log calls include exception variable but multiple catch blocks silently swallow exceptions without any logging.",
+    "scope": "lib/services/*.dart, lib/features/*.dart",
+    "inferred_intent": "Catch blocks should log the exception for diagnostic traceability",
+    "support_set_refs": [
+      "lib/services/eva_service.dart:36-38",
+      "lib/services/encryption_service.dart:51-53",
+      "lib/services/storage_service.dart:65-67",
+      "lib/services/work_order_workflow_service.dart:143-145"
+    ],
+    "support_strength": {
+      "pattern_instances": 12,
+      "deviation_instances": 8,
+      "frequency_ratio": "12/20"
+    },
+    "evidence": {
+      "pattern": "catch (e) { Log.error/warn('...', e); }",
+      "instances": [
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "36-38",
+          "snippet": "} catch (e) {\n  Log.warn('EVA: Failed to initialize LLM provider: $e');\n  _llmInitialized = false;"
+        },
+        {
+          "file_path": "lib/services/encryption_service.dart",
+          "line_range": "51-53",
+          "snippet": "} catch (e, stackTrace) {\n  Log.error('Master key derivation failed', e, stackTrace);\n  rethrow;"
+        },
+        {
+          "file_path": "lib/services/storage_service.dart",
+          "line_range": "65-67",
+          "snippet": "} catch (e) {\n  Log.error('Error picking/saving photo: $e');\n  return null;"
+        }
+      ],
+      "deviation": [
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "223-225",
+          "snippet": "} catch (_) {}"
+        },
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "263",
+          "snippet": "} catch (_) {}"
+        },
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "278",
+          "snippet": "} catch (_) {}"
+        },
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "325",
+          "snippet": "} catch (_) {}"
+        },
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "339",
+          "snippet": "} catch (_) {}"
+        },
+        {
+          "file_path": "lib/services/eva_service.dart",
+          "line_range": "423",
+          "snippet": "} catch (_) {}"
+        },
+        {
+          "file_path": "lib/providers/auth_provider.dart",
+          "line_range": "113-115",
+          "snippet": "} catch (e) {\n  return null;\n}"
+        },
+        {
+          "file_path": "lib/providers/theme_provider.dart",
+          "line_range": "85-87",
+          "snippet": "} catch (e) {\n  debugPrint('Error loading settings: $e');\n}"
+        }
+      ],
+      "frequency_ratio": "12/20 catch blocks log exceptions; 8 swallow silently or use only debugPrint"
+    },
+    "confidence": "High",
+    "audit_gap": false
+  },
+  {
+    "finding_id": "LCE-004",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "StatefulWidget classes follow dispose() pattern with super.dispose() call but some widgets with TextEditingController do not override dispose().",
+    "scope": "lib/features/**/*_sheet.dart",
+    "inferred_intent": "StatefulWidgets with controllers should dispose them in dispose() method",
+    "support_set_refs": [
+      "lib/features/work/create_work_order_sheet.dart",
+      "lib/features/work/edit_work_order_sheet.dart",
+      "lib/features/home/edit_weather_sheet.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 3,
+      "deviation_instances": 0,
+      "frequency_ratio": "3/3"
+    },
+    "evidence": {
+      "pattern": "@override void dispose() { controller.dispose(); super.dispose(); }",
+      "instances": [
+        {
+          "file_path": "lib/features/work/create_work_order_sheet.dart",
+          "line_range": "71-88",
+          "snippet": "@override\nvoid dispose() {\n  _workDescriptionController.dispose();\n  ...\n  super.dispose();\n}"
+        },
+        {
+          "file_path": "lib/features/work/edit_work_order_sheet.dart",
+          "line_range": "50-56",
+          "snippet": "@override\nvoid dispose() {\n  ...\n  super.dispose();\n}"
+        },
+        {
+          "file_path": "lib/features/home/edit_weather_sheet.dart",
+          "line_range": "62-67",
+          "snippet": "@override\nvoid dispose() {\n  _zipController.dispose();\n  super.dispose();\n}"
+        }
+      ],
+      "deviation": [],
+      "frequency_ratio": "3/3 (no deviations found in sampled files)"
+    },
+    "confidence": "High",
+    "audit_gap": false
+  },
+  {
+    "finding_id": "LCE-005",
+    "run_id": "ENFORCING-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "Test file imports package using 'package:fsc_portal/...' pattern but widget_test.dart imports using obsolete 'package:portal_offline/...' name.",
+    "scope": "test/*.dart",
+    "inferred_intent": "Test imports should use current package name from pubspec.yaml",
+    "support_set_refs": [
+      "pubspec.yaml:name",
+      "test/services/work_order_workflow_service_test.dart",
+      "test/performance/work_order_performance_test.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 2,
+      "deviation_instances": 1,
+      "frequency_ratio": "2/3"
+    },
+    "evidence": {
+      "pattern": "import 'package:fsc_portal/...'",
+      "instances": [
+        {
+          "file_path": "pubspec.yaml",
+          "line_range": "1",
+          "snippet": "name: fsc_portal"
+        },
+        {
+          "file_path": "test/services/work_order_workflow_service_test.dart",
+          "line_range": "1-3",
+          "snippet": "import 'package:fsc_portal/database/app_database.dart';\nimport 'package:fsc_portal/services/work_order_workflow_service.dart';"
+        },
+        {
+          "file_path": "test/performance/work_order_performance_test.dart",
+          "line_range": "1-3",
+          "snippet": "import 'package:fsc_portal/database/app_database.dart';"
+        }
+      ],
+      "deviation": [
+        {
+          "file_path": "test/widget_test.dart",
+          "line_range": "11",
+          "snippet": "import 'package:portal_offline/main.dart';"
+        }
+      ],
+      "frequency_ratio": "2/3 test files use correct package name"
+    },
+    "confidence": "High",
+    "audit_gap": false
+  },
+  {
+    "finding_id": "LCE-006",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "Database migration uses sequential 'if (from < N)' pattern but version 2->3 migration uses 'else if' breaking the chain for fresh installs.",
+    "scope": "lib/database/app_database.dart",
+    "inferred_intent": "Database migrations should execute all applicable version blocks sequentially using independent if statements",
+    "support_set_refs": [
+      "lib/database/app_database.dart:549-555",
+      "lib/database/app_database.dart:556-565",
+      "lib/database/app_database.dart:566-568",
+      "lib/database/app_database.dart:569-572",
+      "lib/database/app_database.dart:573-578",
+      "lib/database/app_database.dart:579-607",
+      "lib/database/app_database.dart:608-637",
+      "lib/database/app_database.dart:638-670",
+      "lib/database/app_database.dart:671-717"
+    ],
+    "support_strength": {
+      "pattern_instances": 9,
+      "deviation_instances": 1,
+      "frequency_ratio": "9/10"
+    },
+    "evidence": {
+      "pattern": "if (from < N) { migration code }",
+      "instances": [
+        {
+          "file_path": "lib/database/app_database.dart",
+          "line_range": "549-555",
+          "snippet": "if (from < 4) {\n  await m.createTable(weatherSnapshot);\n  await m.createTable(trafficSnapshot);\n}"
+        },
+        {
+          "file_path": "lib/database/app_database.dart",
+          "line_range": "556-565",
+          "snippet": "if (from < 5) {\n  await m.createTable(workOrders);\n  await m.createTable(appointments);\n}"
+        },
+        {
+          "file_path": "lib/database/app_database.dart",
+          "line_range": "573-578",
+          "snippet": "if (from < 11) {\n  await m.createTable(continuingEducationCourses);\n  await m.createTable(userCourseEnrollments);\n}"
+        }
+      ],
+      "deviation": [
+        {
+          "file_path": "lib/database/app_database.dart",
+          "line_range": "540-548",
+          "snippet": "if (from < 2) {\n  await m.createTable(users);\n} else if (from < 3) {\n  await m.addColumn(users, users.password);"
+        }
+      ],
+      "frequency_ratio": "9/10 migration blocks use independent 'if'; 1 uses 'else if'"
+    },
+    "confidence": "High",
+    "audit_gap": false
+  },
+  {
+    "finding_id": "LCE-007",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "Raw color values (Color(0x...) and Colors.*) used directly in 40+ feature files instead of semantic token system defined in lib/theme/semantic_tokens.dart.",
+    "scope": "lib/features/**/*.dart",
+    "inferred_intent": "Color values should use semantic tokens (SemanticTokens, UIPalette) for theme consistency",
+    "support_set_refs": [
+      "lib/theme/semantic_tokens.dart",
+      "lib/theme/ui_specification.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 2,
+      "deviation_instances": 40,
+      "frequency_ratio": "0/40"
+    },
+    "evidence": {
+      "pattern": "SemanticTokens.*, UIPalette.* for color values",
+      "instances": [
+        {
+          "file_path": "lib/theme/semantic_tokens.dart",
+          "line_range": "44-82",
+          "snippet": "class DarkThemeTokens implements SemanticTokens {\n  Color get bgPrimary => const Color(0xFF121212);\n  Color get accent => const Color(0xFF1E4FA0);"
+        },
+        {
+          "file_path": "lib/theme/ui_specification.dart",
+          "line_range": "12-38",
+          "snippet": "class UIPalette {\n  static const Color deepBlack = Color(0xFF121212);\n  static const Color portalBlue = Color(0xFF0056D2);"
+        }
+      ],
+      "deviation": [
+        {
+          "file_path": "lib/features/work/work_view.dart",
+          "line_range": "107-123",
+          "snippet": "Color(0xFF121212), Color(0xFF1E1E1E), Colors.green, Colors.orange"
+        },
+        {
+          "file_path": "lib/features/home/home_view.dart",
+          "line_range": "183-275",
+          "snippet": "Color(0xFF1E1E1E), Color(0xFF121212), Colors.green"
+        },
+        {
+          "file_path": "lib/features/settings/settings_view.dart",
+          "line_range": "25-555",
+          "snippet": "Colors.green, Colors.red, Color(0xFF...) throughout"
+        }
+      ],
+      "frequency_ratio": "0/40+ files reference tokens; all use raw values"
+    },
+    "confidence": "High",
+    "audit_gap": false
+  },
+  {
+    "finding_id": "LCE-008",
+    "run_id": "FULL-AUDIT-2026-02-07-001",
+    "protocol": "LCE",
+    "domain": "source code as authored artifact",
+    "claim": "Duplicate theme provider implementations exist: lib/providers/theme_provider.dart and lib/theme/theme_provider.dart with overlapping functionality.",
+    "scope": "lib/providers/, lib/theme/",
+    "inferred_intent": "Single authoritative theme provider should exist",
+    "support_set_refs": [
+      "lib/providers/theme_provider.dart",
+      "lib/theme/theme_provider.dart"
+    ],
+    "support_strength": {
+      "pattern_instances": 0,
+      "deviation_instances": 2,
+      "frequency_ratio": "2/1 (duplicate)"
+    },
+    "evidence": {
+      "pattern": "Single ThemeProvider class",
+      "instances": [],
+      "deviation": [
+        {
+          "file_path": "lib/providers/theme_provider.dart",
+          "line_range": "6",
+          "snippet": "class ThemeProvider extends ChangeNotifier"
+        },
+        {
+          "file_path": "lib/theme/theme_provider.dart",
+          "line_range": "5",
+          "snippet": "class ThemeProvider extends ChangeNotifier"
+        }
+      ],
+      "frequency_ratio": "2 implementations of same concept"
+    },
+    "confidence": "High",
+    "audit_gap": false
+  }
+]

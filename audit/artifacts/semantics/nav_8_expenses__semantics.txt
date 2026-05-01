@@ -1,0 +1,230 @@
+=== Semantics Tree Dump ===
+Capture ID: nav_8_expenses
+Timestamp: 2026-02-06T19:26:43.739323
+
+SemanticsNode(id: 0)
+  rect: Rect.fromLTRB(0.0, 0.0, 1264.0, 681.0)
+  label: ""
+  hint: ""
+  value: ""
+  actions: 0
+  flags: 0
+  SemanticsNode(id: 1)
+    rect: Rect.fromLTRB(0.0, 0.0, 1264.0, 681.0)
+    label: ""
+    hint: ""
+    value: ""
+    actions: 0
+    flags: 0
+    SemanticsNode(id: 2)
+      rect: Rect.fromLTRB(0.0, 0.0, 1264.0, 681.0)
+      label: ""
+      hint: ""
+      value: ""
+      actions: 0
+      flags: 0
+      SemanticsNode(id: 3)
+        rect: Rect.fromLTRB(0.0, 0.0, 1264.0, 681.0)
+        label: ""
+        hint: ""
+        value: ""
+        actions: 0
+        flags: 2048
+        SemanticsNode(id: 5)
+          rect: Rect.fromLTRB(0.0, 0.0, 85.7, 48.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 16384
+        SemanticsNode(id: 6)
+          rect: Rect.fromLTRB(0.0, 0.0, 62.3, 28.0)
+          label: "Portal"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 7)
+          rect: Rect.fromLTRB(0.0, 0.0, 240.0, 463.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+          SemanticsNode(id: 18)
+            rect: Rect.fromLTRB(0.0, 0.0, 240.0, 463.0)
+            label: ""
+            hint: ""
+            value: ""
+            actions: 8388624
+            flags: 262144
+            SemanticsNode(id: 8)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Home"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 9)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Work"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 10)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Operations"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 11)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Locations"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 12)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "People"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 13)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Knowledge"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 14)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Training"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 15)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Equipment"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 16)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 39.0)
+              label: "Expenses"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2097152
+            SemanticsNode(id: 17)
+              rect: Rect.fromLTRB(0.0, 0.0, 240.0, 52.0)
+              label: "Settings"
+              hint: ""
+              value: ""
+              actions: 4194305
+              flags: 2105344
+        SemanticsNode(id: 19)
+          rect: Rect.fromLTRB(0.0, 0.0, 240.0, 72.0)
+          label: "j
+jwhit
+TECH"
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 2097152
+        SemanticsNode(id: 20)
+          rect: Rect.fromLTRB(0.0, 0.0, 240.0, 48.0)
+          label: "Logout"
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 2097152
+        SemanticsNode(id: 168)
+          rect: Rect.fromLTRB(0.0, 0.0, 154.1, 29.0)
+          label: "Expense Tracker"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 169)
+          rect: Rect.fromLTRB(0.0, 0.0, 872.0, 40.0)
+          label: "Expense tracking functionality is coming soon. This feature will allow you to track field expenses, upload receipts, and manage expense reports."
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 170)
+          rect: Rect.fromLTRB(0.0, 0.0, 137.4, 23.0)
+          label: "Planned Features:"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 171)
+          rect: Rect.fromLTRB(0.0, 0.0, 902.0, 20.0)
+          label: "Expense entry with categories"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 172)
+          rect: Rect.fromLTRB(0.0, 0.0, 902.0, 20.0)
+          label: "Receipt photo upload"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 173)
+          rect: Rect.fromLTRB(0.0, 0.0, 902.0, 20.0)
+          label: "Expense report generation"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 174)
+          rect: Rect.fromLTRB(0.0, 0.0, 902.0, 20.0)
+          label: "Approval workflow"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 175)
+          rect: Rect.fromLTRB(0.0, 0.0, 902.0, 20.0)
+          label: "Integration with work orders"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+        SemanticsNode(id: 176)
+          rect: Rect.fromLTRB(0.0, 0.0, 968.0, 56.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0
+          SemanticsNode(id: 177)
+            rect: Rect.fromLTRB(0.0, 0.0, 76.9, 24.0)
+            label: "Expenses"
+            hint: ""
+            value: ""
+            actions: 0
+            flags: 4608
+        SemanticsNode(id: 42)
+          rect: Rect.fromLTRB(0.0, 0.0, 48.0, 48.0)
+          label: ""
+          hint: ""
+          value: ""
+          actions: 4194305
+          flags: 2097152
+        SemanticsNode(id: 43)
+          rect: Rect.fromLTRB(0.0, 0.0, 23.1, 14.0)
+          label: "EVA"
+          hint: ""
+          value: ""
+          actions: 0
+          flags: 0

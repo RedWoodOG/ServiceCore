@@ -1,0 +1,70 @@
+name: fsc_portal
+description: FSC Field Service Portal - Development Branch with Security Enhancements
+publish_to: 'none'
+version: 1.1.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Database (Latest)
+  drift: ^2.20.0
+  sqlite3: ^2.1.0
+  sqlite3_flutter_libs: ^0.5.24
+  path_provider: ^2.1.2
+  path: ^1.9.0
+
+  # Maps (Latest v8)
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+
+  # UI & Tools
+  provider: ^6.1.2
+  intl: ^0.20.2
+  url_launcher: ^6.3.0
+  flutter_markdown: ^0.6.18
+  yaml: ^3.1.2
+  rxdart: ^0.27.7
+  file_picker: ^10.3.8
+  image_picker: ^1.2.1
+  http: ^1.2.0
+  shared_preferences: ^2.2.2
+  flutter_svg: ^2.0.10
+  
+  # PDF Processing
+  syncfusion_flutter_pdf: ^28.1.36
+  
+  # CLI Argument Parsing
+  args: ^2.5.0
+  
+  # PHASE 2: Security & Encryption
+  win32: ^5.5.0
+  ffi: ^2.1.0
+  cryptography: ^2.7.0
+  flutter_secure_storage: ^9.2.2
+  crypto: ^3.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+  # Drift code generation
+  drift_dev: ^2.20.0
+  build_runner: ^2.4.9
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/logo.webp
+    - assets/FSC_Logo.svg
+    - assets/logo-light.svg
+    - assets/logo-dark.svg
+    - assets/images/
+    - assets/config/model_config.json
