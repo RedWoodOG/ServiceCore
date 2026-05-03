@@ -7,6 +7,7 @@ import '../../database/app_database.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
 import '../../providers/theme_provider.dart';
+import '../feedback/feedback_annotation_page.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -212,6 +213,41 @@ class _SettingsViewState extends State<SettingsView> {
               (v) {},
             ),
           ],
+        ),
+        const SizedBox(height: 48),
+        _buildSectionHeader("AI ASSISTANT BRIDGE"),
+        const SizedBox(height: 16),
+        GlassCard(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Screen capture + structured notes',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Capture the current portal view, draw boxes on what should change, '
+                'and export a PNG plus JSON. Attach both when you share a screenshot with '
+                'Cursor or another assistant so it can read your exact targets.',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.72),
+                    ),
+              ),
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                onPressed: () => openAiFeedbackAnnotationFlow(context),
+                icon: const Icon(Icons.smart_toy_outlined),
+                label: const Text('Capture & annotate for AI'),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 48),
         _buildSectionHeader("SYSTEM HEALTH"),

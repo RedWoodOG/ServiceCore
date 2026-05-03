@@ -24,6 +24,8 @@ import 'services/weather_update_manager.dart';
 import 'features/continuing_education/continuing_education_home_view.dart';
 import 'features/equipment/equipment_home_view.dart';
 import 'features/expenses/expenses_home_view.dart';
+import 'features/feedback/ai_feedback_capture_key.dart';
+import 'features/feedback/feedback_annotation_page.dart';
 import 'providers/theme_provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/network_reachability_notifier.dart';
@@ -433,9 +435,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         final navigationState = context.watch<NavigationState>();
         final selectedIndex = navigationState.selectedIndex;
 
-        return Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: isMobile
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            RepaintBoundary(
+              key: aiFeedbackPortalCaptureKey,
+              child: Scaffold(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                body: isMobile
               ? Column(
                   children: [
                     _ConnectivityStatusBar(compact: true),
@@ -728,6 +735,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                   },
                 )
               : null,
+              ),
+            ),
+            Positioned(
+              right: 12,
+              bottom: isMobile ? 88 : 20,
+              child: SafeArea(
+                child: FloatingActionButton.small(
+                  heroTag: 'ai_feedback_fab',
+                  tooltip: 'Annotate screen for AI assistant',
+                  onPressed: () => openAiFeedbackAnnotationFlow(context),
+                  child: const Icon(Icons.smart_toy_outlined),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
