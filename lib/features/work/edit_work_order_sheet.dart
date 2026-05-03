@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:drift/drift.dart' hide Column;
+import '../../application/services/document_service.dart';
+import '../../application/services/work_order_service.dart';
 import '../../database/app_database.dart';
+import '../../providers/auth_provider.dart';
 import '../../services/work_order_workflow_service.dart';
 import '../../theme/app_theme.dart';
 import '../../util/log.dart';
-import '../../util/error_handler.dart';
 
 class EditWorkOrderSheet extends StatefulWidget {
   final WorkOrder workOrder;
@@ -102,6 +106,8 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
                     const SizedBox(height: 16),
                     _buildTechnicianDropdown(db, builderTheme),
                     const SizedBox(height: 16),
+                    _buildPhotoAttachments(context, builderTheme),
+                    const SizedBox(height: 24),
                     _buildDescriptionField(builderTheme),
                     const SizedBox(height: 16),
                     _buildNotesField(builderTheme),
@@ -119,7 +125,7 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
               ),
 
               // Actions
-              _buildActions(context, db, workflowService, builderTheme),
+              _buildActions(context, builderTheme),
             ],
           ),
         );
@@ -677,8 +683,6 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
 
   Widget _buildActions(
     BuildContext context,
-    AppDatabase db,
-    WorkOrderWorkflowService workflowService,
     ThemeData theme,
   ) {
     final hasChanges = _hasChanges();
@@ -715,7 +719,7 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
             flex: 2,
             child: ElevatedButton(
               onPressed: (hasChanges && isValid && !_isSubmitting)
-                  ? () => _saveChanges(context, db, workflowService)
+                  ? () => _saveChanges(context)
                   : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: theme.colorScheme.primary,
@@ -750,6 +754,187 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
         _selectedTechnician != widget.workOrder.assignedTechnician;
   }
 
+  bool _fieldsChangedExcludingStatus() {
+    return _descriptionController.text.trim() !=
+            (widget.workOrder.descriptionOfWork ?? '').trim() ||
+        _notesController.text.trim() !=
+            (widget.workOrder.internalNotes ?? '').trim() ||
+        _resolutionController.text.trim() !=
+            (widget.workOrder.resolution ?? '').trim() ||
+        _selectedPriority != widget.workOrder.priority ||
+        _selectedTechnician != widget.workOrder.assignedTechnician;
+  }
+
+  bool _isTerminalWorkOrder() {
+    const t = {'completed', 'closed', 'cancelled'};
+    return t.contains(widget.workOrder.status.toLowerCase());
+  }
+
+  Widget _buildPhotoAttachments(BuildContext context, ThemeData theme) {
+    final docService = context.watch<DocumentService>();
+    final auth = context.watch<AuthProvider>();
+    final canAdd = auth.currentUser != null && !_isTerminalWorkOrder();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              'Photos & attachments',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Spacer(),
+            if (canAdd)
+              TextButton.icon(
+                onPressed: _isSubmitting ? null : () => _pickAndAttachPhoto(context),
+                icon: const Icon(Icons.add_a_photo_outlined, size: 20),
+                label: const Text('Add photo'),
+              ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        StreamBuilder<List<Document>>(
+          stream: docService.watchWorkOrderDocuments(widget.workOrder.id),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting &&
+                !snapshot.hasData) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 12),
+                child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+              );
+            }
+            final docs = snapshot.data ?? const <Document>[];
+            if (docs.isEmpty) {
+              return Text(
+                'No photos yet. Attach images from the field for this work order.',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.65),
+                ),
+              );
+            }
+            return SizedBox(
+              height: 104,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: docs.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 8),
+                itemBuilder: (context, i) {
+                  final d = docs[i];
+                  return _WorkOrderPhotoTile(
+                    document: d,
+                    readOnly: _isTerminalWorkOrder(),
+                    onDelete: _isTerminalWorkOrder()
+                        ? null
+                        : () => _confirmDeletePhoto(context, d.id),
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Future<void> _pickAndAttachPhoto(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final docService = context.read<DocumentService>();
+    try {
+      final picker = ImagePicker();
+      final file = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 82,
+      );
+      if (file == null || !context.mounted) return;
+      final result = await docService.attachPhoto(
+        AttachPhoto(
+          sourceFilePath: file.path,
+          workOrderId: widget.workOrder.id,
+        ),
+      );
+      if (!context.mounted) return;
+      result.when(
+        ok: (_) {
+          messenger.showSnackBar(
+            const SnackBar(
+              content: Text('Photo attached'),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        },
+        err: (f) {
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text(f.message),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        },
+      );
+    } catch (e, st) {
+      Log.error('Photo attach failed', e, st);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Could not attach photo: $e'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _confirmDeletePhoto(BuildContext context, int documentId) async {
+    final theme = Theme.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: theme.colorScheme.surface,
+        title: Text('Remove photo?', style: theme.textTheme.titleMedium),
+        content: Text(
+          'This deletes the file from this device.',
+          style: theme.textTheme.bodyMedium,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text('Remove', style: TextStyle(color: theme.colorScheme.error)),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+    final result = await context.read<DocumentService>().delete(
+          DeleteDocument(documentId: documentId),
+        );
+    if (!context.mounted) return;
+    result.when(
+      ok: (_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Photo removed'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      },
+      err: (f) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(f.message),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      },
+    );
+  }
+
   bool _validateForm() {
     if (_descriptionController.text.trim().isEmpty) return false;
     if (_selectedStatus != widget.workOrder.status &&
@@ -763,140 +948,96 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
     return true;
   }
 
-  Future<void> _saveChanges(
-    BuildContext context,
-    AppDatabase db,
-    WorkOrderWorkflowService workflowService,
-  ) async {
+  Future<void> _saveChanges(BuildContext context) async {
     setState(() {
       _isSubmitting = true;
       _errorMessage = null;
     });
 
     try {
-      // Wrap save operation with retry logic
-      await ErrorHandler.retryOperation(
-        operation: () async {
-          await db.transaction(() async {
-            // Handle status change separately if needed
-            if (_selectedStatus != null &&
-                _selectedStatus != widget.workOrder.status) {
-              await ErrorHandler.withTimeout(
-                operation: () => workflowService.transitionStatus(
-                  workOrder: widget.workOrder,
-                  newStatus: _selectedStatus!,
-                  userId: 1, // TODO: Get current user ID from context
-                  reason: _reasonController.text.trim(),
-                  notes: _notesController.text.trim(),
-                ),
-                timeout: const Duration(seconds: 10),
-                operationName: 'Status Transition',
-              );
-            }
+      if (_isTerminalWorkOrder()) {
+        setState(() {
+          _errorMessage = 'This work order cannot be edited.';
+          _isSubmitting = false;
+        });
+        return;
+      }
 
-            // Update other fields
-            final updatedCompanion = WorkOrdersCompanion(
-              id: Value(widget.workOrder.id),
-              siteId: Value(widget.workOrder.siteId),
-              descriptionOfWork: Value(_descriptionController.text.trim()),
-              internalNotes: Value(_notesController.text.trim()),
-              resolution: Value(_resolutionController.text.trim()),
-              priority: Value(_selectedPriority),
-              assignedTechnician: Value(_selectedTechnician),
-              version: Value(widget.workOrder.version),
-            );
+      final auth = context.read<AuthProvider>();
+      if (auth.currentUser == null) {
+        setState(() {
+          _errorMessage = 'Sign in to save changes.';
+          _isSubmitting = false;
+        });
+        return;
+      }
 
-            final success = await db.updateWorkOrderWithLock(updatedCompanion);
+      final svc = context.read<WorkOrderService>();
+      final fieldsChanged = _fieldsChangedExcludingStatus();
+      final statusChanged = _selectedStatus != widget.workOrder.status;
 
-            if (!success) {
-              throw ConcurrentModificationException(
-                'Work order was modified by another user',
-              );
-            }
-
-            // Audit log for field changes (if no status change)
-            if (_selectedStatus == widget.workOrder.status) {
-              await db.into(db.workOrderAuditLog).insert(
-                    WorkOrderAuditLogCompanion.insert(
-                      workOrderId: widget.workOrder.id,
-                      userId: 1, // TODO: Current user ID
-                      action: 'update',
-                      changeReason: const Value('User edited work order'),
-                    ),
-                  );
-            }
-          });
-        },
-        maxAttempts: 3,
-        operationName: 'Save Work Order',
-      );
-
-      // Success handling
-      if (context.mounted) {
-        final successTheme = Theme.of(context);
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Work order updated successfully'),
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
-            action: SnackBarAction(
-              label: 'View',
-              textColor: successTheme.colorScheme.onSurface,
-              onPressed: () {
-                // TODO: Navigate to detail view
-              },
-            ),
+      if (fieldsChanged) {
+        final updateRes = await svc.update(
+          UpdateWorkOrder(
+            workOrderId: widget.workOrder.id,
+            expectedVersion: widget.workOrder.version,
+            descriptionOfWork: _descriptionController.text,
+            internalNotes: _notesController.text,
+            resolution: _resolutionController.text.trim().isEmpty
+                ? null
+                : _resolutionController.text.trim(),
+            priority: _selectedPriority,
+            assignedTechnician: _selectedTechnician,
           ),
         );
+        if (!context.mounted) return;
+        if (updateRes.isErr) {
+          setState(() {
+            _errorMessage = updateRes.failureOrNull?.message ?? 'Update failed';
+            _isSubmitting = false;
+          });
+          return;
+        }
       }
-    } on InvalidStatusTransitionException catch (e) {
-      setState(() {
-        _errorMessage = e.toString();
-        _isSubmitting = false;
-      });
-    } on ConcurrentModificationException catch (e) {
-      setState(() {
-        _errorMessage = e.toString();
-        _isSubmitting = false;
-      });
 
-      if (context.mounted) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            final theme = Theme.of(context);
-            return AlertDialog(
-              backgroundColor: theme.colorScheme.surface,
-              title: Text(
-                'Conflict Detected',
-                style: theme.textTheme.titleMedium,
-              ),
-              content: Text(e.toString(), style: theme.textTheme.bodyMedium),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Close dialog
-                    Navigator.pop(context); // Close sheet
-                  },
-                  child: const Text('Refresh'),
-                ),
-              ],
-            );
-          },
+      if (statusChanged) {
+        final transitionRes = await svc.transition(
+          TransitionWorkOrder(
+            workOrderId: widget.workOrder.id,
+            newStatus: _selectedStatus!,
+            reason: _reasonController.text.trim(),
+            notes: _notesController.text.trim(),
+          ),
         );
+        if (!context.mounted) return;
+        if (transitionRes.isErr) {
+          setState(() {
+            _errorMessage =
+                transitionRes.failureOrNull?.message ?? 'Status change failed';
+            _isSubmitting = false;
+          });
+          return;
+        }
       }
-    } on ValidationException catch (e) {
-      setState(() {
-        _errorMessage = e.toString();
-        _isSubmitting = false;
-      });
+
+      if (!mounted) return;
+      setState(() => _isSubmitting = false);
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Work order updated successfully'),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     } catch (e, stackTrace) {
       Log.error('Error saving work order: $e', e, stackTrace);
-      setState(() {
-        _errorMessage = 'An unexpected error occurred. Please try again.';
-        _isSubmitting = false;
-      });
+      if (mounted) {
+        setState(() {
+          _errorMessage = 'An unexpected error occurred. Please try again.';
+          _isSubmitting = false;
+        });
+      }
     }
   }
 
@@ -904,5 +1045,96 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
     return status.split('_').map((word) {
       return word[0].toUpperCase() + word.substring(1);
     }).join(' ');
+  }
+}
+
+class _WorkOrderPhotoTile extends StatelessWidget {
+  const _WorkOrderPhotoTile({
+    required this.document,
+    required this.readOnly,
+    this.onDelete,
+  });
+
+  final Document document;
+  final bool readOnly;
+  final VoidCallback? onDelete;
+
+  bool _looksLikeImage(String path) {
+    final lower = path.toLowerCase();
+    return lower.endsWith('.jpg') ||
+        lower.endsWith('.jpeg') ||
+        lower.endsWith('.png') ||
+        lower.endsWith('.webp') ||
+        lower.endsWith('.gif');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final file = File(document.filePath);
+    final exists = file.existsSync();
+    final isImage = _looksLikeImage(document.filePath);
+
+    return Material(
+      color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
+      borderRadius: BorderRadius.circular(AppLayout.radiusSM),
+      clipBehavior: Clip.antiAlias,
+      child: SizedBox(
+        width: 104,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: isImage && exists
+                  ? Image.file(
+                      file,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => _fileFallback(theme),
+                    )
+                  : _fileFallback(theme),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      document.fileName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.labelSmall,
+                    ),
+                  ),
+                  if (!readOnly && onDelete != null)
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minWidth: 28,
+                        minHeight: 28,
+                      ),
+                      icon: Icon(
+                        Icons.close,
+                        size: 16,
+                        color: theme.colorScheme.error,
+                      ),
+                      onPressed: onDelete,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _fileFallback(ThemeData theme) {
+    return ColoredBox(
+      color: theme.colorScheme.surfaceContainerHighest,
+      child: Icon(
+        Icons.insert_drive_file_outlined,
+        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+      ),
+    );
   }
 }

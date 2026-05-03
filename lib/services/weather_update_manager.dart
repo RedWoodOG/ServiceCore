@@ -6,10 +6,11 @@ import '../util/log.dart';
 
 class WeatherUpdateManager {
   final AppDatabase db;
+  final bool Function()? isRemoteAllowed;
   Timer? _timer;
   bool _isUpdating = false;
 
-  WeatherUpdateManager(this.db);
+  WeatherUpdateManager(this.db, {this.isRemoteAllowed});
 
   void start() {
     Log.info('WeatherUpdateManager: Starting auto-update service...');
@@ -30,6 +31,13 @@ class WeatherUpdateManager {
 
   Future<void> updateNow() async {
     if (_isUpdating) return;
+    final allow = isRemoteAllowed;
+    if (allow != null && !allow()) {
+      Log.info(
+        'WeatherUpdateManager: Skipping remote fetch (no network interface).',
+      );
+      return;
+    }
     _isUpdating = true;
 
     try {

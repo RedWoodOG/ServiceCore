@@ -60,6 +60,22 @@ class DocumentService {
   final AppDatabase _db;
   final User? _currentUser;
 
+  /// Local attachments linked to a work order (newest first).
+  Future<List<Document>> listWorkOrderDocuments(int workOrderId) {
+    return (_db.select(_db.documents)
+          ..where((d) => d.workOrderId.equals(workOrderId))
+          ..orderBy([(d) => OrderingTerm.desc(d.uploadedAt)]))
+        .get();
+  }
+
+  /// Reactive stream of work order attachments.
+  Stream<List<Document>> watchWorkOrderDocuments(int workOrderId) {
+    return (_db.select(_db.documents)
+          ..where((d) => d.workOrderId.equals(workOrderId))
+          ..orderBy([(d) => OrderingTerm.desc(d.uploadedAt)]))
+        .watch();
+  }
+
   /// Attaches a document to a work order or site.
   Future<Result<int>> attachDocument(AttachDocument cmd) async {
     // Validate source file exists

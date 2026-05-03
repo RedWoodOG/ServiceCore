@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 
 import '../../database/app_database.dart';
-import '../../models/work_order_enums.dart';
 import '../../services/work_order_workflow_service.dart';
 import '../../util/log.dart';
 import '../errors/app_failure.dart';
@@ -30,20 +29,23 @@ class CreateWorkOrder {
   final String? assignedTechnician;
 }
 
-/// Command to update an existing work order.
+/// Command to update an existing work order (optimistic locking).
 class UpdateWorkOrder {
   const UpdateWorkOrder({
     required this.workOrderId,
-    this.descriptionOfWork,
-    this.internalNotes,
+    required this.expectedVersion,
+    required this.descriptionOfWork,
+    required this.internalNotes,
     this.resolution,
     this.priority,
     this.assignedTechnician,
   });
 
   final int workOrderId;
-  final String? descriptionOfWork;
-  final String? internalNotes;
+  /// Version from the last read [WorkOrder]; must match DB row for update to apply.
+  final int expectedVersion;
+  final String descriptionOfWork;
+  final String internalNotes;
   final String? resolution;
   final String? priority;
   final String? assignedTechnician;
@@ -195,35 +197,62 @@ class WorkOrderService {
       return Err(StorageFailure('Failed to fetch work order', cause: e, stackTrace: st));
     }
 
+    final wo = existing;
+
     // 4. Check if work order is editable (not in terminal state)
-    final status = WorkOrderStatusX.fromDbValue(existing.status);
-    if (status.isTerminal) {
-      return Err(ConflictFailure('Cannot edit completed work order'));
+    if (_isNonEditableStatus(wo.status)) {
+      return Err(ConflictFailure('Cannot edit work order in this state'));
     }
 
-    // 5. Execute update
+    if (cmd.expectedVersion != wo.version) {
+      return Err(
+        ConflictFailure(
+          'Work order was modified elsewhere. Refresh and try again.',
+        ),
+      );
+    }
+
+    final trimmedDesc = cmd.descriptionOfWork.trim();
+    if (trimmedDesc.isEmpty) {
+      return Err(ValidationFailure('Description is required', field: 'descriptionOfWork'));
+    }
+
+    // 5. Execute update with optimistic locking (version bump) + audit in one transaction
     try {
-      await _db.transaction(() async {
-        await (_db.update(_db.workOrders)..where((t) => t.id.equals(cmd.workOrderId))).write(
+      final success = await _db.transaction(() async {
+        final ok = await _db.updateWorkOrderWithLock(
           WorkOrdersCompanion(
-            descriptionOfWork: cmd.descriptionOfWork != null
-                ? Value(cmd.descriptionOfWork)
-                : const Value.absent(),
-            internalNotes: cmd.internalNotes != null
-                ? Value(cmd.internalNotes)
-                : const Value.absent(),
-            resolution: cmd.resolution != null
-                ? Value(cmd.resolution)
-                : const Value.absent(),
-            priority: cmd.priority != null
-                ? Value(cmd.priority)
-                : const Value.absent(),
-            assignedTechnician: cmd.assignedTechnician != null
-                ? Value(cmd.assignedTechnician)
-                : const Value.absent(),
+            id: Value(cmd.workOrderId),
+            siteId: Value(wo.siteId),
+            descriptionOfWork: Value(trimmedDesc),
+            internalNotes: Value(cmd.internalNotes.trim()),
+            resolution: Value(
+              cmd.resolution?.trim().isEmpty ?? true ? null : cmd.resolution?.trim(),
+            ),
+            priority: Value(cmd.priority),
+            assignedTechnician: Value(cmd.assignedTechnician),
+            version: Value(cmd.expectedVersion),
           ),
         );
+        if (!ok) return false;
+        await _db.into(_db.workOrderAuditLog).insert(
+              WorkOrderAuditLogCompanion.insert(
+                workOrderId: cmd.workOrderId,
+                userId: _currentUser?.id ?? 0,
+                action: 'update',
+                changeReason: const Value('User edited work order'),
+              ),
+            );
+        return true;
       });
+
+      if (!success) {
+        return Err(
+          ConflictFailure(
+            'Work order was modified elsewhere. Refresh and try again.',
+          ),
+        );
+      }
 
       Log.info('WorkOrderService: Updated work order ${cmd.workOrderId}');
       return const Ok(null);
@@ -231,6 +260,11 @@ class WorkOrderService {
       Log.error('WorkOrderService: Failed to update work order', e, st);
       return Err(StorageFailure('Failed to update work order', cause: e, stackTrace: st));
     }
+  }
+
+  static bool _isNonEditableStatus(String status) {
+    const blocked = {'completed', 'closed', 'cancelled'};
+    return blocked.contains(status.toLowerCase());
   }
 
   // ============================================

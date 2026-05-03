@@ -25,7 +25,7 @@ This is a **safe clone** of Offline-Portal where you can experiment, break thing
 
 ```powershell
 # 1. Navigate to development directory
-cd h:\FSC_Portal\FSC-Portal
+cd H:\FSC-Portal\FSC-Portal
 
 # 2. Get dependencies
 flutter pub get
@@ -47,12 +47,12 @@ flutter build windows --release
 ## 📁 Directory Structure
 
 ```
-h:\FSC_Portal\
+H:\FSC-Portal\
 │
 ├── Offline-Portal/          ← DO NOT TOUCH
 │   └── Your stable MVP (v1.0.0)
 │
-├── FSC-Portal/              ← WORK HERE
+├── FSC-Portal/              ← CANONICAL WORKDIR (this folder)
 │   └── Development version (v1.1.0+)
 │
 ├── DEVELOPMENT_GUIDE.md     ← Read this for detailed workflow
@@ -103,13 +103,13 @@ h:\FSC_Portal\
 
 ```powershell
 # Delete broken dev version
-Remove-Item h:\FSC_Portal\FSC-Portal -Recurse -Force
+Remove-Item H:\FSC-Portal\FSC-Portal -Recurse -Force
 
 # Copy fresh from stable
-xcopy "h:\FSC_Portal\Offline-Portal" "h:\FSC_Portal\FSC-Portal" /E /I /H /Y
+xcopy "H:\FSC-Portal\Offline-Portal" "H:\FSC-Portal\FSC-Portal" /E /I /H /Y
 
 # Re-run initial setup
-cd h:\FSC_Portal\FSC-Portal
+cd H:\FSC-Portal\FSC-Portal
 flutter pub get
 ```
 

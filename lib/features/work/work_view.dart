@@ -99,6 +99,11 @@ class _WorkViewState extends State<WorkView> {
     }
   }
 
+  bool _isTerminalWorkOrderStatus(String status) {
+    const terminal = {'completed', 'closed', 'cancelled'};
+    return terminal.contains(status.toLowerCase());
+  }
+
   Color _getStatusColor(String status, BuildContext context) {
     final theme = Theme.of(context);
     final parsedStatus = WorkOrderStatusX.fromDbValue(status);
@@ -463,38 +468,39 @@ class _WorkViewState extends State<WorkView> {
                               ),
                             ),
 
-                            // PHASE 1: Edit button overlay
+                            // PHASE 1: Edit button overlay (hidden for terminal states)
                             Positioned(
                               bottom: 12,
                               right: 12,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.edit,
-                                  color: theme.colorScheme.primary,
-                                  size: 20,
-                                ),
-                                tooltip: 'Edit Work Order',
-                                style: IconButton.styleFrom(
-                                  backgroundColor:
-                                      theme.colorScheme.surface.withValues(
-                                    alpha: 0.9,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                ),
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    builder: (context) => EditWorkOrderSheet(
-                                      workOrder: workOrder,
+                              child: _isTerminalWorkOrderStatus(workOrder.status)
+                                  ? const SizedBox.shrink()
+                                  : IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: theme.colorScheme.primary,
+                                        size: 20,
+                                      ),
+                                      tooltip: 'Edit Work Order',
+                                      style: IconButton.styleFrom(
+                                        backgroundColor:
+                                            theme.colorScheme.surface.withValues(
+                                          alpha: 0.9,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                      ),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (context) => EditWorkOrderSheet(
+                                            workOrder: workOrder,
+                                          ),
+                                        ).then((_) {
+                                          _loadData(refresh: true);
+                                        });
+                                      },
                                     ),
-                                  ).then((_) {
-                                    // Refresh data after edit
-                                    _loadData(refresh: true);
-                                  });
-                                },
-                              ),
                             ),
                           ], // Stack children
                         ); // Stack

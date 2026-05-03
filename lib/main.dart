@@ -26,6 +26,7 @@ import 'features/equipment/equipment_home_view.dart';
 import 'features/expenses/expenses_home_view.dart';
 import 'providers/theme_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/network_reachability_notifier.dart';
 
 // PHASE 2: Security Services
 import 'services/auth_service.dart';
@@ -163,6 +164,9 @@ void main() async {
     Log.info('Note: Starting point coordinates check: $e');
   }
 
+  final networkReachability = NetworkReachabilityNotifier();
+  await networkReachability.init();
+
   // Initialize EVA state
   final evaState = EvaState();
   evaState.setDatabase(database);
@@ -173,8 +177,11 @@ void main() async {
   // Initialize Theme Provider
   final themeProvider = ThemeProvider();
 
-  // Initialize and start Weather Update Manager
-  final weatherManager = WeatherUpdateManager(database);
+  // Initialize and start Weather Update Manager (skips HTTP when offline)
+  final weatherManager = WeatherUpdateManager(
+    database,
+    isRemoteAllowed: () => networkReachability.isOnline,
+  );
   weatherManager.start();
 
   // PHASE 2: Provenance service disabled (requires active login session)
@@ -191,6 +198,9 @@ void main() async {
         ChangeNotifierProvider<EvaState>.value(value: evaState),
         ChangeNotifierProvider<NavigationState>.value(value: navigationState),
         ChangeNotifierProvider<ThemeProvider>.value(value: themeProvider),
+        ChangeNotifierProvider<NetworkReachabilityNotifier>.value(
+          value: networkReachability,
+        ),
         // LOGIN: AuthProvider for session management
         ChangeNotifierProvider(create: (_) => AuthProvider(database)),
         // PHASE 2: Security services (nullable - graceful degradation)
@@ -202,6 +212,12 @@ void main() async {
         // Application Layer Services (Tune-Up Contract Rule B)
         ProxyProvider2<AppDatabase, AuthProvider, WorkOrderService>(
           update: (_, db, auth, __) => WorkOrderService(
+            db: db,
+            currentUser: auth.currentUser,
+          ),
+        ),
+        ProxyProvider2<AppDatabase, AuthProvider, ExpenseService>(
+          update: (_, db, auth, __) => ExpenseService(
             db: db,
             currentUser: auth.currentUser,
           ),
@@ -422,6 +438,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           body: isMobile
               ? Column(
                   children: [
+                    _ConnectivityStatusBar(compact: true),
                     Expanded(
                       child: PortalShell(child: _screens[selectedIndex]),
                     ),
@@ -502,6 +519,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                               },
                             ),
                           ),
+                          Divider(
+                            color: Theme.of(context).dividerColor,
+                            height: 1,
+                          ),
+                          const _ConnectivityStatusBar(compact: false),
                           Divider(
                             color: Theme.of(context).dividerColor,
                             height: 1,
@@ -765,6 +787,107 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           );
         },
       ),
+    );
+  }
+}
+
+/// Sidebar / mobile strip: shows interface-level online vs offline for hybrid UX.
+class _ConnectivityStatusBar extends StatelessWidget {
+  const _ConnectivityStatusBar({required this.compact});
+
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<NetworkReachabilityNotifier>(
+      builder: (context, net, _) {
+        final theme = Theme.of(context);
+        final onlineColor = theme.colorScheme.primary;
+        final muted = theme.colorScheme.onSurface.withValues(alpha: 0.55);
+
+        if (compact) {
+          return Material(
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.35,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              child: Row(
+                children: [
+                  Icon(
+                    net.isOnline
+                        ? Icons.cloud_done_outlined
+                        : Icons.cloud_off_outlined,
+                    size: 18,
+                    color: net.isOnline ? onlineColor : muted,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      net.isOnline
+                          ? 'Online — live updates'
+                          : 'Offline — local only',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(10, 6, 10, 6),
+          child: Material(
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.25,
+            ),
+            borderRadius: BorderRadius.circular(8),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Row(
+                children: [
+                  Icon(
+                    net.isOnline
+                        ? Icons.cloud_done_outlined
+                        : Icons.cloud_off_outlined,
+                    size: 20,
+                    color: net.isOnline ? onlineColor : muted,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          net.isOnline ? 'Online' : 'Offline',
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          net.isOnline
+                              ? 'Live updates (e.g. weather) can run'
+                              : 'Work orders & data stay local',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: muted,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

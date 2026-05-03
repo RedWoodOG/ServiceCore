@@ -1,8 +1,12 @@
 # FSC Portal (Development Branch)
 
+**Canonical working directory:** `H:\FSC-Portal\FSC-Portal` — open this folder in your IDE; run all Flutter commands here.
+
 **Version:** 1.1.0 (Development)  
 **Base:** Cloned from Offline-Portal 1.0.0 (Stable MVP)  
 **Purpose:** Active development for security features and improvements
+
+**Connectivity:** **Offline-capable, not offline-only** — core workflows must work without a network (local DB); online features (sync, APIs, fleet, updates) are required when connected, with clear behavior when disconnected. See `../DEVELOPMENT_GUIDE.md` (*Connectivity model*).
 
 ---
 
@@ -15,7 +19,7 @@
 - ✅ Breaking changes allowed
 - ⚠️ Not for production deployment
 
-**For stable deployment, use:** `h:\FSC_Portal\Offline-Portal`
+**For stable deployment, use:** `H:\FSC-Portal\Offline-Portal`
 
 ---
 
@@ -36,9 +40,9 @@
 ## Directory Structure
 
 ```
-h:\FSC_Portal\
+H:\FSC-Portal\
 ├── Offline-Portal/     ← STABLE MVP (v1.0.0) - DO NOT MODIFY
-└── FSC-Portal/         ← DEVELOPMENT (v1.1.0) - Active work happens here
+└── FSC-Portal/         ← DEVELOPMENT (v1.1.0) - CANONICAL WORKDIR (this repo)
 ```
 
 ---
@@ -74,14 +78,14 @@ This ensures no interference with your stable deployment.
 ### Running Development Version
 
 ```powershell
-cd h:\FSC_Portal\FSC-Portal
+cd H:\FSC-Portal\FSC-Portal
 flutter run -d windows
 ```
 
 ### Building Development Version
 
 ```powershell
-cd h:\FSC_Portal\FSC-Portal
+cd H:\FSC-Portal\FSC-Portal
 flutter build windows --release
 ```
 

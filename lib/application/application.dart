@@ -20,6 +20,7 @@ export 'services/equipment_service.dart';
 export 'services/knowledge_service.dart';
 export 'services/import_service.dart';
 export 'services/document_service.dart';
+export 'services/expense_service.dart';
 export 'services/note_service.dart';
 export 'services/announcement_service.dart';
 
