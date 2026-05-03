@@ -59,10 +59,14 @@ class _FeedbackAnnotationPageState extends State<FeedbackAnnotationPage> {
             ),
           ),
           Expanded(
-            child: Scrollbar(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Center(
+            // Do not wrap the canvas in a scroll view: it wins the gesture arena and
+            // pan drags become scroll, so boxes never draw. Fit with FittedBox instead.
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Center(
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  alignment: Alignment.center,
                   child: SizedBox(
                     width: p.logicalWidth,
                     height: p.logicalHeight,
@@ -77,22 +81,24 @@ class _FeedbackAnnotationPageState extends State<FeedbackAnnotationPage> {
                           filterQuality: FilterQuality.medium,
                           gaplessPlayback: true,
                         ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onPanStart: (d) => setState(() {
-                            _dragStart = d.localPosition;
-                            _dragCurrent = d.localPosition;
-                          }),
-                          onPanUpdate: (d) =>
-                              setState(() => _dragCurrent = d.localPosition),
-                          onPanEnd: (_) => _finishDrag(),
-                          child: CustomPaint(
-                            painter: _DragPainter(
-                              regions: _regions,
-                              dragStart: _dragStart,
-                              dragCurrent: _dragCurrent,
+                        Positioned.fill(
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onPanStart: (d) => setState(() {
+                              _dragStart = d.localPosition;
+                              _dragCurrent = d.localPosition;
+                            }),
+                            onPanUpdate: (d) =>
+                                setState(() => _dragCurrent = d.localPosition),
+                            onPanEnd: (_) => _finishDrag(),
+                            child: CustomPaint(
+                              painter: _DragPainter(
+                                regions: _regions,
+                                dragStart: _dragStart,
+                                dragCurrent: _dragCurrent,
+                              ),
+                              child: const SizedBox.expand(),
                             ),
-                            child: const SizedBox.expand(),
                           ),
                         ),
                       ],
@@ -324,8 +330,8 @@ Future<void> openAiFeedbackAnnotationFlow(BuildContext context) async {
       backgroundColor: theme.colorScheme.surface,
       title: const Text('Capture this screen?'),
       content: const Text(
-        'The current portal view (navigation + content) will be frozen as a PNG. '
-        'You can then draw boxes and add notes for an AI assistant.',
+        'Step 1 of 2: the current portal (navigation + content) is saved as a PNG.\n\n'
+        'Step 2 opens next: drag on that image to draw boxes and add a short note for each spot you want changed.',
       ),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
