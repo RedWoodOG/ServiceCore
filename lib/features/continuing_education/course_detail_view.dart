@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../database/app_database.dart';
+import '../../providers/network_reachability_notifier.dart';
 
 class CourseDetailView extends StatelessWidget {
   final ContinuingEducationCourse course;
@@ -22,7 +24,19 @@ class CourseDetailView extends StatelessWidget {
     }
   }
 
-  Future<void> _launchExternalUrl(String url) async {
+  Future<void> _launchExternalUrl(BuildContext context, String url) async {
+    if (!context.read<NetworkReachabilityNotifier>().isOnline) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'You are offline. Connect to the internet to open external course links.',
+          ),
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 4),
+        ),
+      );
+      return;
+    }
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -161,7 +175,7 @@ class CourseDetailView extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: () =>
-                            _launchExternalUrl(course.externalUrl!),
+                            _launchExternalUrl(context, course.externalUrl!),
                         icon: const Icon(Icons.open_in_new),
                         label: const Text('Open Course Link'),
                         style: ElevatedButton.styleFrom(

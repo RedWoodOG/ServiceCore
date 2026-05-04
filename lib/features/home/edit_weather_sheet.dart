@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' show Value;
 import '../../database/app_database.dart';
+import '../../providers/network_reachability_notifier.dart';
 import '../../services/weather_service.dart';
 import '../../util/log.dart';
 
@@ -120,6 +121,19 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
     }
 
     if (!mounted) return;
+
+    if (!context.read<NetworkReachabilityNotifier>().isOnline) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'You are offline. Connect to the internet to fetch live weather from the API.',
+          ),
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 4),
+        ),
+      );
+      return;
+    }
 
     setState(() {
       _isFetching = true;

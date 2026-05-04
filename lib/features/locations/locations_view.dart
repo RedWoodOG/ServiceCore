@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import '../../database/app_database.dart';
+import '../../providers/network_reachability_notifier.dart';
 import '../../theme/app_theme.dart';
 import '../../config/app_constants.dart';
 import '../../util/log.dart';
@@ -174,6 +175,7 @@ class _LocationsViewState extends State<LocationsView> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final online = context.watch<NetworkReachabilityNotifier>().isOnline;
     return Scaffold(
       body: Stack(
         children: [
@@ -182,56 +184,98 @@ class _LocationsViewState extends State<LocationsView> {
                 child:
                     CircularProgressIndicator(color: theme.colorScheme.primary))
           else
-            FlutterMap(
-              mapController: mapController,
-              options: MapOptions(
-                initialCenter: LatLng(
-                    AppConstants.defaultMapLat, AppConstants.defaultMapLng),
-                initialZoom: AppConstants.defaultMapZoom,
-                minZoom: AppConstants.mapMinZoom,
-                maxZoom: AppConstants.mapMaxZoom,
-              ),
+            Stack(
+              fit: StackFit.expand,
               children: [
-                TileLayer(
-                  urlTemplate: Theme.of(context).brightness == Brightness.dark
-                      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-                      : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: const ['a', 'b', 'c', 'd'],
-                  userAgentPackageName: 'com.example.portal_offline',
+                ColoredBox(
+                  color: theme.colorScheme.surfaceContainerHighest,
                 ),
-                if (isPMMode && routePath.isNotEmpty)
-                  PolylineLayer(
-                    polylines: [
-                      Polyline(
-                        points: routePath,
-                        strokeWidth: 5.0,
-                        color: AppPalette.purpleAccent.withValues(alpha: 0.7),
-                      ),
-                    ],
+                FlutterMap(
+                  mapController: mapController,
+                  options: MapOptions(
+                    initialCenter: LatLng(
+                        AppConstants.defaultMapLat, AppConstants.defaultMapLng),
+                    initialZoom: AppConstants.defaultMapZoom,
+                    minZoom: AppConstants.mapMinZoom,
+                    maxZoom: AppConstants.mapMaxZoom,
                   ),
-                MarkerLayer(
-                  markers: [
-                    ...startingPoints.map((sp) => Marker(
-                          point: LatLng(sp.latitude, sp.longitude),
-                          width: 50,
-                          height: 50,
-                          child: _buildHomeMarker(sp),
-                        )),
-                    ...sites.map((site) {
-                      final client = clientsMap[site.clientId];
-                      final color = client != null
-                          ? _getColorFromString(client.themeColor, context)
-                          : theme.colorScheme.onSurface.withValues(alpha: 0.7);
+                  children: [
+                    if (online)
+                      TileLayer(
+                        urlTemplate:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                                : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        subdomains: const ['a', 'b', 'c', 'd'],
+                        userAgentPackageName: 'com.example.portal_offline',
+                      ),
+                    if (isPMMode && routePath.isNotEmpty)
+                      PolylineLayer(
+                        polylines: [
+                          Polyline(
+                            points: routePath,
+                            strokeWidth: 5.0,
+                            color:
+                                AppPalette.purpleAccent.withValues(alpha: 0.7),
+                          ),
+                        ],
+                      ),
+                    MarkerLayer(
+                      markers: [
+                        ...startingPoints.map((sp) => Marker(
+                              point: LatLng(sp.latitude, sp.longitude),
+                              width: 50,
+                              height: 50,
+                              child: _buildHomeMarker(sp),
+                            )),
+                        ...sites.map((site) {
+                          final client = clientsMap[site.clientId];
+                          final color = client != null
+                              ? _getColorFromString(client.themeColor, context)
+                              : theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7);
 
-                      return Marker(
-                        point: LatLng(site.latitude, site.longitude),
-                        width: 100,
-                        height: 100,
-                        child: _buildSiteMarker(site, color),
-                      );
-                    }),
+                          return Marker(
+                            point: LatLng(site.latitude, site.longitude),
+                            width: 100,
+                            height: 100,
+                            child: _buildSiteMarker(site, color),
+                          );
+                        }),
+                      ],
+                    ),
                   ],
                 ),
+                if (!online)
+                  Positioned(
+                    top: 72,
+                    left: 16,
+                    right: 88,
+                    child: Material(
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(8),
+                      color: theme.colorScheme.surfaceContainerHigh,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
+                        child: Row(
+                          children: [
+                            Icon(Icons.cloud_off,
+                                color: theme.colorScheme.primary, size: 20),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Offline: map tiles are unavailable. Pins and routes still show from local data.',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurface,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           Positioned(

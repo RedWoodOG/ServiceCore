@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../database/app_database.dart';
+import '../providers/network_reachability_notifier.dart';
 import '../theme/app_theme.dart';
 
 // Helper function to format time ago
@@ -37,9 +38,12 @@ class NewsFeedWidget extends StatefulWidget {
 }
 
 class _NewsFeedWidgetState extends State<NewsFeedWidget> {
+  static const String _offlineNewsImage = 'assets/images/news_AV.png';
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final online = context.watch<NetworkReachabilityNotifier>().isOnline;
     return StreamBuilder<List<IndustryBriefingData>>(
       stream: Provider.of<AppDatabase>(context, listen: false)
           .watchLatestIndustryBriefing(limit: 5),
@@ -199,7 +203,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                     // Featured item is wider
                     final double width = item.isFeatured ? 300 : 160;
 
-                    return _buildNewsCard(context, item, width);
+                    return _buildNewsCard(context, item, width, online);
                   },
                 ),
               ),
@@ -210,7 +214,12 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
     );
   }
 
-  Widget _buildNewsCard(BuildContext context, _NewsItem item, double width) {
+  Widget _buildNewsCard(
+    BuildContext context,
+    _NewsItem item,
+    double width,
+    bool online,
+  ) {
     final theme = Theme.of(context);
     return Semantics(
       label: "News article: ${item.headline} from ${item.source}",
@@ -242,7 +251,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (_isNetworkImage(item.imageUrl))
+                        if (_isNetworkImage(item.imageUrl) && online)
                           Image.network(
                             item.imageUrl,
                             height: 150,
@@ -257,6 +266,12 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                                 size: 48,
                               ),
                             ),
+                          )
+                        else if (_isNetworkImage(item.imageUrl) && !online)
+                          Image.asset(
+                            _offlineNewsImage,
+                            height: 150,
+                            fit: BoxFit.cover,
                           )
                         else
                           Image.asset(
@@ -331,7 +346,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                 // Background Image with Error Handling
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: _isNetworkImage(item.imageUrl)
+                  child: _isNetworkImage(item.imageUrl) && online
                       ? Image.network(
                           item.imageUrl,
                           width: width,
@@ -341,15 +356,22 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                             return _buildImageErrorFallback(context, width);
                           },
                         )
-                      : Image.asset(
-                          item.imageUrl,
-                          width: width,
-                          height: 220,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return _buildImageErrorFallback(context, width);
-                          },
-                        ),
+                      : _isNetworkImage(item.imageUrl) && !online
+                          ? Image.asset(
+                              _offlineNewsImage,
+                              width: width,
+                              height: 220,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              item.imageUrl,
+                              width: width,
+                              height: 220,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return _buildImageErrorFallback(context, width);
+                              },
+                            ),
                 ),
                 // Gradient Overlay (Crucial for readability)
                 Positioned.fill(
