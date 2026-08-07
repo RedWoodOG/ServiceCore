@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/native.dart';
-import 'package:fsc_portal/database/app_database.dart';
-import 'package:fsc_portal/services/work_order_workflow_service.dart';
+import 'package:servicecore/database/app_database.dart';
+import 'package:servicecore/services/work_order_workflow_service.dart';
 
 void main() {
   late AppDatabase db;

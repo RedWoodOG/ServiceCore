@@ -184,7 +184,7 @@ class _SettingsViewState extends State<SettingsView> {
           children: [
             _buildToggleCard(
               "LIGHT THEME",
-              "Use FSC brand colors with white background (professional).",
+              "Use brand colors with white background (professional).",
               themeProvider.isLightMode,
               (v) {
                 if (v) {

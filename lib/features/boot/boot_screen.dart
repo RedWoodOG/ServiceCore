@@ -91,7 +91,7 @@ class _BootScreenState extends State<BootScreen> {
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-            color: AppPalette.fscRoyalBlue,
+            color: AppPalette.brandRoyalBlue,
             borderRadius: BorderRadius.circular(16),
           ),
           child: const Icon(
@@ -102,7 +102,7 @@ class _BootScreenState extends State<BootScreen> {
         ),
         const SizedBox(height: 24),
         Text(
-          'FSC Portal',
+          'ServiceCore',
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -111,7 +111,7 @@ class _BootScreenState extends State<BootScreen> {
         ),
         const SizedBox(height: 32),
         CircularProgressIndicator(
-          valueColor: const AlwaysStoppedAnimation<Color>(AppPalette.fscRoyalBlue),
+          valueColor: const AlwaysStoppedAnimation<Color>(AppPalette.brandRoyalBlue),
         ),
         const SizedBox(height: 16),
         Text(

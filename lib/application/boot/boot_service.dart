@@ -135,15 +135,15 @@ class BootService extends ChangeNotifier {
   Future<void> _checkFilesystem() async {
     // Get app documents directory
     final appDir = await getApplicationDocumentsDirectory();
-    final fscDir = Directory('${appDir.path}/fsc_portal');
+    final appDataDir = Directory('${appDir.path}/fsc_portal');
     
     // Ensure directory exists
-    if (!await fscDir.exists()) {
-      await fscDir.create(recursive: true);
-      Log.info('BootService: Created app directory at ${fscDir.path}');
+    if (!await appDataDir.exists()) {
+      await appDataDir.create(recursive: true);
+      Log.info('BootService: Created app directory at ${appDataDir.path}');
     }
 
-    _dbPath = '${fscDir.path}/fsc_portal.db';
+    _dbPath = '${appDataDir.path}/fsc_portal.db';
     
     // Check if database file exists
     final dbFile = File(_dbPath);
@@ -156,13 +156,13 @@ class BootService extends ChangeNotifier {
 
     // Check write permissions by creating temp file
     try {
-      final testFile = File('${fscDir.path}/.write_test');
+      final testFile = File('${appDataDir.path}/.write_test');
       await testFile.writeAsString('test');
       await testFile.delete();
       _dbWritable = true;
     } catch (e) {
       _dbWritable = false;
-      throw StateError('Database directory is not writable: ${fscDir.path}');
+      throw StateError('Database directory is not writable: ${appDataDir.path}');
     }
 
     Log.info('BootService: Filesystem OK - dbExists: $_dbExists, size: $_dbSizeBytes bytes');

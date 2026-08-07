@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:portal_offline/main.dart';
+import 'package:servicecore/main.dart';
 
 void main() {
   testWidgets('App launches successfully', (WidgetTester tester) async {

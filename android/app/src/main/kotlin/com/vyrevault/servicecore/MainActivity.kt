@@ -1,4 +1,4 @@
-package com.example.portal_offline
+package com.vyrevault.servicecore
 
 import io.flutter.embedding.android.FlutterActivity
 

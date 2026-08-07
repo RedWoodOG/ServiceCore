@@ -123,11 +123,11 @@ class _WorkViewState extends State<WorkView> {
     final theme = Theme.of(context);
     switch (colorName.toLowerCase()) {
       case 'blue':
-        return AppColors.pinNorthwind;
+        return AppColors.pinClientBlue;
       case 'red':
-        return AppColors.pinGulfCoast;
+        return AppColors.pinClientRed;
       case 'yellow':
-        return AppColors.pinLoneStar;
+        return AppColors.pinClientAmber;
       default:
         return theme.colorScheme.onSurface.withValues(alpha: 0.7);
     }

@@ -1,5 +1,5 @@
-name: fsc_portal
-description: FSC Field Service Portal - Development Branch with Security Enhancements
+name: servicecore
+description: ServiceCore — field service portal for equipment-servicing operations. Local-first Flutter app for Windows and Android.
 publish_to: 'none'
 version: 1.1.2+1
 

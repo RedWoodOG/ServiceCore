@@ -65,7 +65,7 @@ class EvaService {
       return EvaResponse(
         "For IT support, please contact:\n\n"
         "**Demo Technician**\n"
-        "Email: [redacted-email]\n"
+        "Email: demotech@example.com\n"
         "Phone: (210) 937-2876\n\n"
         "In the meantime, I can help you search the knowledge base for IT-related procedures or troubleshooting guides. What's the issue?",
         queryType: 'itsupport',

@@ -87,11 +87,11 @@ class _LocationsViewState extends State<LocationsView> {
     final theme = Theme.of(context);
     switch (colorName.toLowerCase()) {
       case 'blue':
-        return AppColors.pinNorthwind;
+        return AppColors.pinClientBlue;
       case 'red':
-        return AppColors.pinGulfCoast;
+        return AppColors.pinClientRed;
       case 'yellow':
-        return AppColors.pinLoneStar;
+        return AppColors.pinClientAmber;
       default:
         return theme.colorScheme.onSurface.withValues(alpha: 0.7);
     }
@@ -207,7 +207,7 @@ class _LocationsViewState extends State<LocationsView> {
                                 ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
                                 : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                         subdomains: const ['a', 'b', 'c', 'd'],
-                        userAgentPackageName: 'com.example.portal_offline',
+                        userAgentPackageName: 'com.vyrevault.servicecore',
                       ),
                     if (isPMMode && routePath.isNotEmpty)
                       PolylineLayer(
@@ -517,9 +517,14 @@ class _LocationsViewState extends State<LocationsView> {
           ),
           const SizedBox(height: 12),
           _legendItem(AppColors.pinStartPoint, 'Service Hubs'),
-          _legendItem(AppColors.pinNorthwind, 'Northwind Sites'),
-          _legendItem(AppColors.pinLoneStar, 'Lone Star Bank'),
-          _legendItem(AppColors.pinGulfCoast, 'Gulf Coast Bank'),
+          // Clients are deployment data, not product constants: one entry per
+          // client row, coloured by its own themeColor.
+          ...clientsMap.values.map(
+            (client) => _legendItem(
+              _getColorFromString(client.themeColor, context),
+              client.name,
+            ),
+          ),
           if (isPMMode)
             _legendItem(AppPalette.purpleAccent, 'Optimized Service Route'),
         ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// FSC Portal - Fixed Theme System
+/// ServiceCore - Fixed Theme System
 /// Proper light and dark themes with working toggle
 
 // ============================================
@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 // ============================================
 
 class AppPalette {
-  // FSC Brand Colors (from logo)
-  static const Color fscRoyalBlue = Color(0xFF1E4FA0);
-  static const Color fscCharcoalGray = Color(0xFF3D4449);
-  static const Color fscWhite = Color(0xFFFFFFFF);
-  static const Color fscBlueLight = Color(0xFF2E6BC0);
-  static const Color fscBlueDark = Color(0xFF0E3F80);
+  // Brand palette. Deployment-overridable; values inherited from the original
+  // deployment’s mark and should be re-picked for product branding.
+  static const Color brandRoyalBlue = Color(0xFF1E4FA0);
+  static const Color brandCharcoalGray = Color(0xFF3D4449);
+  static const Color brandWhite = Color(0xFFFFFFFF);
+  static const Color brandBlueLight = Color(0xFF2E6BC0);
+  static const Color brandBlueDark = Color(0xFF0E3F80);
 
   // Dark Theme Colors
   static const Color deepBlack = Color(0xFF121212);
@@ -250,14 +251,14 @@ class AppTheme {
         StatusColors(
           warning: AppPalette.warningAmber,
           success: AppPalette.successGreen,
-          info: AppPalette.fscBlueLight,
+          info: AppPalette.brandBlueLight,
         ),
       ],
 
       // Color Scheme
       colorScheme: const ColorScheme.dark(
-        primary: AppPalette.fscRoyalBlue,
-        secondary: AppPalette.fscBlueLight,
+        primary: AppPalette.brandRoyalBlue,
+        secondary: AppPalette.brandBlueLight,
         surface: AppPalette.darkGrey,
         error: AppPalette.alertRed,
         onPrimary: AppPalette.textWhite,
@@ -309,7 +310,7 @@ class AppTheme {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppLayout.radiusMD),
           borderSide: const BorderSide(
-            color: AppPalette.fscRoyalBlue,
+            color: AppPalette.brandRoyalBlue,
             width: 2,
           ),
         ),
@@ -318,7 +319,7 @@ class AppTheme {
       // Buttons
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppPalette.fscRoyalBlue,
+          backgroundColor: AppPalette.brandRoyalBlue,
           foregroundColor: AppPalette.textWhite,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -328,7 +329,7 @@ class AppTheme {
       ),
 
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(foregroundColor: AppPalette.fscRoyalBlue),
+        style: TextButton.styleFrom(foregroundColor: AppPalette.brandRoyalBlue),
       ),
 
       // Dividers
@@ -404,14 +405,14 @@ class AppTheme {
         StatusColors(
           warning: AppPalette.warningAmber,
           success: AppPalette.successGreen,
-          info: AppPalette.fscBlueLight,
+          info: AppPalette.brandBlueLight,
         ),
       ],
 
       // Color Scheme
       colorScheme: const ColorScheme.light(
-        primary: AppPalette.fscRoyalBlue,
-        secondary: AppPalette.fscBlueLight,
+        primary: AppPalette.brandRoyalBlue,
+        secondary: AppPalette.brandBlueLight,
         surface: AppPalette.lightSurface,
         error: AppPalette.alertRed,
         onPrimary: AppPalette.textWhite,
@@ -464,7 +465,7 @@ class AppTheme {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppLayout.radiusMD),
           borderSide: const BorderSide(
-            color: AppPalette.fscRoyalBlue,
+            color: AppPalette.brandRoyalBlue,
             width: 2,
           ),
         ),
@@ -473,7 +474,7 @@ class AppTheme {
       // Buttons
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppPalette.fscRoyalBlue,
+          backgroundColor: AppPalette.brandRoyalBlue,
           foregroundColor: AppPalette.textWhite,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -483,7 +484,7 @@ class AppTheme {
       ),
 
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(foregroundColor: AppPalette.fscRoyalBlue),
+        style: TextButton.styleFrom(foregroundColor: AppPalette.brandRoyalBlue),
       ),
 
       // Dividers
@@ -547,7 +548,7 @@ class AppTheme {
       // List Tiles
       listTileTheme: const ListTileThemeData(
         textColor: AppPalette.textDark,
-        iconColor: AppPalette.fscRoyalBlue,
+        iconColor: AppPalette.brandRoyalBlue,
       ),
 
       // Icon Theme
@@ -566,7 +567,7 @@ class AppColors {
   // Core Colors - DEFAULT (dark theme values for backwards compat)
   static const Color background = AppPalette.deepBlack;
   static const Color surface = AppPalette.darkGrey;
-  static const Color primary = AppPalette.fscRoyalBlue;
+  static const Color primary = AppPalette.brandRoyalBlue;
 
   // Status Colors
   static const Color error = AppPalette.alertRed;
@@ -589,13 +590,13 @@ class AppColors {
 
   // Status Backgrounds
   static Color successBg = AppPalette.successGreen.withValues(alpha: 0.15);
-  static Color infoBg = AppPalette.fscRoyalBlue.withValues(alpha: 0.15);
+  static Color infoBg = AppPalette.brandRoyalBlue.withValues(alpha: 0.15);
   static Color errorBg = AppPalette.alertRed.withValues(alpha: 0.15);
 
   // Map Pins
-  static const Color pinNorthwind = Colors.blue;
-  static const Color pinLoneStar = Colors.amber;
-  static const Color pinGulfCoast = Colors.red;
+  static const Color pinClientBlue = Colors.blue;
+  static const Color pinClientAmber = Colors.amber;
+  static const Color pinClientRed = Colors.red;
   static const Color pinStartPoint = AppPalette.successGreen;
 }
 
@@ -605,7 +606,6 @@ class AppColors {
 
 class AppAssets {
   static const String logo = 'assets/logo.webp';
-  static const String fscLogo = 'assets/FSC_Logo.svg';
   static const String mapStyle = 'assets/map_style_dark.json';
 }
 
@@ -622,7 +622,7 @@ class AppComponents {
 
   // Primary Button Style
   static ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: AppPalette.fscRoyalBlue,
+    backgroundColor: AppPalette.brandRoyalBlue,
     foregroundColor: AppPalette.textWhite,
     padding: const EdgeInsets.symmetric(
       horizontal: AppLayout.buttonPaddingH,
@@ -636,7 +636,7 @@ class AppComponents {
 
   // Text Button Style
   static ButtonStyle textButtonStyle = TextButton.styleFrom(
-    foregroundColor: AppPalette.fscRoyalBlue,
+    foregroundColor: AppPalette.brandRoyalBlue,
     padding: const EdgeInsets.symmetric(
       horizontal: AppLayout.spacingSM,
       vertical: AppLayout.spacingXS,
@@ -645,7 +645,7 @@ class AppComponents {
 
   // Navigation Item - Active
   static BoxDecoration navItemActiveDecoration = BoxDecoration(
-    color: AppPalette.fscRoyalBlue,
+    color: AppPalette.brandRoyalBlue,
     borderRadius: BorderRadius.circular(AppLayout.radiusMD),
   );
 
@@ -711,7 +711,7 @@ class AppComponents {
 
   // User Avatar
   static BoxDecoration userAvatarDecoration = BoxDecoration(
-    color: AppPalette.fscRoyalBlue,
+    color: AppPalette.brandRoyalBlue,
     shape: BoxShape.circle,
   );
 }
@@ -727,7 +727,7 @@ class AppIcons {
   static const double sizeLG = 32.0;
   static const double sizeXL = 48.0;
 
-  static const Color colorPrimary = AppPalette.fscRoyalBlue;
+  static const Color colorPrimary = AppPalette.brandRoyalBlue;
   static const Color colorSuccess = AppPalette.successGreen;
   static const Color colorWarning = AppPalette.warningAmber;
   static const Color colorError = AppPalette.alertRed;
@@ -789,10 +789,10 @@ class AppGlass {
   );
 
   static BoxDecoration activeDecoration = BoxDecoration(
-    color: AppPalette.fscRoyalBlue.withValues(alpha: 0.15),
+    color: AppPalette.brandRoyalBlue.withValues(alpha: 0.15),
     borderRadius: BorderRadius.circular(AppLayout.radiusMD),
     border: Border.all(
-      color: AppPalette.fscRoyalBlue.withValues(alpha: 0.3),
+      color: AppPalette.brandRoyalBlue.withValues(alpha: 0.3),
       width: 1,
     ),
   );

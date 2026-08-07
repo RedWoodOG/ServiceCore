@@ -1,11 +1,11 @@
-/// FSC-Portal Application Layer
+/// ServiceCore Application Layer
 ///
 /// This barrel file exports all application services, errors, and boot components.
 /// UI code should import from here rather than individual files.
 ///
 /// Usage:
 /// ```dart
-/// import 'package:fsc_portal/application/application.dart';
+/// import 'package:servicecore/application/application.dart';
 /// ```
 library;
 

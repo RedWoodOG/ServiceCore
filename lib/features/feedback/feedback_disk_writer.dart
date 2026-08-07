@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'feedback_export_bundle.dart';
 
 const String _readme = '''
-FSC Portal — AI feedback exports
+ServiceCore — AI feedback exports
 =================================
 
 Each capture produces two files with the same basename:
@@ -27,7 +27,7 @@ class FeedbackDiskWriter {
     required String appVersion,
   }) async {
     final root = await getApplicationDocumentsDirectory();
-    final dir = Directory(p.join(root.path, 'FSC_Portal_ai_feedback'));
+    final dir = Directory(p.join(root.path, 'ServiceCore_ai_feedback'));
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }

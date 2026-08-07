@@ -4,7 +4,7 @@ import 'package:yaml/yaml.dart';
 import '../util/log.dart';
 import '../util/knowledge_categorizer.dart';
 import 'package:drift/drift.dart';
-import 'package:fsc_portal/database/app_database.dart';
+import 'package:servicecore/database/app_database.dart';
 
 Future<void> seedDatabase(AppDatabase db) async {
   // Check if already seeded
@@ -79,8 +79,7 @@ Future<void> seedDatabase(AppDatabase db) async {
       existingWeather != null &&
       existingWorkCalls > 0) {
     Log.info('Rest of database already seeded. Skipping core seed...');
-    // But we still check for GulfCoast enrichment, team updates, and knowledge
-    await _seedGulfCoastLocations(db);
+    // Deployment fixtures may still add client sites; team + knowledge always run.
     await _seedTeamMembers(db);
     await _ingestKnowledgeEntries(db);
     return;
@@ -92,9 +91,9 @@ Future<void> seedDatabase(AppDatabase db) async {
   if (existingUsers.isEmpty) {
     await db.into(db.users).insert(
           UsersCompanion.insert(
-            username: 'jwhite',
+            username: 'demotech',
             fullName: 'Demo Technician',
-            email: '[redacted-email]',
+            email: 'demotech@example.com',
             role: 'Senior Systems Engineer',
             password: const Value('password123'),
             location: const Value('San Antonio, TX'),
@@ -103,7 +102,7 @@ Future<void> seedDatabase(AppDatabase db) async {
             dateOfBirth: Value(DateTime(1985, 5, 15)),
           ),
         );
-    Log.info('- Default User (Demo Technician) created');
+    Log.info('- Default demo user created');
   } else {
     // Update existing user to ensure correct information
     try {
@@ -111,7 +110,7 @@ Future<void> seedDatabase(AppDatabase db) async {
       User? userToUpdate;
       try {
         userToUpdate = existingUsers.firstWhere(
-          (u) => u.username == 'jwhite' || u.username == 'admin',
+          (u) => u.username == 'demotech' || u.username == 'admin',
         );
       } catch (e) {
         // If no jwhite or admin, use first user
@@ -124,16 +123,16 @@ Future<void> seedDatabase(AppDatabase db) async {
         await db.updateUser(
           UsersCompanion(
             id: Value(userToUpdate.id),
-            username: const Value('jwhite'),
+            username: const Value('demotech'),
             fullName: const Value('Demo Technician'),
-            email: const Value('[redacted-email]'),
+            email: const Value('demotech@example.com'),
             role: const Value('Senior Systems Engineer'),
             bio: const Value('Senior Systems Engineer'),
             phoneNumber: const Value('(210) 937-2876'),
           ),
         );
         Log.info(
-          '- Updated user to Demo Technician with correct contact information',
+          '- Updated demo user contact information',
         );
       }
     } catch (e) {
@@ -149,31 +148,30 @@ Future<void> seedDatabase(AppDatabase db) async {
     Log.info('- Clients already exist, skipping core client seed.');
   } else {
     // Insert Clients
-    final NorthwindId = await db
+    final clientBlueId = await db
         .into(db.clients)
-        .insert(ClientsCompanion.insert(name: 'Northwind', themeColor: 'blue'));
+        .insert(ClientsCompanion.insert(name: 'Northwind Credit Union', themeColor: 'blue'));
 
-    final LoneStarId = await db.into(db.clients).insert(
+    final clientAmberId = await db.into(db.clients).insert(
           ClientsCompanion.insert(name: 'Lone Star Bank', themeColor: 'yellow'),
         );
 
-    final GulfCoastId = await db.into(db.clients).insert(
+    final clientRedId = await db.into(db.clients).insert(
           ClientsCompanion.insert(name: 'Gulf Coast Bank', themeColor: 'red'),
         );
 
     // Insert Starting Points
     await db.into(db.startingPoints).insert(
           StartingPointsCompanion.insert(
-            name: "Home Base",
-            latitude: 29.4241, // [redacted-address]
+            name: 'Home Base',
+            latitude: 29.4241,
             longitude: -98.4936,
           ),
         );
 
     await db.into(db.startingPoints).insert(
           StartingPointsCompanion.insert(
-            name:
-                'Office', // Shop: [redacted-address]
+            name: 'Service Shop',
             latitude: 29.5150,
             longitude: -98.4600,
           ),
@@ -181,16 +179,16 @@ Future<void> seedDatabase(AppDatabase db) async {
 
     await db.into(db.startingPoints).insert(
           StartingPointsCompanion.insert(
-            name: "Home Base 2",
+            name: 'Home Base 2',
             latitude: 29.703,
             longitude: -98.124,
           ),
         );
 
-    // Insert Sites - Northwind
+    // Insert Sites - Northwind Credit Union
     await db.into(db.sites).insert(
           SitesCompanion.insert(
-            clientId: NorthwindId,
+            clientId: clientBlueId,
             branchName: 'Bulverde Crossing',
             address: 'Bulverde Crossing, TX',
             latitude: 29.682,
@@ -201,7 +199,7 @@ Future<void> seedDatabase(AppDatabase db) async {
 
     await db.into(db.sites).insert(
           SitesCompanion.insert(
-            clientId: NorthwindId,
+            clientId: clientBlueId,
             branchName: 'Stone Oak',
             address: 'Stone Oak, TX',
             latitude: 29.645,
@@ -213,7 +211,7 @@ Future<void> seedDatabase(AppDatabase db) async {
     // Insert Sites - Lone Star Bank
     await db.into(db.sites).insert(
           SitesCompanion.insert(
-            clientId: LoneStarId,
+            clientId: clientAmberId,
             branchName: 'Alamo Heights',
             address: 'Alamo Heights, TX',
             latitude: 29.480,
@@ -224,7 +222,7 @@ Future<void> seedDatabase(AppDatabase db) async {
 
     await db.into(db.sites).insert(
           SitesCompanion.insert(
-            clientId: LoneStarId,
+            clientId: clientAmberId,
             branchName: 'Downtown',
             address: 'Downtown, TX',
             latitude: 29.424,
@@ -236,7 +234,7 @@ Future<void> seedDatabase(AppDatabase db) async {
     // Insert Sites - Gulf Coast Bank
     await db.into(db.sites).insert(
           SitesCompanion.insert(
-            clientId: GulfCoastId,
+            clientId: clientRedId,
             branchName: 'New Braunfels',
             address: 'New Braunfels, TX',
             latitude: 29.700,
@@ -247,7 +245,7 @@ Future<void> seedDatabase(AppDatabase db) async {
 
     await db.into(db.sites).insert(
           SitesCompanion.insert(
-            clientId: GulfCoastId,
+            clientId: clientRedId,
             branchName: 'Seguin',
             address: 'Seguin, TX',
             latitude: 29.560,
@@ -276,7 +274,7 @@ Future<void> seedDatabase(AppDatabase db) async {
   if (existingTraffic == null) {
     await db.insertTraffic(
       TrafficSnapshotCompanion.insert(
-        routeLabel: 'Northwind - Bulverde',
+        routeLabel: 'Northwind - Demo Route',
         etaMinutes: 22,
         conditionLabel: 'Light',
         fetchedAt: DateTime.now(),
@@ -493,7 +491,7 @@ Future<void> seedDatabase(AppDatabase db) async {
   await _ingestKnowledgeEntries(db);
 
   Log.info('Database seeded successfully!');
-  Log.info('- 3 Clients (Northwind, Lone Star Bank, Gulf Coast Bank)');
+  Log.info('- 3 demo clients');
   Log.info('- 3 Starting Points');
   Log.info('- 6 Sites total');
   Log.info('- Offline-first dashboard data ready');
@@ -922,192 +920,6 @@ Future<void> _ingestKnowledgeEntries(AppDatabase db) async {
   Log.info('=== Knowledge Ingestion End ===');
 }
 
-Future<void> _seedGulfCoastLocations(AppDatabase db) async {
-  final allSites = await db.getAllSites();
-  final GulfCoastSites = allSites
-      .where(
-        (s) =>
-            s.branchName.contains('Northwest Blvd') ||
-            s.branchName.contains('Alice'),
-      )
-      .toList();
-
-  if (GulfCoastSites.isNotEmpty) {
-    Log.info('- GulfCoast locations already enriched, skipping.');
-    return;
-  }
-
-  Log.info('Enriching Gulf Coast Bank locations...');
-
-  // Find GulfCoast Client ID
-  final clients = await db.getAllClients();
-  final GulfCoastClient = clients.firstWhere(
-    (c) => c.name.toLowerCase().contains('gulfcoast'),
-    orElse: () => throw Exception('Gulf Coast Bank client not found'),
-  );
-
-  final List<Map<String, dynamic>> newSites = [
-    {
-      'name': 'Alice',
-      'address': '1200 E. Main, Alice, TX',
-      'lat': 27.75,
-      'long': -98.07,
-      'region': 'South',
-    },
-    {
-      'name': 'Aransas Pass',
-      'address': '1005 S. Commercial St, Aransas Pass, TX',
-      'lat': 27.904,
-      'long': -97.149,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'Bastrop',
-      'address': '499 Highway 71 West, Bastrop, TX',
-      'lat': 30.110,
-      'long': -97.311,
-      'region': 'Central',
-    },
-    {
-      'name': 'Beeville',
-      'address': '100 S Washington, Beeville, TX',
-      'lat': 28.401,
-      'long': -97.750,
-      'region': 'South',
-    },
-    {
-      'name': 'Bryan (Texas Ave)',
-      'address': '2807 S Texas Ave, Bryan, TX',
-      'lat': 30.655,
-      'long': -96.353,
-      'region': 'East',
-    },
-    {
-      'name': 'Bryan (29th St)',
-      'address': '3710 E. 29th St., Bryan, TX',
-      'lat': 30.665,
-      'long': -96.342,
-      'region': 'East',
-    },
-    {
-      'name': 'Bryan (University)',
-      'address': '3333 E University Dr, Bryan, TX',
-      'lat': 30.648,
-      'long': -96.331,
-      'region': 'East',
-    },
-    {
-      'name': 'Caldwell',
-      'address': '129 W Buck St, Caldwell, TX',
-      'lat': 30.531,
-      'long': -96.691,
-      'region': 'East',
-    },
-    {
-      'name': 'Canton',
-      'address': '898 W Dallas St, Canton, TX',
-      'lat': 32.553,
-      'long': -95.864,
-      'region': 'North',
-    },
-    {
-      'name': 'Cedar Park',
-      'address': '650 E Whitestone Blvd, Cedar Park, TX',
-      'lat': 30.506,
-      'long': -97.824,
-      'region': 'Central',
-    },
-    {
-      'name': 'Mathis',
-      'address': '103 N Highway 359, Mathis, TX',
-      'lat': 28.09,
-      'long': -97.82,
-      'region': 'South',
-    },
-    {
-      'name': 'Sinton',
-      'address': '1127 E Sinton Street, Sinton, TX',
-      'lat': 28.036,
-      'long': -97.509,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'Taft',
-      'address': '421 Green Ave., Taft, TX',
-      'lat': 27.981,
-      'long': -97.400,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'CC - Northwest',
-      'address': '14201 Northwest Blvd, Corpus Christi, TX',
-      'lat': 27.854,
-      'long': -97.584,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'CC - Leopard',
-      'address': '11113 Leopard Street, Corpus Christi, TX',
-      'lat': 27.818,
-      'long': -97.534,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'CC - Water St',
-      'address': '921 N Water Street, Corpus Christi, TX',
-      'lat': 27.801,
-      'long': -97.394,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'CC - Saratoga',
-      'address': '4002 Saratoga Blvd, Corpus Christi, TX',
-      'lat': 27.701,
-      'long': -97.394,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'CC - Staples South',
-      'address': '6670 S. Staples St., Corpus Christi, TX',
-      'lat': 27.652,
-      'long': -97.375,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'CC - Staples North',
-      'address': '4115 S Staples St, Corpus Christi, TX',
-      'lat': 27.712,
-      'long': -97.382,
-      'region': 'Coastal',
-    },
-    {
-      'name': 'CC - Padre Island',
-      'address': '15201 S Padre Island Dr, Corpus Christi, TX',
-      'lat': 27.615,
-      'long': -97.234,
-      'region': 'Coastal',
-    },
-  ];
-
-  for (final site in newSites) {
-    try {
-      await db.into(db.sites).insert(
-            SitesCompanion.insert(
-              clientId: GulfCoastClient.id,
-              branchName: site['name'],
-              address: site['address'],
-              latitude: site['lat'],
-              longitude: site['long'],
-              region: site['region'],
-            ),
-          );
-    } catch (e) {
-      Log.info('Error seeding site ${site['name']}: $e');
-    }
-  }
-  Log.info('✓ Added ${newSites.length} Gulf Coast Bank locations');
-}
-
 Future<void> _seedTeamMembers(AppDatabase db) async {
   // Check if we already have the expected count to avoid constant deletions
   final allUsers = await db.getAllUsers();
@@ -1132,18 +944,17 @@ Future<void> _seedTeamMembers(AppDatabase db) async {
 
   // If we already have everyone, don't clear and recreate unless names changed
   if (existingTeamCount == teamMemberUsernames.length &&
-      !allUsers.any((u) => u.username == 'jbennet' || u.username == 'Chand')) {
+      !allUsers.any((u) => u.username == 'legacy_demo')) {
     Log.info('- Team members already up to date.');
     return;
   }
 
   Log.info('Updating team members list...');
 
-  // Delete existing team members (by username) - keeps Demo Technician and other users
+  // Delete existing team members (by username) - keeps the primary demo user
   for (var user in allUsers) {
     if (teamMemberUsernames.contains(user.username.toLowerCase()) ||
-        user.username.toLowerCase() == 'jbennet' ||
-        user.username.toLowerCase() == 'tech3') {
+        user.username.toLowerCase() == 'legacy_demo') {
       await (db.delete(db.users)..where((tbl) => tbl.id.equals(user.id))).go();
     }
   }
@@ -1152,42 +963,42 @@ Future<void> _seedTeamMembers(AppDatabase db) async {
     {
       'username': 'tech1',
       'fullName': 'Demo Technician 1',
-      'email': '[redacted-email]',
+      'email': 'tech1@example.com',
     },
     {
       'username': 'tech2',
       'fullName': 'Demo Technician 2',
-      'email': '[redacted-email]',
+      'email': 'tech2@example.com',
     },
     {
       'username': 'tech3',
       'fullName': 'Demo Technician 3',
-      'email': '[redacted-email]',
+      'email': 'tech3@example.com',
     },
     {
       'username': 'tech4',
       'fullName': 'Demo Technician 4',
-      'email': '[redacted-email]',
+      'email': 'tech4@example.com',
     },
     {
       'username': 'tech5',
       'fullName': 'Demo Technician 5',
-      'email': '[redacted-email]',
+      'email': 'tech5@example.com',
     },
     {
       'username': 'tech6',
       'fullName': 'Demo Technician 6',
-      'email': '[redacted-email]',
+      'email': 'tech6@example.com',
     },
     {
       'username': 'tech7',
       'fullName': 'Demo Technician 7',
-      'email': '[redacted-email]',
+      'email': 'tech7@example.com',
     },
     {
       'username': 'tech8',
       'fullName': 'Demo Technician 8',
-      'email': '[redacted-email]',
+      'email': 'tech8@example.com',
     },
   ];
 

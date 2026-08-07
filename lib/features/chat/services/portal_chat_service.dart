@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:fsc_portal/database/app_database.dart';
+import 'package:servicecore/database/app_database.dart';
 import '../models/portal_chat_models.dart' as model;
 import 'dart:convert';
 

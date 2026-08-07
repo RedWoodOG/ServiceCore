@@ -1,4 +1,4 @@
-/// FSC Portal - Complete UI Specification
+/// ServiceCore - Complete UI Specification
 /// Comprehensive documentation of all visual elements, colors, layout, and components
 /// Based on the actual application screenshot
 library;

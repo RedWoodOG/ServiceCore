@@ -7,5 +7,5 @@
 void main() async {
   print('Knowledge Table Count Script Starting...');
   // This is hard since I don't know the exact path of the sqlite file
-  // but usually it's in AppData/Roaming/FSC...
+  // but usually it's under the app data directory
 }

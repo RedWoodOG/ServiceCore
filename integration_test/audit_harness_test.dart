@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print
-/// FSC Portal - Audit Artifact Capture Harness
+/// ServiceCore - Audit Artifact Capture Harness
 ///
 /// This integration test captures artifacts for the five-protocol enforcing audit:
 /// - Screenshots (RLDF Visual)
@@ -22,14 +22,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:provider/provider.dart';
 
-import 'package:fsc_portal/main.dart';
-import 'package:fsc_portal/database/app_database.dart';
-import 'package:fsc_portal/database/seed_service.dart';
-import 'package:fsc_portal/providers/auth_provider.dart';
-import 'package:fsc_portal/providers/theme_provider.dart';
-import 'package:fsc_portal/app_shell/eva_state.dart';
-import 'package:fsc_portal/app_shell/navigation_state.dart';
-import 'package:fsc_portal/services/weather_update_manager.dart';
+import 'package:servicecore/main.dart';
+import 'package:servicecore/database/app_database.dart';
+import 'package:servicecore/database/seed_service.dart';
+import 'package:servicecore/providers/auth_provider.dart';
+import 'package:servicecore/providers/theme_provider.dart';
+import 'package:servicecore/app_shell/eva_state.dart';
+import 'package:servicecore/app_shell/navigation_state.dart';
+import 'package:servicecore/services/weather_update_manager.dart';
 
 /// Audit run configuration
 class AuditConfig {
@@ -351,7 +351,7 @@ void main() {
   group('Audit Artifact Capture', () {
     testWidgets('Full audit capture run', (WidgetTester tester) async {
       print('\n========================================');
-      print('FSC PORTAL - AUDIT ARTIFACT CAPTURE');
+      print('SERVICECORE - AUDIT ARTIFACT CAPTURE');
       print('Run ID: ${AuditConfig.runId}');
       print('========================================\n');
       

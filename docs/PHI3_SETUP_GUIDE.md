@@ -409,7 +409,7 @@ EVA will fall back to keyword-based search from knowledge base.
 For issues or questions:
 1. Check this guide's Troubleshooting section
 2. Review console logs for error messages
-3. Contact: [redacted-email]
+3. Contact: your deployment maintainer
 
 ---
 

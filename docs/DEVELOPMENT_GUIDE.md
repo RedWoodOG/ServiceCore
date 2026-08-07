@@ -32,7 +32,7 @@
 - Offline-first architecture (no backend)
 
 **Primary Use Case:**
-Field service technicians servicing ATMs, currency counters, check scanners, and other banking equipment at client locations (Northwind, Lone Star Bank, Gulf Coast Bank).
+Field service technicians servicing ATMs, currency counters, check scanners, and similar equipment at client sites. Clients are deployment data, not part of the product.
 
 ---
 

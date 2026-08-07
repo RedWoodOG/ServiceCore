@@ -845,11 +845,11 @@ class _OperationsViewState extends State<OperationsView> {
     if (themeColor == null) return theme.colorScheme.primary;
     switch (themeColor.toLowerCase()) {
       case 'blue':
-        return AppColors.pinNorthwind;
+        return AppColors.pinClientBlue;
       case 'red':
-        return AppColors.pinGulfCoast;
+        return AppColors.pinClientRed;
       case 'yellow':
-        return AppColors.pinLoneStar;
+        return AppColors.pinClientAmber;
       default:
         return theme.colorScheme.primary;
     }

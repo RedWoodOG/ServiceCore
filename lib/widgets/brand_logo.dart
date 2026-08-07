@@ -1,4 +1,4 @@
-/// FSC Logo Widget
+/// Brand logo widget.
 /// Components must never reference logo files directly.
 /// Uses AssetResolver to select appropriate variant.
 library;
@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../theme/asset_resolver.dart';
 import '../providers/theme_provider.dart';
 
-class FscLogo extends StatelessWidget {
+class BrandLogo extends StatelessWidget {
   /// Logo dimensions. Preserves aspect ratio.
   final double? width;
   final double? height;
@@ -21,7 +21,7 @@ class FscLogo extends StatelessWidget {
   /// Fit mode for the logo.
   final BoxFit fit;
 
-  const FscLogo({
+  const BrandLogo({
     super.key,
     this.width,
     this.height,

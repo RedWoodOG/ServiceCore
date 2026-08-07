@@ -1,4 +1,4 @@
-/// The boot state machine for FSC-Portal startup.
+/// The boot state machine for ServiceCore startup.
 ///
 /// Boot is deterministic: each state represents a checkpoint in the
 /// startup sequence. If any checkpoint fails, boot transitions to

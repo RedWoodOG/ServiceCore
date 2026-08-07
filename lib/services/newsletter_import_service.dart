@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-import 'package:fsc_portal/database/app_database.dart';
+import 'package:servicecore/database/app_database.dart';
 import 'package:drift/drift.dart' as drift;
 
 /// Service to import newsletter content from PDF into company announcements

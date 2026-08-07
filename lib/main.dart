@@ -18,7 +18,6 @@ import 'theme/app_theme.dart';
 import 'app_shell/portal_shell.dart';
 import 'app_shell/eva_state.dart';
 import 'app_shell/navigation_state.dart';
-import 'scripts/fix_starting_points.dart';
 import 'util/log.dart';
 import 'services/weather_update_manager.dart';
 import 'features/continuing_education/continuing_education_home_view.dart';
@@ -156,14 +155,6 @@ void main() async {
     Log.error('Error seeding database: $e');
     Log.error('Stack: $stackTrace');
     // Continue anyway - app might work with existing data
-  }
-
-  // Fix starting point coordinates (one-time update for existing databases)
-  try {
-    await fixStartingPointCoordinates(database);
-  } catch (e) {
-    // Silently fail if coordinates already correct or points don't exist
-    Log.info('Note: Starting point coordinates check: $e');
   }
 
   final networkReachability = NetworkReachabilityNotifier();
@@ -309,7 +300,7 @@ class _PortalOfflineAppState extends State<PortalOfflineApp> {
     final themeProvider = context.watch<ThemeProvider>();
 
     return MaterialApp(
-      title: 'FSC Portal',
+      title: 'ServiceCore',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

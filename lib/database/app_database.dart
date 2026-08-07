@@ -174,7 +174,7 @@ class WorkOrders extends Table {
   BoolColumn get onServiceContract =>
       boolean().withDefault(const Constant(false))();
   TextColumn get contractType =>
-      text().nullable()(); // e.g., 'GulfCoast_standard'
+      text().nullable()(); // e.g., 'client_standard'
 
   // Reference/PO
   TextColumn get referenceNumber => text().nullable()();

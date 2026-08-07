@@ -1,129 +1,77 @@
-# FSC Portal (Development Branch)
+# ServiceCore
 
-**Canonical working directory:** `H:\FSC-Portal\FSC-Portal` — open this folder in your IDE; run all Flutter commands here.
+Field service portal for equipment-servicing operations — work orders, sites, expenses,
+photo attachments, dispatch mapping, and continuing-education tracking.
 
-**Version:** 1.1.0 (Development)  
-**Base:** Cloned from Offline-Portal 1.0.0 (Stable MVP)  
-**Purpose:** Active development for security features and improvements
+Built and owned by VyreVault Studios. Customers are **deployments**, not forks.
 
-**Connectivity:** **Offline-capable, not offline-only** — core workflows must work without a network (local DB); online features (sync, APIs, fleet, updates) are required when connected, with clear behavior when disconnected. See `../DEVELOPMENT_GUIDE.md` (*Connectivity model*).
+## What it is
 
----
+A **local-first Flutter application**. All core field workflows run with no network:
+work orders, site data, expenses and attachments live in a local SQLite database via
+Drift. Network is used opportunistically — weather, map tiles, news, external course
+links — and every one of those paths degrades to a local experience when the device is
+offline.
 
-## ⚠️ IMPORTANT
+- **Targets:** Windows (primary) and Android. No iOS/macOS/web.
+- **Storage:** Drift + SQLite, migrations in `lib/database/app_database.dart`
+- **State:** `provider`
+- **Maps:** `flutter_map` v8 + OSM/Carto raster tiles
+- **Security:** `flutter_secure_storage` + `cryptography` for at-rest DB encryption
 
-**This is the DEVELOPMENT branch.**
-
-- ✅ Safe to experiment
-- ✅ Security features being added
-- ✅ Breaking changes allowed
-- ⚠️ Not for production deployment
-
-**For stable deployment, use:** `H:\FSC-Portal\Offline-Portal`
-
----
-
-## Current Development Focus
-
-### Phase 1: Security Architecture (In Progress)
-
-**Implementing:**
-1. Windows SID-based authentication
-2. Hybrid encryption (KDF + SQLCipher)
-3. MKPE provenance tracking
-4. Key management and recovery
-
-**Status:** Not yet started (clone just created)
-
----
-
-## Directory Structure
+## Layout
 
 ```
-H:\FSC-Portal\
-├── Offline-Portal/     ← STABLE MVP (v1.0.0) - DO NOT MODIFY
-└── FSC-Portal/         ← DEVELOPMENT (v1.1.0) - CANONICAL WORKDIR (this repo)
+lib/
+  application/   services (work orders, expenses, documents), boot, error types
+  database/      Drift schema, migrations, seed
+  features/      one directory per screen area
+  providers/     app-wide ChangeNotifiers (auth, theme, reachability)
+  services/      integrations (weather, workflow, encryption, LLM)
+  theme/         palette, typography, asset resolution
+docs/            development guide, design system, security audit
 ```
 
----
+## Getting started
 
-## Development Rules
-
-### ✅ DO:
-- Experiment with new features
-- Test security implementations
-- Refactor and improve
-- Break things and fix them
-
-### ❌ DON'T:
-- Deploy this to production
-- Copy changes back to Offline-Portal without testing
-- Delete the Offline-Portal directory
-
----
-
-## Database Isolation
-
-**Development database will be separate:**
-
-- Stable: `%USERPROFILE%\Documents\portal_offline.sqlite`
-- Development: `%USERPROFILE%\Documents\fsc_portal_dev.sqlite`
-
-This ensures no interference with your stable deployment.
-
----
-
-## How to Work
-
-### Running Development Version
-
-```powershell
-cd H:\FSC-Portal\FSC-Portal
+```bash
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs   # Drift codegen
 flutter run -d windows
 ```
 
-### Building Development Version
+## Deployments
 
-```powershell
-cd H:\FSC-Portal\FSC-Portal
-flutter build windows --release
-```
+Client identity is **data, not code**. A deployment supplies:
 
-Output: `build\windows\x64\runner\Release\fsc_portal.exe`
+- **Clients and sites** — rows in the `clients` / `sites` tables. Each client carries a
+  `themeColor`; map pins and the map legend derive from it. There are no per-client
+  constants in the product.
+- **Branding** — `assets/logo.webp`, `assets/logo-{dark,light}.svg`, and the palette in
+  `lib/theme/app_theme.dart`.
+- **Seed data** — `lib/database/seed_service.dart` ships a small synthetic demo set
+  (three example clients, eight demo technicians). Replace it per deployment; do not
+  commit real client rosters, site lists, or staff records to this repository.
 
-### Testing Changes
+## Identifiers that must not be renamed
 
-1. Make changes in FSC-Portal
-2. Test thoroughly
-3. When stable, decide if you want to merge to Offline-Portal
-4. Keep Offline-Portal frozen until you're ready
+Several strings look like leftover branding but are load-bearing. Changing any of them
+breaks or destroys data in existing installs:
 
----
+| Identifier | Location | Why |
+|---|---|---|
+| `fsc_portal_v1_2026_security` | `services/encryption_service.dart` | Key-derivation salt. Changing it makes every encrypted database undecryptable. |
+| `fsc_portal_db_key_encrypted` | `services/encryption_service.dart` | Secure-storage key holding the DB key. Renaming orphans the key; the database cannot be opened. |
+| `fsc_export_salt_v1` | `services/encryption_service.dart` | Nonce for encrypted exports. Changing it breaks decryption of prior exports. |
+| `fsc_portal_dev.sqlite`, `fsc_portal/`, `fsc_portal.db` | `main.dart`, `database/`, `application/boot/` | On-disk database paths. Renaming orphans existing databases. |
+| `portal_offline/` | `document_service.dart`, `expenses_home_view.dart`, `local_llm_provider.dart` | On-disk directories for attachments, receipts and models. |
+| `admin@fscportal.local` | `application/boot/boot_service.dart` | Seeded admin account identity. |
 
-## Version History
+Renaming these is a **data migration**, not a find-and-replace. Do it deliberately, with
+a migration path, or not at all.
 
-### v1.1.0 (In Development)
-- Cloned from Offline-Portal v1.0.0
-- Prepared for security enhancements
-- Database renamed for isolation
+## Known issues
 
-### v1.0.0 (Stable - Offline-Portal)
-- MVP release
-- 8 core features functional
-- Production-ready build
-- See: `../Offline-Portal/PROJECT_STATUS_REPORT_2026.md`
-
----
-
-## Next Steps
-
-1. ✅ Clone created (DONE)
-2. ⏳ Implement Windows SID authentication
-3. ⏳ Add hybrid encryption layer
-4. ⏳ Build MKPE provenance system
-5. ⏳ Test thoroughly
-6. ⏳ Decide if/when to merge back
-
----
-
-**Questions?** Check the documentation in `../Offline-Portal/` for base functionality.
+See `docs/` and the issue tracker. Notably: `FeedbackCaptureService.capturePortal`
+reads `RenderObject.debugNeedsPaint`, which is assert-only and throws in release builds —
+the AI feedback capture works in debug and fails when shipped.

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/native.dart';
-import 'package:fsc_portal/database/app_database.dart';
+import 'package:servicecore/database/app_database.dart';
 
 void main() {
   late AppDatabase db;

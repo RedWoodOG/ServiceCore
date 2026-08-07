@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // Title
                       Text(
-                        'FSC Portal',
+                        'ServiceCore',
                         style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

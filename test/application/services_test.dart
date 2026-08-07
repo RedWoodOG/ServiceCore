@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/drift.dart' hide isNotNull, isNull;
 import 'package:drift/native.dart';
-import 'package:fsc_portal/database/app_database.dart';
-import 'package:fsc_portal/application/application.dart';
+import 'package:servicecore/database/app_database.dart';
+import 'package:servicecore/application/application.dart';
 
 void main() {
   late AppDatabase db;
