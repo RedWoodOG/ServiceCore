@@ -99,9 +99,17 @@ class _WorkViewState extends State<WorkView> {
     }
   }
 
-  bool _isTerminalWorkOrderStatus(String status) {
-    const terminal = {'completed', 'closed', 'cancelled'};
-    return terminal.contains(status.toLowerCase());
+  /// Statuses that accept no further change at all. `completed` is not one of
+  /// them: the workflow allows completed -> in_progress, so the edit sheet must
+  /// stay reachable to reopen the job.
+  bool _isFullyLockedStatus(String status) {
+    const locked = {'closed', 'cancelled'};
+    return locked.contains(status.toLowerCase());
+  }
+
+  bool _areFieldsLockedStatus(String status) {
+    const locked = {'completed', 'closed', 'cancelled'};
+    return locked.contains(status.toLowerCase());
   }
 
   Color _getStatusColor(String status, BuildContext context) {
@@ -468,19 +476,25 @@ class _WorkViewState extends State<WorkView> {
                               ),
                             ),
 
-                            // PHASE 1: Edit button overlay (hidden for terminal states)
+                            // Edit overlay. Hidden only for fully-locked states;
+                            // a completed job still opens, to reopen or close it.
                             Positioned(
                               bottom: 12,
                               right: 12,
-                              child: _isTerminalWorkOrderStatus(workOrder.status)
+                              child: _isFullyLockedStatus(workOrder.status)
                                   ? const SizedBox.shrink()
                                   : IconButton(
                                       icon: Icon(
-                                        Icons.edit,
+                                        _areFieldsLockedStatus(workOrder.status)
+                                            ? Icons.lock_open
+                                            : Icons.edit,
                                         color: theme.colorScheme.primary,
                                         size: 20,
                                       ),
-                                      tooltip: 'Edit Work Order',
+                                      tooltip:
+                                          _areFieldsLockedStatus(workOrder.status)
+                                              ? 'Reopen or Close Work Order'
+                                              : 'Edit Work Order',
                                       style: IconButton.styleFrom(
                                         backgroundColor:
                                             theme.colorScheme.surface.withValues(

@@ -174,6 +174,11 @@ class WorkOrderService {
   // ============================================
 
   /// Updates an existing work order's editable fields.
+  ///
+  /// Use [saveEdit] when a status transition may accompany the edit. Calling
+  /// this and then [transition] separately commits the field write before the
+  /// transition is attempted, so a rejected transition strands the caller on a
+  /// stale version and every retry fails as a phantom conflict.
   Future<Result<void>> update(UpdateWorkOrder cmd) async {
     // 1. Validate inputs
     if (cmd.workOrderId <= 0) {
@@ -265,6 +270,179 @@ class WorkOrderService {
   static bool _isNonEditableStatus(String status) {
     const blocked = {'completed', 'closed', 'cancelled'};
     return blocked.contains(status.toLowerCase());
+  }
+
+  /// Statuses that accept no further work at all — not edits, not transitions.
+  ///
+  /// `completed` is deliberately absent: the workflow allows
+  /// `completed -> in_progress` so a job can be reopened. Its *fields* are
+  /// locked (see [_isNonEditableStatus]), but the transition is legitimate.
+  static bool _isFullyLocked(String status) {
+    const blocked = {'closed', 'cancelled'};
+    return blocked.contains(status.toLowerCase());
+  }
+
+  // ============================================
+  // SAVE (FIELDS + STATUS, ATOMICALLY)
+  // ============================================
+
+  /// Applies a field edit and/or a status transition as one atomic operation.
+  ///
+  /// Callers must use this rather than calling [update] and [transition] in
+  /// sequence. Sequenced calls commit the field update before attempting the
+  /// transition, so a rejected transition leaves the row written and its
+  /// version bumped — the caller's in-memory copy is then stale and every
+  /// retry fails with a spurious "modified elsewhere" conflict, with no way
+  /// out but discarding the edit.
+  ///
+  /// Here everything is validated before anything is written, and both writes
+  /// share a transaction: if the transition is rejected the field update rolls
+  /// back with it, leaving the version untouched so a retry succeeds.
+  Future<Result<void>> saveEdit({
+    UpdateWorkOrder? fieldUpdate,
+    TransitionWorkOrder? transition,
+  }) async {
+    if (fieldUpdate == null && transition == null) {
+      return const Ok(null);
+    }
+
+    final workOrderId = fieldUpdate?.workOrderId ?? transition!.workOrderId;
+    if (workOrderId <= 0) {
+      return Err(ValidationFailure('Invalid work order ID', field: 'workOrderId'));
+    }
+    if (fieldUpdate != null &&
+        transition != null &&
+        fieldUpdate.workOrderId != transition.workOrderId) {
+      return Err(ValidationFailure('Mismatched work order IDs', field: 'workOrderId'));
+    }
+
+    final permissionError = await _checkUpdatePermission(workOrderId);
+    if (permissionError != null) {
+      return Err(permissionError);
+    }
+
+    WorkOrder? existing;
+    try {
+      existing = await _db.getWorkOrderById(workOrderId);
+      if (existing == null) {
+        return Err(NotFoundFailure('Work order $workOrderId not found'));
+      }
+    } catch (e, st) {
+      return Err(StorageFailure('Failed to fetch work order', cause: e, stackTrace: st));
+    }
+    final wo = existing;
+
+    // ---- Validate everything up front, before any write. ----
+    if (_isFullyLocked(wo.status)) {
+      return Err(ConflictFailure('This work order is closed and cannot be changed.'));
+    }
+
+    String trimmedDesc = '';
+    if (fieldUpdate != null) {
+      if (_isNonEditableStatus(wo.status)) {
+        return Err(
+          ConflictFailure(
+            'Reopen this work order before editing its details.',
+          ),
+        );
+      }
+      if (fieldUpdate.expectedVersion != wo.version) {
+        return Err(
+          ConflictFailure('Work order was modified elsewhere. Refresh and try again.'),
+        );
+      }
+      trimmedDesc = fieldUpdate.descriptionOfWork.trim();
+      if (trimmedDesc.isEmpty) {
+        return Err(
+          ValidationFailure('Description is required', field: 'descriptionOfWork'),
+        );
+      }
+    }
+
+    if (transition != null) {
+      if (transition.newStatus.isEmpty) {
+        return Err(ValidationFailure('New status is required', field: 'newStatus'));
+      }
+      if (!_workflowService.canTransition(wo.status, transition.newStatus)) {
+        return Err(
+          ConflictFailure(
+            'Cannot transition from ${wo.status} to ${transition.newStatus}',
+          ),
+        );
+      }
+    }
+
+    // ---- Both writes in one transaction. ----
+    try {
+      await _db.transaction(() async {
+        var current = wo;
+
+        if (fieldUpdate != null) {
+          final ok = await _db.updateWorkOrderWithLock(
+            WorkOrdersCompanion(
+              id: Value(workOrderId),
+              siteId: Value(wo.siteId),
+              descriptionOfWork: Value(trimmedDesc),
+              internalNotes: Value(fieldUpdate.internalNotes.trim()),
+              resolution: Value(
+                fieldUpdate.resolution?.trim().isEmpty ?? true
+                    ? null
+                    : fieldUpdate.resolution?.trim(),
+              ),
+              priority: Value(fieldUpdate.priority),
+              assignedTechnician: Value(fieldUpdate.assignedTechnician),
+              version: Value(fieldUpdate.expectedVersion),
+            ),
+          );
+          if (!ok) {
+            throw ConcurrentModificationException(
+              'Work order was modified elsewhere. Refresh and try again.',
+            );
+          }
+
+          await _db.into(_db.workOrderAuditLog).insert(
+                WorkOrderAuditLogCompanion.insert(
+                  workOrderId: workOrderId,
+                  userId: _currentUser?.id ?? 0,
+                  action: 'update',
+                  changeReason: const Value('User edited work order'),
+                ),
+              );
+
+          // Re-read so the transition sees the bumped version. This read is
+          // inside the transaction, so it observes the uncommitted write.
+          final refreshed = await _db.getWorkOrderById(workOrderId);
+          if (refreshed == null) {
+            throw WorkOrderNotFoundException('Work order $workOrderId not found');
+          }
+          current = refreshed;
+        }
+
+        if (transition != null) {
+          await _workflowService.transitionStatus(
+            workOrder: current,
+            newStatus: transition.newStatus,
+            userId: _currentUser?.id ?? 0,
+            notes: transition.notes,
+            reason: transition.reason,
+          );
+        }
+      });
+
+      Log.info('WorkOrderService: Saved edit for work order $workOrderId');
+      return const Ok(null);
+    } on InvalidStatusTransitionException catch (e) {
+      return Err(ConflictFailure(e.message));
+    } on WorkOrderNotFoundException catch (e) {
+      return Err(NotFoundFailure(e.message));
+    } on ConcurrentModificationException catch (e) {
+      return Err(ConflictFailure(e.message));
+    } on ValidationException catch (e) {
+      return Err(ValidationFailure(e.message));
+    } catch (e, st) {
+      Log.error('WorkOrderService: Failed to save work order edit', e, st);
+      return Err(StorageFailure('Failed to save work order', cause: e, stackTrace: st));
+    }
   }
 
   // ============================================
