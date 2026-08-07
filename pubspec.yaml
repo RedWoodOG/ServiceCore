@@ -42,8 +42,6 @@ dependencies:
   args: ^2.5.0
   
   # PHASE 2: Security & Encryption
-  win32: ^5.5.0
-  ffi: ^2.1.0
   cryptography: ^2.7.0
   flutter_secure_storage: ^9.2.2
   crypto: ^3.0.5

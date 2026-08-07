@@ -1,7 +1,7 @@
 import '../database/app_database.dart';
 import '../util/log.dart';
 import 'dart:convert';
-import 'local_llm_provider.dart';
+import 'assistant/assistant_model_provider.dart';
 
 class EvaResponse {
   final String text;
@@ -20,27 +20,33 @@ class EvaResponse {
 
 class EvaService {
   final AppDatabase _db;
-  final LocalLLMProvider _llm = LocalLLMProvider.instance;
-  bool _llmInitialized = false;
 
-  EvaService(this._db) {
-    // Initialize LLM provider asynchronously
-    _initializeLLM();
+  /// Optional generation capability. Defaults to none: EVA answers from
+  /// retrieval alone unless a provider is injected.
+  final AssistantModelProvider _model;
+  bool _modelReady = false;
+
+  EvaService(
+    this._db, {
+    AssistantModelProvider model = const UnavailableAssistantModelProvider(),
+  }) : _model = model {
+    _initializeModel();
   }
 
-  Future<void> _initializeLLM() async {
+  Future<void> _initializeModel() async {
     try {
-      await _llm.initialize();
-      _llmInitialized = _llm.isAvailable;
-      Log.info('EVA: LLM provider initialized (available: $_llmInitialized)');
+      await _model.initialize();
+      _modelReady = _model.isAvailable;
+      Log.info('EVA: model provider ready (available: $_modelReady)');
     } catch (e) {
-      Log.warn('EVA: Failed to initialize LLM provider: $e');
-      _llmInitialized = false;
+      Log.warn('EVA: model provider failed to initialize: $e');
+      _modelReady = false;
     }
   }
 
   /// Process a user query and return a structured response
-  /// If LLM is available, uses it for synthesis; otherwise falls back to keyword matching
+  /// Uses the model provider for synthesis when one is available; otherwise
+  /// answers from intent routing and keyword search over the knowledge base.
   Future<EvaResponse> processQuery(String query) async {
     Log.info('EVA: Processing query: "$query"');
     
@@ -76,11 +82,11 @@ class EvaService {
     final intent = _detectIntent(query);
     
     // Try LLM synthesis first if available
-    if (_llmInitialized) {
+    if (_modelReady) {
       try {
         return await _synthesizeWithLLM(query, intent);
       } catch (e) {
-        Log.warn('LLM synthesis failed, falling back to intent-based routing: $e');
+        Log.warn('EVA: synthesis failed, falling back to intent routing: $e');
       }
     }
     
@@ -97,7 +103,7 @@ class EvaService {
     return _handleGeneralQuery(query);
   }
 
-  /// Synthesize response using LLM with RAG context
+  /// Synthesize a response from retrieved context using the model provider.
   Future<EvaResponse> _synthesizeWithLLM(String query, String intent) async {
     try {
       // Retrieve context from knowledge base
@@ -115,7 +121,7 @@ class EvaService {
 
       // Stream tokens from LLM
       final responseBuffer = StringBuffer();
-      await _llm
+      await _model
           .generate(
             systemPrompt: systemPrompt,
             userQuery: query,
@@ -134,7 +140,7 @@ class EvaService {
         isStreaming: false,
       );
     } catch (e) {
-      Log.error('LLM synthesis error: $e');
+      Log.error('EVA: synthesis error: $e');
       rethrow;
     }
   }
