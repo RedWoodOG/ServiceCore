@@ -160,11 +160,17 @@ void main() {
           .update(db.workOrders)
           .replace(workOrder.copyWith(status: 'assigned', version: 2));
 
-      // Original user tries to update with stale version
-      expect(
+      // Original user tries to update with stale version.
+      //
+      // The target must be reachable from the *stale* status ('open'), or
+      // transitionStatus rejects the transition before it ever reaches the
+      // version check — which is what this test was silently doing with
+      // 'in_progress'. 'cancelled' is valid from 'open' and carries no
+      // business rules, so the version check is what fires.
+      await expectLater(
         () async => await service.transitionStatus(
           workOrder: workOrder, // Still has version 1
-          newStatus: 'in_progress',
+          newStatus: 'cancelled',
           userId: 1,
         ),
         throwsA(isA<ConcurrentModificationException>()),
