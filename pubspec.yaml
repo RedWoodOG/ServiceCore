@@ -62,7 +62,6 @@ flutter:
   
   assets:
     - assets/logo.webp
-    - assets/FSC_Logo.svg
     - assets/logo-light.svg
     - assets/logo-dark.svg
     - assets/images/

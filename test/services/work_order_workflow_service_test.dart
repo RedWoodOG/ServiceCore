@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:drift/drift.dart' hide isNotNull, isNull;
 import 'package:drift/native.dart';
 import 'package:servicecore/database/app_database.dart';
 import 'package:servicecore/services/work_order_workflow_service.dart';
@@ -75,6 +76,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'open',
               descriptionOfWork: const Value('Test work'),
               assignedTechnician: const Value(null),
@@ -97,6 +99,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'in_progress',
               descriptionOfWork: const Value('Test work'),
               assignedTechnician: const Value('tech1'),
@@ -119,6 +122,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'in_progress',
               descriptionOfWork: const Value('Test work'),
               assignedTechnician: const Value('tech1'),
@@ -144,6 +148,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'open',
               descriptionOfWork: const Value('Test work'),
               version: const Value(1),
@@ -172,6 +177,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'open',
               descriptionOfWork: const Value('Test work'),
               assignedTechnician: const Value('tech1'),
@@ -197,6 +203,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'open',
               descriptionOfWork: const Value('Test work'),
               assignedTechnician: const Value('tech1'),
@@ -223,6 +230,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'open',
               descriptionOfWork: const Value('Test work'),
               assignedTechnician: const Value('tech1'),
@@ -251,6 +259,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'in_progress',
               descriptionOfWork: const Value('Test work'),
             ),
@@ -286,6 +295,9 @@ void main() {
         descriptionOfWork: 'Fake',
         createdAt: DateTime.now(),
         version: 1,
+        repeatIssue: false,
+        workflowState: 'draft',
+        onServiceContract: false,
       );
 
       expect(
@@ -304,6 +316,7 @@ void main() {
           .insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
+              createdAt: DateTime.now(),
               status: 'open',
               descriptionOfWork: const Value('Test work'),
             ),
