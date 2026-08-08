@@ -1,3 +1,6 @@
+// This is a benchmark: reporting elapsed times to stdout is the point.
+// ignore_for_file: avoid_print
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/drift.dart' hide isNotNull, isNull;
 import 'package:drift/native.dart';

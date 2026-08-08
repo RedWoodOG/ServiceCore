@@ -17,7 +17,6 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:provider/provider.dart';
@@ -194,6 +193,10 @@ void main() {
       buffer.writeln('');
       
       // Get the semantics owner
+      // TODO(portability): renderView is deprecated in favour of renderViews,
+      // which is a real behaviour change for multi-view. Left as-is until the
+      // harness can actually be run against a device.
+      // ignore: deprecated_member_use
       final owner = RendererBinding.instance.renderView.owner?.semanticsOwner;
       if (owner != null) {
         void dumpNode(SemanticsNode node, int depth) {
@@ -204,6 +207,9 @@ void main() {
           buffer.writeln('$indent  hint: "${node.hint}"');
           buffer.writeln('$indent  value: "${node.value}"');
           buffer.writeln('$indent  actions: ${node.getSemanticsData().actions}');
+          // TODO(portability): flags -> flagsCollection; the replacement has a
+          // different shape, so this needs a run to verify the dump format.
+          // ignore: deprecated_member_use
           buffer.writeln('$indent  flags: ${node.getSemanticsData().flags}');
           
           node.visitChildren((child) {
