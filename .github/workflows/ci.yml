@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push to a branch makes the previous run's answer irrelevant.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-and-test:
+    name: Analyze & test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      # drift's NativeDatabase opens the system SQLite. ubuntu-latest ships
+      # libsqlite3-0, but the runner image is not contractually stable, so make
+      # the dependency explicit rather than inherited.
+      - name: Install SQLite
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsqlite3-dev
+
+      - uses: subosito/flutter-action@v2
+        with:
+          # Pin this to the team's local version once that's settled — a moving
+          # `stable` means CI can break on a day nobody touched the code.
+          channel: stable
+          cache: true
+
+      - run: flutter --version
+
+      - name: Resolve dependencies
+        run: flutter pub get
+
+      # app_database.g.dart is committed, but regenerating catches a schema
+      # change that was made without re-running the generator.
+      - name: Generate drift code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test --reporter expanded
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+
+      # Windows is the primary target, and the embedder is the part unit tests
+      # never touch: CMake project/binary names, plugin registration, the runner.
+      - name: Build release
+        run: flutter build windows --release
+
+      - name: Show output
+        shell: bash
+        run: ls -la build/windows/x64/runner/Release/
