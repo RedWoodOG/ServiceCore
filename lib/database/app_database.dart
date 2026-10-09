@@ -1671,7 +1671,7 @@ class WorkOrderWithDetails {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'fsc_portal_dev.sqlite'));
+    final file = File(AppPaths.liveDatabasePathIn(dbFolder));
 
     // Setup sqlite3 for Windows
     if (Platform.isWindows) {

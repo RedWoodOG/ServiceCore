@@ -10,6 +10,8 @@ import 'package:drift/native.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:path/path.dart' as p;
 
+import '../util/app_paths.dart';
+
 part 'app_database_standalone.g.dart';
 
 // Knowledge Entries Table (updated to match app_database.dart v9)
@@ -143,7 +145,7 @@ LazyDatabase _openStandaloneConnection([String? dbPath]) {
         dbFolder.createSync(recursive: true);
       }
 
-      file = File(p.join(dbFolder.path, 'fsc_portal_dev.sqlite'));
+      file = File(AppPaths.liveDatabasePathIn(dbFolder));
 
       if (Platform.environment.containsKey('DEBUG_DB_PATH')) {
         print('DEBUG: Standalone database path: ${file.path}');
