@@ -90,12 +90,14 @@ this revision.
 - **Expense amounts: a comma is dropped, not read as a decimal separator.** `12,50` is
   saved as `1250` (`lib/features/expenses/expenses_home_view.dart:269`). A thousands
   separator such as `1,234.50` parses as intended.
-- **Safe-mode recovery targets the wrong file.** Boot checks, backs up and deletes
-  `fsc_portal/fsc_portal.db` under the application documents directory
-  (`lib/application/boot/boot_service.dart:106-146`), but the live database is
-  `fsc_portal_dev.sqlite` directly in that directory (`lib/database/app_database.dart:1667`).
-  Recovery therefore cannot repair the real database.
+- **Safe-mode recovery targets the wrong file.** Boot looks for
+  `fsc_portal/fsc_portal.db` under the application documents directory and reads its size
+  (`lib/application/boot/boot_service.dart:146-154`, existence check at `:149-150`), and
+  recovery backs that file up and deletes it (`boot_service.dart:106-123`). The live
+  database is `fsc_portal_dev.sqlite` directly in that directory
+  (`lib/database/app_database.dart:1667`). Recovery therefore cannot repair the real
+  database.
 - **Search is a case-insensitive substring match, not a full-text index.**
-  `searchKnowledge` (`lib/database/app_database.dart:1401-1413`) and `searchWorkOrders`
+  `searchKnowledge` (`lib/database/app_database.dart:1401-1414`) and `searchWorkOrders`
   (`lib/database/app_database.dart:1166-1177`) lowercase the query and apply `contains`
   to lowercased columns.

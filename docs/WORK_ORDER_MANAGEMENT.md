@@ -98,10 +98,11 @@ draft → open → assigned → in_progress → completed → closed
 
 `WorkOrderService` (`lib/application/services/work_order_service.dart`) is the intended
 single write boundary for work orders: UI code calls it instead of writing to the database
-directly (`work_order_service.dart:97-100`). `create` validates the command, checks that
-the site exists, sets `createdAt` and `createdBy` (the signed-in user's full name, or
-`System`), and inserts inside a transaction. It accepts only the statuses `draft`, `open`,
-`on_hold` and `completed` (`work_order_service.dart:638-641`).
+directly (`work_order_service.dart:97-100`). `create` validates the command, returns an
+`UnauthorizedFailure` when no user is signed in (`work_order_service.dart:649-656`), checks
+that the site exists, sets `createdAt` and `createdBy` (the signed-in user's full name), and
+inserts inside a transaction. It accepts only the statuses `draft`, `open`, `on_hold` and
+`completed` (`work_order_service.dart:638-641`).
 
 ```dart
 final service = context.read<WorkOrderService>(); // provided in lib/main.dart
@@ -115,11 +116,12 @@ final result = await service.create(
   ),
 );
 
+// Result is sealed: handle both cases. showError stands in for your own error display.
 switch (result) {
   case Ok(value: final workOrderId):
-    // workOrderId is the id of the new work order
-  case Err(failure: final failure):
-    showError(failure.message);
+    print('Created work order $workOrderId');
+  case Err(failure: final f):
+    showError(f.message);
 }
 ```
 

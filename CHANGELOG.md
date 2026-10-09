@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 Changes since ServiceCore was extracted from the FSC-Portal monorepo (`4b40bff`). Each entry
-cites the pull request and commit it came from. No release number has been assigned; see
-the versioning note at the end of this section.
+cites its commit, and its pull request where there is one. No release number has been
+assigned; see the versioning note at the end of this section.
 
 ### Added
 
@@ -67,12 +67,22 @@ the versioning note at the end of this section.
 - Completed work orders could not be reopened from the UI although the workflow allows
   `completed` to `in_progress`. `closed` and `cancelled` accept no changes; `completed` locks
   its fields but still accepts a transition. (#2, `b0a71f2`)
-- Cleared the analyzer errors and infos that the first CI runs reported. Fixed test files
-  that could not compile (a missing `drift` import, `WorkOrdersCompanion.insert` calls
-  without the required `createdAt`, a `WorkOrder` literal missing required fields), an
-  unused import, and a `pubspec.yaml` asset entry for a deleted file. Two deprecated
-  semantics calls in `integration_test/audit_harness_test.dart` are suppressed rather than
-  migrated. (#3, `0240ace`, `2d72582`)
+- Cleared the analyzer errors and infos that the first CI runs reported. (#3, `0240ace`,
+  `2d72582`)
+  - Test files that could not compile: `drift` was not imported in two of them
+    (`test/performance/work_order_performance_test.dart` and
+    `test/services/work_order_workflow_service_test.dart`), nine
+    `WorkOrdersCompanion.insert` calls omitted the required `createdAt`, and a `WorkOrder`
+    literal omitted `repeatIssue`, `workflowState` and `onServiceContract`.
+  - Three unused or redundant imports removed: `dart:io` in
+    `lib/features/work/edit_work_order_sheet.dart` and `drift` in
+    `test/application/services_test.dart` (`0240ace`), and `package:flutter/semantics.dart` in
+    `integration_test/audit_harness_test.dart` (`2d72582`).
+  - A `pubspec.yaml` asset entry for a deleted file (`assets/FSC_Logo.svg`) removed.
+  - Two deprecated semantics calls in `integration_test/audit_harness_test.dart` are
+    suppressed with TODOs rather than migrated, and
+    `test/performance/work_order_performance_test.dart` ignores `avoid_print` for the whole
+    file (`2d72582`).
 - The optimistic-locking test asserted nothing, because it attempted an illegal transition
   before reaching the version check. It now uses a reachable transition and awaits the
   assertion. (#3, `c348240`)
@@ -113,9 +123,11 @@ Corrected against the source at this revision. Earlier entries below are left as
 ### Versioning note
 
 `pubspec.yaml` is `1.1.2+1` and `kPortalPackageVersion` is `1.1.2`
-(`lib/features/feedback/portal_build_version.dart`). FSC-Portal shipped releases v1.1.0 to
-v1.1.2 in May 2026 that have no entries in this file, while the newest numbered entry here is
-1.2.0 from January 2026. The next release number is the owner's decision.
+(`lib/features/feedback/portal_build_version.dart`). FSC-Portal published v1.1.0
+(2026-05-03) to v1.1.2 (2026-05-04). The `[1.1.0]` entry below is dated 2026-01-30 and
+describes the development fork, not that release, and there are no 1.1.1 or 1.1.2 entries.
+The newest numbered entry, `[1.2.0]` (2026-01-30), is higher than the current package
+version, 1.1.2. The next release number is the owner's decision.
 
 ---
 
