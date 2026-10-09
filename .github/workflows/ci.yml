@@ -28,8 +28,10 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          # Pin this to the team's local version once that's settled — a moving
-          # `stable` means CI can break on a day nobody touched the code.
+          # Pinned: a moving `stable` means CI can break on a day nobody touched
+          # the code. 3.44.9 is what the first green run (31232683632) used.
+          # Change it here and in the build-windows job together.
+          flutter-version: 3.44.9
           channel: stable
           cache: true
 
@@ -58,6 +60,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: 3.44.9
           channel: stable
           cache: true
 
