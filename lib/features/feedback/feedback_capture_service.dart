@@ -19,7 +19,17 @@ class FeedbackCaptureService {
     }
 
     final dpr = pixelRatio ?? MediaQuery.devicePixelRatioOf(context);
-    if (!boundary.debugNeedsPaint && boundary.size == Size.zero) {
+
+    // Do NOT consult `debugNeedsPaint` here. Its backing value is assigned
+    // inside an `assert(...)`, so with asserts stripped — release and profile —
+    // the getter reads an uninitialised `late` local and throws
+    // LateInitializationError. Reading it made this work in `flutter run` and
+    // fail in every shipped build.
+    //
+    // Callers await `endOfFrame` before capturing, which is what actually
+    // guarantees the boundary has painted. A size check is all that belongs
+    // here, and it also keeps the scale factors below finite.
+    if (boundary.size.isEmpty) {
       return null;
     }
 

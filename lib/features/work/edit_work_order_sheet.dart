@@ -427,7 +427,9 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
                 ),
               )
               .toList(),
-          onChanged: (value) {
+          onChanged: _areFieldsLocked()
+              ? null
+              : (value) {
             setState(() {
               _selectedPriority = value;
             });
@@ -528,11 +530,13 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
                   ),
                 ),
               ],
-              onChanged: (value) {
-                setState(() {
-                  _selectedTechnician = value;
-                });
-              },
+              onChanged: _areFieldsLocked()
+                  ? null
+                  : (value) {
+                      setState(() {
+                        _selectedTechnician = value;
+                      });
+                    },
             );
           },
         ),
@@ -552,6 +556,7 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
         const SizedBox(height: 8),
         TextField(
           controller: _descriptionController,
+          enabled: !_areFieldsLocked(),
           maxLines: 4,
           maxLength: 1000,
           style: theme.textTheme.bodyMedium,
@@ -589,6 +594,7 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
         const SizedBox(height: 8),
         TextField(
           controller: _notesController,
+          enabled: !_areFieldsLocked(),
           maxLines: 3,
           maxLength: 500,
           style: theme.textTheme.bodyMedium,
@@ -633,6 +639,7 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
         const SizedBox(height: 8),
         TextField(
           controller: _resolutionController,
+          enabled: !_areFieldsLocked(),
           maxLines: 3,
           maxLength: 500,
           style: theme.textTheme.bodyMedium,
@@ -746,13 +753,8 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
   }
 
   bool _hasChanges() {
-    return _descriptionController.text !=
-            (widget.workOrder.descriptionOfWork ?? '') ||
-        _notesController.text != (widget.workOrder.internalNotes ?? '') ||
-        _resolutionController.text != (widget.workOrder.resolution ?? '') ||
-        _selectedStatus != widget.workOrder.status ||
-        _selectedPriority != widget.workOrder.priority ||
-        _selectedTechnician != widget.workOrder.assignedTechnician;
+    return _fieldsChangedExcludingStatus() ||
+        _selectedStatus != widget.workOrder.status;
   }
 
   bool _fieldsChangedExcludingStatus() {
@@ -766,15 +768,23 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
         _selectedTechnician != widget.workOrder.assignedTechnician;
   }
 
-  bool _isTerminalWorkOrder() {
-    const t = {'completed', 'closed', 'cancelled'};
-    return t.contains(widget.workOrder.status.toLowerCase());
+  /// Fields are read-only once the job is done. A completed work order can
+  /// still be transitioned (reopened or closed) — see [_isFullyLocked].
+  bool _areFieldsLocked() {
+    const locked = {'completed', 'closed', 'cancelled'};
+    return locked.contains(widget.workOrder.status.toLowerCase());
+  }
+
+  /// Nothing at all can be changed: no edits, no transitions.
+  bool _isFullyLocked() {
+    const locked = {'closed', 'cancelled'};
+    return locked.contains(widget.workOrder.status.toLowerCase());
   }
 
   Widget _buildPhotoAttachments(BuildContext context, ThemeData theme) {
     final docService = context.watch<DocumentService>();
     final auth = context.watch<AuthProvider>();
-    final canAdd = auth.currentUser != null && !_isTerminalWorkOrder();
+    final canAdd = auth.currentUser != null && !_areFieldsLocked();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -826,8 +836,8 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
                   final d = docs[i];
                   return _WorkOrderPhotoTile(
                     document: d,
-                    readOnly: _isTerminalWorkOrder(),
-                    onDelete: _isTerminalWorkOrder()
+                    readOnly: _areFieldsLocked(),
+                    onDelete: _areFieldsLocked()
                         ? null
                         : () => _confirmDeletePhoto(context, d.id),
                   );
@@ -956,9 +966,9 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
     });
 
     try {
-      if (_isTerminalWorkOrder()) {
+      if (_isFullyLocked()) {
         setState(() {
-          _errorMessage = 'This work order cannot be edited.';
+          _errorMessage = 'This work order is closed and cannot be changed.';
           _isSubmitting = false;
         });
         return;
@@ -977,54 +987,55 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
       final fieldsChanged = _fieldsChangedExcludingStatus();
       final statusChanged = _selectedStatus != widget.workOrder.status;
 
-      if (fieldsChanged) {
-        final updateRes = await svc.update(
-          UpdateWorkOrder(
-            workOrderId: widget.workOrder.id,
-            expectedVersion: widget.workOrder.version,
-            descriptionOfWork: _descriptionController.text,
-            internalNotes: _notesController.text,
-            resolution: _resolutionController.text.trim().isEmpty
-                ? null
-                : _resolutionController.text.trim(),
-            priority: _selectedPriority,
-            assignedTechnician: _selectedTechnician,
-          ),
-        );
-        if (!context.mounted) return;
-        if (updateRes.isErr) {
-          setState(() {
-            _errorMessage = updateRes.failureOrNull?.message ?? 'Update failed';
-            _isSubmitting = false;
-          });
-          return;
-        }
+      if (fieldsChanged && _areFieldsLocked()) {
+        setState(() {
+          _errorMessage = 'Reopen this work order before editing its details.';
+          _isSubmitting = false;
+        });
+        return;
       }
 
-      if (statusChanged) {
-        final transitionRes = await svc.transition(
-          TransitionWorkOrder(
-            workOrderId: widget.workOrder.id,
-            newStatus: _selectedStatus!,
-            reason: _reasonController.text.trim(),
-            notes: _notesController.text.trim(),
-          ),
-        );
-        if (!context.mounted) return;
-        if (transitionRes.isErr) {
-          setState(() {
-            _errorMessage =
-                transitionRes.failureOrNull?.message ?? 'Status change failed';
-            _isSubmitting = false;
-          });
-          return;
-        }
+      // One atomic call. Sequencing update() then transition() used to commit
+      // the field write before a rejected transition rolled anything back,
+      // leaving widget.workOrder.version stale and every retry failing as a
+      // phantom conflict.
+      final result = await svc.saveEdit(
+        fieldUpdate: fieldsChanged
+            ? UpdateWorkOrder(
+                workOrderId: widget.workOrder.id,
+                expectedVersion: widget.workOrder.version,
+                descriptionOfWork: _descriptionController.text,
+                internalNotes: _notesController.text,
+                resolution: _resolutionController.text.trim().isEmpty
+                    ? null
+                    : _resolutionController.text.trim(),
+                priority: _selectedPriority,
+                assignedTechnician: _selectedTechnician,
+              )
+            : null,
+        transition: statusChanged
+            ? TransitionWorkOrder(
+                workOrderId: widget.workOrder.id,
+                newStatus: _selectedStatus!,
+                reason: _reasonController.text.trim(),
+              )
+            : null,
+      );
+
+      if (!context.mounted) return;
+      if (result.isErr) {
+        setState(() {
+          _errorMessage = result.failureOrNull?.message ?? 'Save failed';
+          _isSubmitting = false;
+        });
+        return;
       }
 
       if (!mounted) return;
+      final messenger = ScaffoldMessenger.of(context);
       setState(() => _isSubmitting = false);
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.showSnackBar(
         const SnackBar(
           content: Text('Work order updated successfully'),
           backgroundColor: Colors.green,
