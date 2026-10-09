@@ -25,7 +25,7 @@
 **Portal Offline** is a Flutter desktop application (Windows primary) for field service management in the financial equipment industry. It's an offline-first application using SQLite (Drift) with reactive streams.
 
 **Key Technologies:**
-- Flutter 3.38.5 / Dart 3.10.4
+- Flutter 3.44.9 (pinned in CI, `.github/workflows/ci.yml`) and the Dart SDK bundled with it
 - Drift (SQLite ORM) with reactive queries
 - Provider for state management
 - Material Design with custom dark theme
@@ -206,7 +206,7 @@ import 'example_detail_view.dart';
 
 **Location:** `lib/database/app_database.dart`
 
-**Current Schema Version:** 11
+**Current Schema Version:** 15 (`schemaVersion` in `lib/database/app_database.dart`)
 
 ### Table Definition Pattern
 
@@ -302,7 +302,7 @@ class NewFeature extends Table {
 **Step 3:** Increment schema version
 ```dart
 @override
-int get schemaVersion => 12; // Was 11, now 12
+int get schemaVersion => 16; // Was 15, now 16
 ```
 
 **Step 4:** Add migration logic
@@ -312,8 +312,8 @@ MigrationStrategy get migration => MigrationStrategy(
   // ...
   onUpgrade: (Migrator m, int from, int to) async {
     // ... existing migrations
-    if (from < 12) {
-      // V12: Add NewFeature table
+    if (from < 16) {
+      // V16: Add NewFeature table
       await m.createTable(newFeature);
     }
   },
@@ -968,10 +968,10 @@ class Tasks extends Table {
 ])
 
 // Increment schema version
-int get schemaVersion => 12;
+int get schemaVersion => 16;
 
 // Add migration
-if (from < 12) {
+if (from < 16) {
   await m.createTable(tasks);
 }
 

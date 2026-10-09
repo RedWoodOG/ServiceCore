@@ -7,6 +7,130 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+Changes since ServiceCore was extracted from the FSC-Portal monorepo (`4b40bff`). Each entry
+cites its commit, and its pull request where there is one. No release number has been
+assigned; see the versioning note at the end of this section.
+
+### Added
+
+- `AppPaths` (`lib/util/app_paths.dart`): attachment and receipt paths are stored relative to
+  the documents root and resolved when read. Legacy absolute paths are re-rooted on read, so
+  no data migration is needed. Unit tests in `test/util/app_paths_test.dart`. (#1, `ab11271`)
+- `AssistantModelProvider` (`lib/services/assistant/assistant_model_provider.dart`) with an
+  explicit `UnavailableAssistantModelProvider` default, so text generation sits behind an
+  interface instead of a placeholder. (#1, `ab11271`)
+- `WorkOrderService.saveEdit()`: applies a field edit and an optional status transition in one
+  transaction. Tests in `test/application/work_order_save_edit_test.dart`. (#2, `b0a71f2`)
+- GitHub Actions CI (`.github/workflows/ci.yml`), run on pushes to `main` and on pull requests:
+  `flutter pub get`, Drift code generation, `flutter analyze` and `flutter test` on Ubuntu,
+  and a Windows release build. (#3, `cddc752`)
+- `dart_test.yaml` registers a `perf` tag. Tests tagged `perf` are excluded from CI and run
+  locally with `flutter test --tags perf`. (#3, `c348240`)
+
+### Changed
+
+- Extraction from the FSC-Portal monorepo (`4b40bff`):
+  - Package renamed `fsc_portal` to `servicecore`. Android identity changed from
+    `com.example.portal_offline` to `com.vyrevault.servicecore`.
+  - The seed data is now a synthetic demo set in place of real client, staff and site records.
+  - Map pin colours and the map legend derive from `clients.themeColor` instead of per-client
+    theme constants.
+  - `lib/widgets/fsc_logo.dart` renamed to `lib/widgets/brand_logo.dart`.
+  - `DEVELOPMENT_GUIDE.md`, `DESIGN_SYSTEM_2026.md` and `SECURITY_AUDIT_2026_01.md` moved to
+    `docs/`. More than 60 session-artifact documents, generated audit dumps and one-off
+    deployment migration scripts were removed.
+  - The README documents the on-disk paths, storage keys and crypto salts that must not be
+    renamed.
+- Removed the ONNX Runtime FFI path (`lib/ffi/onnxruntime_native.dart`,
+  `lib/services/onnxruntime_ffi.dart`, `lib/services/local_llm_provider.dart`) and the
+  `win32` and `ffi` dependencies. The path was disabled behind a flag that was never true, so
+  behaviour is unchanged: EVA answers by retrieval only. This removes Windows-only code
+  couplings; no iOS or macOS runner exists in the repository, which still has only
+  `android/` and `windows/` platform directories. (#1, `ab11271`)
+- The edit sheet disables locked fields instead of rejecting them only on save. (#2, `b0a71f2`)
+- Removed the `Phi-3-mini-4k-instruct` gitlink, which had no `.gitmodules`, and added it to
+  `.gitignore`. (#3, `0240ace`)
+
+### Fixed
+
+- Stored attachment and receipt paths no longer break when the application's documents
+  directory moves (for example the iOS container, which is recreated on every update).
+  (#1, `ab11271`)
+- AI feedback capture crashed in release and profile builds: `capturePortal` read
+  `RenderObject.debugNeedsPaint`, which throws when asserts are stripped. It now checks the
+  boundary size instead (`lib/features/feedback/feedback_capture_service.dart`). (#2, `b0a71f2`)
+- A rejected status transition during an edit left the work order on a stale version, so every
+  retry failed as a conflict. `saveEdit()` validates both parts first and rolls the field
+  update back with the transition. (#2, `b0a71f2`)
+- Completed work orders could not be reopened from the UI although the workflow allows
+  `completed` to `in_progress`. `closed` and `cancelled` accept no changes; `completed` locks
+  its fields but still accepts a transition. (#2, `b0a71f2`)
+- Cleared the analyzer errors and infos that the first CI runs reported. (#3, `0240ace`,
+  `2d72582`)
+  - Test files that could not compile: `drift` was not imported in two of them
+    (`test/performance/work_order_performance_test.dart` and
+    `test/services/work_order_workflow_service_test.dart`), nine
+    `WorkOrdersCompanion.insert` calls omitted the required `createdAt`, and a `WorkOrder`
+    literal omitted `repeatIssue`, `workflowState` and `onServiceContract`.
+  - Three unused or redundant imports removed: `dart:io` in
+    `lib/features/work/edit_work_order_sheet.dart` and `drift` in
+    `test/application/services_test.dart` (`0240ace`), and `package:flutter/semantics.dart` in
+    `integration_test/audit_harness_test.dart` (`2d72582`).
+  - A `pubspec.yaml` asset entry for a deleted file (`assets/FSC_Logo.svg`) removed.
+  - Two deprecated semantics calls in `integration_test/audit_harness_test.dart` are
+    suppressed with TODOs rather than migrated, and
+    `test/performance/work_order_performance_test.dart` ignores `avoid_print` for the whole
+    file (`2d72582`).
+- The optimistic-locking test asserted nothing, because it attempted an illegal transition
+  before reaching the version check. It now uses a reachable transition and awaits the
+  assertion. (#3, `c348240`)
+- The scaffold widget test (`test/widget_test.dart`) is skipped with its reason recorded
+  instead of failing on missing providers and `path_provider`. (#3, `c348240`)
+
+### Documentation corrections
+
+Corrected against the source at this revision. Earlier entries below are left as written.
+
+- README: removed the claim of at-rest database encryption. The database is opened with a
+  plain `NativeDatabase.createInBackground` (`lib/database/app_database.dart:1664-1676`);
+  the stored key is used only for a startup fingerprint and key export/import.
+- README: the do-not-rename table no longer says that renaming
+  `fsc_portal_v1_2026_security` makes "every encrypted database undecryptable" or that
+  renaming `fsc_portal_db_key_encrypted` stops "the database" opening. No database is
+  encrypted yet; the table now describes the stored key and key exports. The
+  `fsc_portal/fsc_portal.db` boot path is listed separately from the live database
+  `fsc_portal_dev.sqlite`, and the `portal_offline/` location now points at
+  `lib/util/app_paths.dart` (`local_llm_provider.dart` no longer exists).
+- README, Known issues: removed the `debugNeedsPaint` release-build crash, fixed in #2.
+  Added, each with file and line: no encryption at rest; expense amounts drop a comma
+  (`12,50` is saved as `1250`); safe-mode recovery acts on `fsc_portal/fsc_portal.db`, not the
+  live `fsc_portal_dev.sqlite`; knowledge and work order search are substring matches.
+- DEVELOPMENT_GUIDE: Flutter 3.38.5 / Dart 3.10.4 replaced by Flutter 3.44.9 (the version
+  pinned in CI) and the Dart SDK bundled with it. Current schema version corrected from 11 to
+  15, and the schema-version tutorial examples now go from 15 to 16.
+- WORK_ORDER_MANAGEMENT: the create example now uses `WorkOrderService.create` instead of a
+  direct `db.into(...)` insert, and lists the code paths that still write directly. The
+  permission matrix, the "Admin only" notes and the sanitization and upload rules are marked
+  as not enforced at this revision: role checks in `WorkOrderService` are TODO stubs and
+  `SecurityService` has no callers. The "full-text search" benchmark is relabelled as
+  substring search. The schema section states the current version (15).
+- The 1.2.0 entry below still says "Role-based permissions implemented", "Input
+  sanitization active", "File upload validation" and lists a "Full-text search" benchmark.
+  Those statements do not match the source at this revision (see the items above).
+
+### Versioning note
+
+`pubspec.yaml` is `1.1.2+1` and `kPortalPackageVersion` is `1.1.2`
+(`lib/features/feedback/portal_build_version.dart`). FSC-Portal published v1.1.0
+(2026-05-03) to v1.1.2 (2026-05-04). The `[1.1.0]` entry below is dated 2026-01-30 and
+describes the development fork, not that release, and there are no 1.1.1 or 1.1.2 entries.
+The newest numbered entry, `[1.2.0]` (2026-01-30), is higher than the current package
+version, 1.1.2. The next release number is the owner's decision.
+
+---
+
 ## [1.2.0] - 2026-01-30 - Phase 1: Work Order Enhancement
 
 ### Added
