@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../application/services/document_service.dart';
 import '../../application/services/work_order_service.dart';
 import '../../database/app_database.dart';
+import '../../util/app_paths.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/work_order_workflow_service.dart';
 import '../../theme/app_theme.dart';
@@ -1071,8 +1072,9 @@ class _WorkOrderPhotoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final file = File(document.filePath);
-    final exists = file.existsSync();
+    // Stored paths are root-relative; resolve against the current documents
+    // root so attachments survive an app-container move.
+    final file = AppPaths.resolveFile(document.filePath);
     final isImage = _looksLikeImage(document.filePath);
 
     return Material(
@@ -1085,7 +1087,7 @@ class _WorkOrderPhotoTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: isImage && exists
+              child: isImage
                   ? Image.file(
                       file,
                       fit: BoxFit.cover,

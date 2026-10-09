@@ -18,6 +18,7 @@ import 'theme/app_theme.dart';
 import 'app_shell/portal_shell.dart';
 import 'app_shell/eva_state.dart';
 import 'app_shell/navigation_state.dart';
+import 'util/app_paths.dart';
 import 'util/log.dart';
 import 'services/weather_update_manager.dart';
 import 'features/continuing_education/continuing_education_home_view.dart';
@@ -134,6 +135,15 @@ void main() async {
     currentUser = null;
     authService = null;
     encryptionService = null;
+  }
+
+  // Resolve the documents root once, before anything reads or writes user files.
+  // AppPaths.resolveSync() depends on this having completed.
+  try {
+    await AppPaths.init();
+  } catch (e, stackTrace) {
+    Log.error('Failed to resolve application documents directory', e, stackTrace);
+    rethrow; // Attachments, receipts and the database all live under this root.
   }
 
   // Initialize database

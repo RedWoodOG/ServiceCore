@@ -4,12 +4,12 @@ import 'package:drift/drift.dart' show OrderingTerm;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../application/services/expense_service.dart';
 import '../../database/app_database.dart';
+import '../../util/app_paths.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/glass_card.dart';
 
@@ -248,14 +248,13 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
     final shot = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
     if (shot == null || !context.mounted) return;
     try {
-      final appDir = await getApplicationDocumentsDirectory();
-      final dir = Directory(p.join(appDir.path, 'portal_offline', 'expenses', '$uid'));
-      if (!await dir.exists()) await dir.create(recursive: true);
+      final dir = await AppPaths.appDir(['expenses', '$uid']);
       final ext = p.extension(shot.path);
       final dest = p.join(dir.path, 'receipt_${DateTime.now().millisecondsSinceEpoch}$ext');
       await File(shot.path).copy(dest);
       if (mounted) {
-        setState(() => _receiptCopyPath = dest);
+        // Persist root-relative so the path survives an app-container move.
+        setState(() => _receiptCopyPath = AppPaths.toStorable(dest));
       }
     } catch (e) {
       if (mounted) {

@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
 
 import '../../database/app_database.dart';
+import '../../util/app_paths.dart';
 import '../../util/log.dart';
 import '../errors/app_failure.dart';
 import '../errors/result.dart';
@@ -110,17 +110,10 @@ class DocumentService {
     // Create storage directory
     String targetDir;
     try {
-      final appDir = await getApplicationDocumentsDirectory();
-      if (cmd.workOrderId != null) {
-        targetDir = path.join(appDir.path, 'portal_offline', 'work_orders', cmd.workOrderId.toString());
-      } else {
-        targetDir = path.join(appDir.path, 'portal_offline', 'sites', cmd.siteId.toString());
-      }
-      
-      final dir = Directory(targetDir);
-      if (!await dir.exists()) {
-        await dir.create(recursive: true);
-      }
+      final dir = cmd.workOrderId != null
+          ? await AppPaths.appDir(['work_orders', cmd.workOrderId.toString()])
+          : await AppPaths.appDir(['sites', cmd.siteId.toString()]);
+      targetDir = dir.path;
     } catch (e, st) {
       return Err(StorageFailure('Failed to create storage directory', cause: e, stackTrace: st));
     }
@@ -147,7 +140,7 @@ class DocumentService {
             workOrderId: Value(cmd.workOrderId),
             siteId: Value(cmd.siteId),
             fileName: cmd.fileName,
-            filePath: targetPath,
+            filePath: AppPaths.toStorable(targetPath),
             uploadedAt: DateTime.now(),
             uploadedBy: Value(_currentUser?.fullName ?? 'System'),
           ),
@@ -199,7 +192,7 @@ class DocumentService {
 
     // Delete file
     try {
-      final file = File(doc.filePath);
+      final file = AppPaths.resolveFile(doc.filePath);
       if (await file.exists()) {
         await file.delete();
       }
