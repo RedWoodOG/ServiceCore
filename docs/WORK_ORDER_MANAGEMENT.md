@@ -14,7 +14,7 @@ Complete CRUD system with workflow state management for work orders in FSC Porta
 - ✅ Status workflow with validation
 - ✅ Optimistic locking for concurrent updates
 - ✅ Comprehensive audit logging
-- ✅ Permission-based access control
+- ⏳ Permission-based access control (planned — not enforced at this revision; see the Permission Matrix under Security)
 - ✅ Transaction safety with rollback
 - ✅ Performance-optimized queries
 
@@ -81,12 +81,12 @@ draft → open → assigned → in_progress → completed → closed
 
 ### Status: closed
 - **Required:** Must transition from completed status
-- **Permission:** Admin only
+- **Permission (planned — not enforced at this revision):** Admin only
 - Final review complete
 - Terminal state (cannot be changed)
 
 ### Status: cancelled
-- **Permission:** Admin only
+- **Permission (planned — not enforced at this revision):** Admin only
 - Work order cancelled before completion
 - Terminal state (cannot be changed)
 
@@ -96,18 +96,45 @@ draft → open → assigned → in_progress → completed → closed
 
 ### Creating Work Orders
 
+`WorkOrderService` (`lib/application/services/work_order_service.dart`) is the intended
+single write boundary for work orders: UI code calls it instead of writing to the database
+directly (`work_order_service.dart:97-100`). `create` validates the command, checks that
+the site exists, sets `createdAt` and `createdBy` (the signed-in user's full name, or
+`System`), and inserts inside a transaction. It accepts only the statuses `draft`, `open`,
+`on_hold` and `completed` (`work_order_service.dart:638-641`).
+
 ```dart
-final workOrder = await db.into(db.workOrders).insertReturning(
-  WorkOrdersCompanion.insert(
+final service = context.read<WorkOrderService>(); // provided in lib/main.dart
+
+final result = await service.create(
+  CreateWorkOrder(
     siteId: selectedSiteId,
     status: 'draft',
-    createdAt: DateTime.now(),
-    descriptionOfWork: Value('Replace ATM card reader'),
-    priority: Value('high'),
-    createdBy: Value(currentUser.username),
+    priority: 'high',
+    descriptionOfWork: 'Replace ATM card reader',
   ),
 );
+
+switch (result) {
+  case Ok(value: final workOrderId):
+    // workOrderId is the id of the new work order
+  case Err(failure: final failure):
+    showError(failure.message);
+}
 ```
+
+Edits, status transitions, notes and equipment links have matching service methods:
+`update`, `saveEdit` (a field edit and an optional status transition applied in one
+transaction), `transition`, `addNote` and `linkEquipment`.
+
+**Known exceptions that still write without the service at this revision:**
+
+- `lib/application/services/import_service.dart:395` inserts imported `work_orders` rows
+  with `_db.into(_db.workOrders).insert(...)`.
+- `lib/features/work/create_work_order_sheet.dart:331` calls
+  `db.linkEquipmentToWorkOrder(...)` directly, although `WorkOrderService.linkEquipment`
+  exists.
+- `lib/database/seed_service.dart:396` and `:427` insert demo work orders directly.
 
 ### Editing Work Orders
 
@@ -136,6 +163,10 @@ showModalBottomSheet(
 ```
 
 ### Status Transitions
+
+This example calls the workflow engine, `WorkOrderWorkflowService`, directly. Application
+code goes through `WorkOrderService.transition` (or `saveEdit` when a field edit
+accompanies the transition), which apply the same transition rules.
 
 ```dart
 final workflowService = WorkOrderWorkflowService(db);
@@ -173,7 +204,13 @@ for (final trans in transitions) {
 
 ## Security
 
-### Permission Matrix
+### Permission Matrix (Planned — not enforced at this revision)
+
+The matrix below is the intended design, not current behavior. Role checks in
+`WorkOrderService` are TODO stubs: `_checkCreatePermission` and `_checkUpdatePermission`
+only require a signed-in user (`work_order_service.dart:646-667`). `SecurityService`
+(`lib/services/security_service.dart`) contains role logic, but nothing in `lib/` or
+`test/` calls it, and `WorkOrderWorkflowService` has no role checks.
 
 | Role | Create | View All | Edit Own | Edit Any | Delete | Complete | Close/Cancel |
 |------|--------|----------|----------|----------|--------|----------|--------------|
@@ -182,6 +219,11 @@ for (final trans in transitions) {
 | **Admin** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ### Validation Rules
+
+The sanitization and file-upload rules below are implemented in `SecurityService`
+(`sanitizeInput`, `validateFileUpload`), which has no callers at this revision, so they
+are not applied to work order input or uploads yet. `WorkOrderService` applies its own
+command validation (for example, a required site and a known status).
 
 **Input Sanitization:**
 - All text input trimmed
@@ -223,7 +265,7 @@ All changes logged to `work_order_audit_log` table:
 |-----------|--------|--------|--------|
 | Create 1,000 work orders | < 5s | TBD | ⏳ |
 | Query 10,000 by status | < 100ms | TBD | ⏳ |
-| Full-text search 10,000 | < 200ms | TBD | ⏳ |
+| Substring search 10,000 (`searchWorkOrders`; not a full-text index) | < 200ms | TBD | ⏳ |
 | 100 concurrent updates | < 2s | TBD | ⏳ |
 
 ### Database Indexes
@@ -439,6 +481,12 @@ class ErrorHandler {
 
 ## Database Schema
 
+The current `schemaVersion` is 15 (`lib/database/app_database.dart:550`). The tables and
+columns below are the Phase 1 additions made by the `from < 12` migration
+(`app_database.dart:599-627`). The `from < 14` migration (`app_database.dart:658-690`) later
+added further `work_orders` columns (scheduling, contact, billing, account numbers,
+service contract and reference/PO fields) that are not listed here.
+
 ### WorkOrders Table (Enhanced)
 
 ```sql
@@ -538,7 +586,7 @@ Located in `test/performance/work_order_performance_test.dart`
 **Benchmarks:**
 - ✅ Create 1,000 work orders
 - ✅ Query 10,000 by status
-- ✅ Full-text search 10,000 records
+- ✅ Substring search over 10,000 records (`searchWorkOrders`; not a full-text index)
 - ✅ 100 concurrent update transactions
 
 ---
