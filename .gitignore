@@ -87,3 +87,6 @@ inventory_temp/
 venv/
 env/
 __pycache__/
+
+# Local model checkout; was committed as an orphaned gitlink
+Phi-3-mini-4k-instruct/

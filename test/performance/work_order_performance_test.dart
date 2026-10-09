@@ -1,4 +1,15 @@
+// Benchmarks, not correctness tests. The thresholds are wall-clock and a
+// shared CI runner is not a stable clock — 'queries in < 100ms' measured 154ms
+// on GitHub's ubuntu runner while passing locally. Tagged so CI can skip them;
+// run deliberately with `flutter test --tags perf`.
+@Tags(['perf'])
+library;
+
+// Reporting elapsed times to stdout is the point of a benchmark.
+// ignore_for_file: avoid_print
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:drift/drift.dart' hide isNotNull, isNull;
 import 'package:drift/native.dart';
 import 'package:servicecore/database/app_database.dart';
 
