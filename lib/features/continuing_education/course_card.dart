@@ -73,13 +73,14 @@ class CourseCard extends StatelessWidget {
                       children: [
                         Icon(Icons.access_time,
                             size: 16,
-                            color:
-                                theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7)),
                         const SizedBox(width: 4),
                         Text(
                           '${course.durationHours}h',
                           style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12,
                           ),
                         ),
@@ -105,7 +106,8 @@ class CourseCard extends StatelessWidget {
                 children: [
                   Icon(Icons.business,
                       size: 16,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                   const SizedBox(width: 6),
                   Text(
                     course.provider,

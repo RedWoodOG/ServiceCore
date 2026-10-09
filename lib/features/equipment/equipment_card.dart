@@ -85,7 +85,8 @@ class EquipmentCard extends StatelessWidget {
                             .where((e) => e != null && e.isNotEmpty)
                             .join(' '),
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -98,14 +99,14 @@ class EquipmentCard extends StatelessWidget {
                         children: [
                           Icon(Icons.qr_code,
                               size: 14,
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                           const SizedBox(width: 4),
                           Text(
                             'S/N: ${equipment.serialNumber}',
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7),
                               fontSize: 12,
                             ),
                           ),

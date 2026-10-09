@@ -54,7 +54,8 @@ class EquipmentDetailSheet extends StatelessWidget {
                               .where((e) => e != null && e.isNotEmpty)
                               .join(' '),
                           style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                           ),
                         ),
                       ],

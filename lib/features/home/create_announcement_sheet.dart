@@ -6,7 +6,8 @@ class CreateAnnouncementSheet extends StatefulWidget {
   const CreateAnnouncementSheet({super.key});
 
   @override
-  State<CreateAnnouncementSheet> createState() => _CreateAnnouncementSheetState();
+  State<CreateAnnouncementSheet> createState() =>
+      _CreateAnnouncementSheetState();
 }
 
 class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
@@ -43,7 +44,9 @@ class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
       category: _category,
       title: _titleController.text,
       body: _bodyController.text,
-      actionLabel: _actionLabelController.text.isEmpty ? null : _actionLabelController.text,
+      actionLabel: _actionLabelController.text.isEmpty
+          ? null
+          : _actionLabelController.text,
     ));
 
     if (!mounted) return;
@@ -91,12 +94,14 @@ class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: Icon(Icons.close, color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                  icon: Icon(Icons.close,
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                 ),
               ],
             ),
             const SizedBox(height: 24),
-            
+
             // Category Selector
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -108,7 +113,12 @@ class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
                     child: FilterChip(
                       selected: isSelected,
                       label: Text(entry.key.toUpperCase()),
-                      avatar: Icon(entry.value, size: 16, color: isSelected ? theme.colorScheme.onSurface : theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      avatar: Icon(entry.value,
+                          size: 16,
+                          color: isSelected
+                              ? theme.colorScheme.onSurface
+                              : theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                       onSelected: (selected) {
                         setState(() => _category = entry.key);
                       },
@@ -116,13 +126,20 @@ class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
                       selectedColor: theme.colorScheme.primary,
                       backgroundColor: theme.scaffoldBackgroundColor,
                       labelStyle: TextStyle(
-                        color: isSelected ? theme.colorScheme.onSurface : theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        color: isSelected
+                            ? theme.colorScheme.onSurface
+                            : theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.normal,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                         side: BorderSide(
-                          color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withValues(alpha: 0.3),
+                          color: isSelected
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.3),
                         ),
                       ),
                     ),
@@ -140,7 +157,9 @@ class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
                 hintText: 'e.g. Winter Weather Advisory',
                 prefixIcon: Icon(Icons.title),
               ),
-              validator: (value) => value == null || value.isEmpty ? 'Please enter a headline' : null,
+              validator: (value) => value == null || value.isEmpty
+                  ? 'Please enter a headline'
+                  : null,
               textCapitalization: TextCapitalization.sentences,
             ),
             const SizedBox(height: 16),
@@ -155,7 +174,9 @@ class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
                 prefixIcon: Icon(Icons.notes),
               ),
               maxLines: 4,
-              validator: (value) => value == null || value.isEmpty ? 'Please enter message details' : null,
+              validator: (value) => value == null || value.isEmpty
+                  ? 'Please enter message details'
+                  : null,
               textCapitalization: TextCapitalization.sentences,
             ),
             const SizedBox(height: 16),
@@ -187,7 +208,9 @@ class _CreateAnnouncementSheetState extends State<CreateAnnouncementSheet> {
               ),
             ),
             // Add padding for keyboard if needed, though this is usually handled by Scaffold
-            Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
+            Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom)),
           ],
         ),
       ),

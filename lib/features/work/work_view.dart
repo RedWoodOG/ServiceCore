@@ -191,13 +191,17 @@ class _WorkViewState extends State<WorkView> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    _buildFilterChip(StatusFilter.labelFor(StatusFilter.all), StatusFilter.all),
+                    _buildFilterChip(StatusFilter.labelFor(StatusFilter.all),
+                        StatusFilter.all),
                     const SizedBox(width: 8),
-                    _buildFilterChip(WorkOrderStatus.open.label, WorkOrderStatus.open.dbValue),
+                    _buildFilterChip(WorkOrderStatus.open.label,
+                        WorkOrderStatus.open.dbValue),
                     const SizedBox(width: 8),
-                    _buildFilterChip(WorkOrderStatus.onHold.label, WorkOrderStatus.onHold.dbValue),
+                    _buildFilterChip(WorkOrderStatus.onHold.label,
+                        WorkOrderStatus.onHold.dbValue),
                     const SizedBox(width: 8),
-                    _buildFilterChip(WorkOrderStatus.completed.label, WorkOrderStatus.completed.dbValue),
+                    _buildFilterChip(WorkOrderStatus.completed.label,
+                        WorkOrderStatus.completed.dbValue),
                   ],
                 ),
               ),
@@ -212,14 +216,15 @@ class _WorkViewState extends State<WorkView> {
                           Icon(
                             Icons.work_outline,
                             size: 64,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                           ),
                           const SizedBox(height: 16),
                           Text(
                             'No work orders found',
                             style: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7),
                               fontSize: 16,
                             ),
                           ),
@@ -259,8 +264,10 @@ class _WorkViewState extends State<WorkView> {
                             GlassCard(
                               margin: const EdgeInsets.only(bottom: 12),
                               // Active border for active status
-                              activeBorderColor: workOrder.status == WorkOrderStatus.open.dbValue
-                                  ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                              activeBorderColor: workOrder.status ==
+                                      WorkOrderStatus.open.dbValue
+                                  ? theme.colorScheme.primary
+                                      .withValues(alpha: 0.3)
                                   : null,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -273,17 +280,19 @@ class _WorkViewState extends State<WorkView> {
                                           vertical: 4,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: statusColor.withValues(alpha: 0.1),
+                                          color: statusColor.withValues(
+                                              alpha: 0.1),
                                           borderRadius: BorderRadius.circular(
                                             4,
                                           ),
                                           border: Border.all(
-                                            color: statusColor.withValues(alpha: 0.3),
+                                            color: statusColor.withValues(
+                                                alpha: 0.3),
                                           ),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: statusColor.withValues(alpha: 
-                                                0.1,
+                                              color: statusColor.withValues(
+                                                alpha: 0.1,
                                               ),
                                               blurRadius: 8,
                                               spreadRadius: -2,
@@ -298,8 +307,8 @@ class _WorkViewState extends State<WorkView> {
                                             fontWeight: FontWeight.bold,
                                             shadows: [
                                               Shadow(
-                                                color: statusColor.withValues(alpha: 
-                                                  0.5,
+                                                color: statusColor.withValues(
+                                                  alpha: 0.5,
                                                 ),
                                                 blurRadius: 4,
                                               ),
@@ -491,13 +500,14 @@ class _WorkViewState extends State<WorkView> {
                                         color: theme.colorScheme.primary,
                                         size: 20,
                                       ),
-                                      tooltip:
-                                          _areFieldsLockedStatus(workOrder.status)
-                                              ? 'Reopen or Close Work Order'
-                                              : 'Edit Work Order',
+                                      tooltip: _areFieldsLockedStatus(
+                                              workOrder.status)
+                                          ? 'Reopen or Close Work Order'
+                                          : 'Edit Work Order',
                                       style: IconButton.styleFrom(
-                                        backgroundColor:
-                                            theme.colorScheme.surface.withValues(
+                                        backgroundColor: theme
+                                            .colorScheme.surface
+                                            .withValues(
                                           alpha: 0.9,
                                         ),
                                         padding: const EdgeInsets.all(8),
@@ -507,7 +517,8 @@ class _WorkViewState extends State<WorkView> {
                                           context: context,
                                           isScrollControlled: true,
                                           backgroundColor: Colors.transparent,
-                                          builder: (context) => EditWorkOrderSheet(
+                                          builder: (context) =>
+                                              EditWorkOrderSheet(
                                             workOrder: workOrder,
                                           ),
                                         ).then((_) {

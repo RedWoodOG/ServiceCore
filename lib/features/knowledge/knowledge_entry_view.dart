@@ -51,7 +51,8 @@ class _KnowledgeEntryViewState extends State<KnowledgeEntryView> {
                     children: [
                       Icon(Icons.error_outline,
                           size: 64,
-                          color: theme.colorScheme.error.withValues(alpha: 0.6)),
+                          color:
+                              theme.colorScheme.error.withValues(alpha: 0.6)),
                       const SizedBox(height: 16),
                       Text(
                         'Entry not found',
@@ -102,7 +103,8 @@ class _KnowledgeEntryViewState extends State<KnowledgeEntryView> {
                           if (_entry!.estimatedTime != null)
                             _buildBadge(
                               '~${_entry!.estimatedTime} min',
-                              theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                              theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.5),
                               theme,
                               icon: Icons.schedule,
                             ),
@@ -119,8 +121,8 @@ class _KnowledgeEntryViewState extends State<KnowledgeEntryView> {
                         data: _entry!.content,
                         styleSheet: MarkdownStyleSheet(
                           p: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.8),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.8),
                               fontSize: 15,
                               height: 1.7),
                           h1: TextStyle(
@@ -150,17 +152,18 @@ class _KnowledgeEntryViewState extends State<KnowledgeEntryView> {
                           ),
                           codeblockPadding: const EdgeInsets.all(12),
                           listBullet: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                           strong: TextStyle(
                               color: theme.colorScheme.onSurface,
                               fontWeight: FontWeight.bold),
                           em: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7),
                               fontStyle: FontStyle.italic),
                           blockquote: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontStyle: FontStyle.italic,
                           ),
                         ),
@@ -190,7 +193,8 @@ class _KnowledgeEntryViewState extends State<KnowledgeEntryView> {
       decoration: BoxDecoration(
         color: theme.colorScheme.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.1)),
+        border:
+            Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,7 +271,8 @@ class _KnowledgeEntryViewState extends State<KnowledgeEntryView> {
     return Row(
       children: [
         Icon(icon,
-            size: 14, color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
+            size: 14,
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
         const SizedBox(width: 6),
         Text(
           '$label: ',

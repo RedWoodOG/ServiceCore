@@ -20,15 +20,11 @@ void main() {
     db = AppDatabase.forTesting(NativeDatabase.memory());
 
     // Seed test client and site
-    final client = await db
-        .into(db.clients)
-        .insertReturning(
+    final client = await db.into(db.clients).insertReturning(
           ClientsCompanion.insert(name: 'Test Client', themeColor: 'blue'),
         );
 
-    await db
-        .into(db.sites)
-        .insert(
+    await db.into(db.sites).insert(
           SitesCompanion.insert(
             clientId: client.id,
             branchName: 'Test Branch',
@@ -49,9 +45,7 @@ void main() {
       final stopwatch = Stopwatch()..start();
 
       for (int i = 0; i < 1000; i++) {
-        await db
-            .into(db.workOrders)
-            .insert(
+        await db.into(db.workOrders).insert(
               WorkOrdersCompanion.insert(
                 siteId: 1,
                 status: 'open',
@@ -124,9 +118,7 @@ void main() {
 
     test('concurrent updates handle 100 simultaneous transactions', () async {
       // Create test work order
-      final wo = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final wo = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               status: 'open',
@@ -139,9 +131,7 @@ void main() {
       final stopwatch = Stopwatch()..start();
       final futures = List.generate(100, (i) async {
         try {
-          await db
-              .update(db.workOrders)
-              .replace(
+          await db.update(db.workOrders).replace(
                 wo.copyWith(
                   internalNotes: Value('Update $i'),
                   version: wo.version + i,

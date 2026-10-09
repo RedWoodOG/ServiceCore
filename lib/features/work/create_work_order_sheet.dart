@@ -210,7 +210,9 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
           finalSiteId = id;
         case Err(failure: final f):
           messenger.showSnackBar(
-            SnackBar(content: Text('Error creating location: ${f.message}'), backgroundColor: Colors.red),
+            SnackBar(
+                content: Text('Error creating location: ${f.message}'),
+                backgroundColor: Colors.red),
           );
           return;
       }
@@ -286,7 +288,9 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
         case Err(failure: final f):
           if (mounted) {
             messenger.showSnackBar(
-              SnackBar(content: Text('Error creating work order: ${f.message}'), backgroundColor: Colors.red),
+              SnackBar(
+                  content: Text('Error creating work order: ${f.message}'),
+                  backgroundColor: Colors.red),
             );
           }
           return;
@@ -407,8 +411,10 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -431,7 +437,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                     const Spacer(),
                     IconButton(
                       icon: Icon(Icons.close,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
@@ -450,7 +457,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Company/Client *',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -465,8 +473,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'Select a company',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         dropdownColor: theme.colorScheme.surface,
                         style: TextStyle(color: theme.colorScheme.onSurface),
@@ -503,7 +511,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Location/Branch *',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -823,7 +832,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Status *',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -847,7 +857,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Priority',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -862,8 +873,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'None',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         dropdownColor: theme.colorScheme.surface,
                         style: TextStyle(color: theme.colorScheme.onSurface),
@@ -973,7 +984,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Description of Work *',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -989,8 +1001,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'Describe the work to be performed...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -999,7 +1011,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Special Instructions',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1016,8 +1029,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           hintText:
                               'Special instructions for the technician...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -1026,7 +1039,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Checklist',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1042,8 +1056,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'Enter checklist items (one per line)...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -1052,7 +1066,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Equipment (Optional)',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1266,7 +1281,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Assigned Technician',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1281,8 +1297,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'Technician name',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -1291,7 +1307,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Customer Reference / P.O.',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1306,8 +1323,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'Customer PO number or reference...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -1316,7 +1333,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Internal Reference',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1331,8 +1349,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'Internal reference number...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -1341,7 +1359,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Photos & Documents (Optional)',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1442,7 +1461,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                       Text(
                         'Internal Notes',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -1458,8 +1478,8 @@ class _CreateWorkOrderSheetState extends State<CreateWorkOrderSheet> {
                           ),
                           hintText: 'Internal notes (not visible to client)...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),

@@ -16,7 +16,7 @@ class WeatherUpdateManager {
     Log.info('WeatherUpdateManager: Starting auto-update service...');
     // Initial update after a short delay
     Future.delayed(const Duration(seconds: 10), () => updateNow());
-    
+
     // Schedule periodic updates every 30 minutes
     _timer = Timer.periodic(const Duration(minutes: 30), (timer) {
       updateNow();
@@ -45,15 +45,17 @@ class WeatherUpdateManager {
       final zipCode = latest?.zipCode ?? '78217'; // Default to San Antonio
       final region = latest?.region ?? 'San Antonio, TX';
 
-      Log.info('WeatherUpdateManager: Auto-updating weather for $zipCode ($region)...');
+      Log.info(
+          'WeatherUpdateManager: Auto-updating weather for $zipCode ($region)...');
 
       final weatherData = await WeatherService.fetchWeatherByZip(zipCode);
 
       if (weatherData != null) {
         await db.insertWeather(
           WeatherSnapshotCompanion.insert(
-            region: weatherData.region.isNotEmpty && weatherData.region != 'Zip $zipCode' 
-                ? weatherData.region 
+            region: weatherData.region.isNotEmpty &&
+                    weatherData.region != 'Zip $zipCode'
+                ? weatherData.region
                 : region,
             temperature: weatherData.temperature,
             condition: weatherData.condition,

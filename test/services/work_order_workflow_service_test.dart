@@ -14,9 +14,7 @@ void main() {
     service = WorkOrderWorkflowService(db);
 
     // Seed test data
-    await db
-        .into(db.users)
-        .insert(
+    await db.into(db.users).insert(
           UsersCompanion.insert(
             username: 'tech1',
             fullName: 'Test Technician',
@@ -26,15 +24,11 @@ void main() {
         );
 
     // Seed a test client and site
-    final client = await db
-        .into(db.clients)
-        .insertReturning(
+    final client = await db.into(db.clients).insertReturning(
           ClientsCompanion.insert(name: 'Test Client', themeColor: 'blue'),
         );
 
-    await db
-        .into(db.sites)
-        .insert(
+    await db.into(db.sites).insert(
           SitesCompanion.insert(
             clientId: client.id,
             branchName: 'Test Branch',
@@ -71,9 +65,7 @@ void main() {
 
   group('Business Rule Validation', () {
     test('requires technician for assigned status', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -94,9 +86,7 @@ void main() {
     });
 
     test('requires resolution for completed status', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -117,9 +107,7 @@ void main() {
     });
 
     test('allows completion with valid resolution', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -143,9 +131,7 @@ void main() {
 
   group('Optimistic Locking', () {
     test('prevents concurrent modifications', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -178,9 +164,7 @@ void main() {
     });
 
     test('increments version on successful update', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -204,9 +188,7 @@ void main() {
 
   group('Audit Logging', () {
     test('logs status transitions', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -231,9 +213,7 @@ void main() {
     });
 
     test('creates audit log entry for all changes', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -260,9 +240,7 @@ void main() {
 
   group('Transaction Safety', () {
     test('rolls back on error', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),
@@ -317,9 +295,7 @@ void main() {
     });
 
     test('handles invalid status gracefully', () async {
-      final workOrder = await db
-          .into(db.workOrders)
-          .insertReturning(
+      final workOrder = await db.into(db.workOrders).insertReturning(
             WorkOrdersCompanion.insert(
               siteId: 1,
               createdAt: DateTime.now(),

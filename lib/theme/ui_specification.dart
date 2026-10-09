@@ -12,27 +12,33 @@ import 'package:flutter/material.dart';
 class UIPalette {
   // Background Colors
   static const Color deepBlack = Color(0xFF121212); // Main background
-  static const Color darkGrey = Color(0xFF1E1E1E); // Cards, surfaces, selected nav items
+  static const Color darkGrey =
+      Color(0xFF1E1E1E); // Cards, surfaces, selected nav items
   static const Color cardBackground = Color(0xFF1E1E1E); // Card backgrounds
-  
+
   // Primary Brand Colors
   static const Color portalBlue = Color(0xFF0056D2); // Primary brand blue
-  static const Color portalBlueLight = Color(0xFF1E6FE8); // Lighter blue variant
-  
+  static const Color portalBlueLight =
+      Color(0xFF1E6FE8); // Lighter blue variant
+
   // Status Colors
   static const Color successGreen = Color(0xFF03DAC6); // Completed, checkmarks
   static const Color warningAmber = Color(0xFFFFC107); // Low priority, warnings
-  static const Color alertRed = Color(0xFFCF6679); // Notification badges, errors
-  static const Color quietDayGreen = Color(0xFF4CAF50); // "Quiet Day" tag background
-  
+  static const Color alertRed =
+      Color(0xFFCF6679); // Notification badges, errors
+  static const Color quietDayGreen =
+      Color(0xFF4CAF50); // "Quiet Day" tag background
+
   // Accent Colors
-  static const Color purpleAccent = Color(0xFF9C27B0); // Graph icons, purple accents
-  
+  static const Color purpleAccent =
+      Color(0xFF9C27B0); // Graph icons, purple accents
+
   // Text Colors
-  static const Color textWhite = Color(0xFFFFFFFF); // Primary text, titles, numbers
+  static const Color textWhite =
+      Color(0xFFFFFFFF); // Primary text, titles, numbers
   static const Color textGrey = Color(0xFFB0B0B0); // Secondary text, subtitles
   static const Color textGreyDark = Color(0xFF808080); // Tertiary text
-  
+
   // Border Colors
   static const Color borderGrey = Color(0xFF2A2A2F); // Subtle borders
 }
@@ -44,9 +50,10 @@ class UIPalette {
 class UILayout {
   // Screen Structure
   static const double sidebarWidth = 240.0; // Left navigation sidebar
-  static const double rightSidebarWidth = 280.0; // Right sidebar (Dispatch Insights)
+  static const double rightSidebarWidth =
+      280.0; // Right sidebar (Dispatch Insights)
   static const double headerHeight = 64.0; // Top header bar
-  
+
   // Spacing
   static const double spacingXS = 4.0;
   static const double spacingSM = 8.0;
@@ -54,24 +61,24 @@ class UILayout {
   static const double spacingLG = 24.0;
   static const double spacingXL = 32.0;
   static const double spacingXXL = 48.0;
-  
+
   // Border Radius
   static const double radiusSM = 4.0;
   static const double radiusMD = 8.0;
   static const double radiusLG = 12.0;
   static const double radiusXL = 16.0;
-  
+
   // Card Specifications
   static const double cardElevation = 2.0;
   static const double cardPadding = 16.0;
   static const EdgeInsets cardPaddingAll = EdgeInsets.all(16.0);
-  
+
   // Button Specifications
   static const double buttonHeight = 40.0;
   static const double buttonPaddingH = 16.0;
   static const double buttonPaddingV = 12.0;
   static const double buttonBorderRadius = 8.0;
-  
+
   // Navigation Item Specifications
   static const double navItemHeight = 48.0;
   static const double navItemPaddingH = 16.0;
@@ -92,80 +99,80 @@ class UITypography {
   static const double fontSizeXXL = 20.0;
   static const double fontSizeHuge = 24.0;
   static const double fontSizeMassive = 32.0;
-  
+
   // Font Weights
   static const FontWeight weightNormal = FontWeight.normal;
   static const FontWeight weightMedium = FontWeight.w500;
   static const FontWeight weightSemiBold = FontWeight.w600;
   static const FontWeight weightBold = FontWeight.bold;
-  
+
   // Text Styles
   static const TextStyle appTitle = TextStyle(
     fontSize: fontSizeXL,
     fontWeight: weightBold,
     color: UIPalette.textWhite,
   );
-  
+
   static const TextStyle sectionTitle = TextStyle(
     fontSize: fontSizeXXL,
     fontWeight: weightBold,
     color: UIPalette.textWhite,
   );
-  
+
   static const TextStyle sectionSubtitle = TextStyle(
     fontSize: fontSizeMD,
     fontWeight: weightNormal,
     color: UIPalette.textGrey,
   );
-  
+
   static const TextStyle cardTitle = TextStyle(
     fontSize: fontSizeLG,
     fontWeight: weightSemiBold,
     color: UIPalette.textWhite,
   );
-  
+
   static const TextStyle cardSubtitle = TextStyle(
     fontSize: fontSizeMD,
     fontWeight: weightNormal,
     color: UIPalette.textGrey,
   );
-  
+
   static const TextStyle cardNumber = TextStyle(
     fontSize: fontSizeMassive,
     fontWeight: weightBold,
     color: UIPalette.textWhite,
   );
-  
+
   static const TextStyle bodyText = TextStyle(
     fontSize: fontSizeMD,
     fontWeight: weightNormal,
     color: UIPalette.textGrey,
   );
-  
+
   static const TextStyle navItemActive = TextStyle(
     fontSize: fontSizeMD,
     fontWeight: weightSemiBold,
     color: UIPalette.textWhite,
   );
-  
+
   static const TextStyle navItemInactive = TextStyle(
     fontSize: fontSizeMD,
     fontWeight: weightNormal,
     color: UIPalette.textGrey,
   );
-  
+
   static const TextStyle buttonText = TextStyle(
     fontSize: fontSizeMD,
     fontWeight: weightMedium,
     color: UIPalette.textWhite,
   );
-  
+
   static const TextStyle tagText = TextStyle(
     fontSize: fontSizeSM,
     fontWeight: weightMedium,
     color: UIPalette.textWhite,
   );
-  
+
   static const TextStyle timestamp = TextStyle(
     fontSize: fontSizeSM,
     fontWeight: weightNormal,
@@ -181,7 +188,7 @@ class UIComponents {
   // ============================================
   // HEADER BAR
   // ============================================
-  
+
   static BoxDecoration headerBarDecoration = BoxDecoration(
     color: UIPalette.deepBlack,
     border: Border(
@@ -191,13 +198,13 @@ class UIComponents {
       ),
     ),
   );
-  
+
   static TextStyle headerAppName = const TextStyle(
     fontSize: UITypography.fontSizeLG,
     fontWeight: UITypography.weightMedium,
     color: UIPalette.textWhite,
   );
-  
+
   // Header Buttons
   static ButtonStyle headerButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: UIPalette.portalBlue,
@@ -211,108 +218,109 @@ class UIComponents {
     ),
     elevation: 0,
   );
-  
+
   // Notification Badge
   static BoxDecoration notificationBadgeDecoration = BoxDecoration(
     color: UIPalette.alertRed,
     shape: BoxShape.circle,
   );
-  
+
   // ============================================
   // LEFT NAVIGATION SIDEBAR
   // ============================================
-  
+
   static BoxDecoration sidebarDecoration = const BoxDecoration(
     color: UIPalette.deepBlack,
   );
-  
+
   // Logo Area
   static const double logoSize = 48.0;
   static const EdgeInsets logoPadding = EdgeInsets.only(
     top: UILayout.spacingXL,
     bottom: UILayout.spacingMD,
   );
-  
+
   // Navigation Items
   static BoxDecoration navItemActiveDecoration = BoxDecoration(
     color: UIPalette.portalBlue,
     borderRadius: BorderRadius.circular(UILayout.radiusMD),
   );
-  
+
   static BoxDecoration navItemInactiveDecoration = const BoxDecoration(
     color: Colors.transparent,
   );
-  
+
   static EdgeInsets navItemPadding = const EdgeInsets.symmetric(
     horizontal: UILayout.navItemPaddingH,
     vertical: UILayout.spacingSM,
   );
-  
+
   // Dark Mode Toggle
   static TextStyle darkModeLabel = const TextStyle(
     fontSize: UITypography.fontSizeMD,
     fontWeight: UITypography.weightNormal,
     color: UIPalette.textGrey,
   );
-  
+
   // User Profile Section
   static BoxDecoration userAvatarDecoration = BoxDecoration(
     color: UIPalette.portalBlue,
     shape: BoxShape.circle,
   );
-  
+
   static TextStyle userName = const TextStyle(
     fontSize: UITypography.fontSizeMD,
     fontWeight: UITypography.weightSemiBold,
     color: UIPalette.textWhite,
   );
-  
+
   static TextStyle userRole = const TextStyle(
     fontSize: UITypography.fontSizeSM,
     fontWeight: UITypography.weightNormal,
     color: UIPalette.textGrey,
   );
-  
+
   // ============================================
   // MAIN CONTENT AREA
   // ============================================
-  
+
   static BoxDecoration mainContentDecoration = const BoxDecoration(
     color: UIPalette.deepBlack,
   );
-  
-  static EdgeInsets mainContentPadding = const EdgeInsets.all(UILayout.spacingXL);
-  
+
+  static EdgeInsets mainContentPadding =
+      const EdgeInsets.all(UILayout.spacingXL);
+
   // Section Headers
   static EdgeInsets sectionHeaderPadding = const EdgeInsets.only(
     bottom: UILayout.spacingMD,
   );
-  
+
   // Tag Styles
   static BoxDecoration tagQuietDayDecoration = BoxDecoration(
     color: UIPalette.quietDayGreen,
     borderRadius: BorderRadius.circular(UILayout.radiusSM),
   );
-  
+
   static BoxDecoration tagLowDecoration = BoxDecoration(
     color: UIPalette.warningAmber,
     borderRadius: BorderRadius.circular(UILayout.radiusSM),
   );
-  
+
   static BoxDecoration tagCompletedDecoration = BoxDecoration(
     color: UIPalette.successGreen,
     borderRadius: BorderRadius.circular(UILayout.radiusSM),
   );
-  
+
   static EdgeInsets tagPadding = const EdgeInsets.symmetric(
     horizontal: UILayout.spacingSM,
     vertical: UILayout.spacingXS,
   );
-  
+
   // ============================================
   // SUMMARY CARDS (Top Row)
   // ============================================
-  
+
   static BoxDecoration summaryCardDecoration = BoxDecoration(
     color: UIPalette.darkGrey,
     borderRadius: BorderRadius.circular(UILayout.radiusLG),
@@ -324,79 +332,84 @@ class UIComponents {
       ),
     ],
   );
-  
-  static EdgeInsets summaryCardPadding = const EdgeInsets.all(UILayout.cardPadding);
-  
+
+  static EdgeInsets summaryCardPadding =
+      const EdgeInsets.all(UILayout.cardPadding);
+
   static const double summaryCardIconSize = 32.0;
   static const double summaryCardGraphIconSize = 16.0;
-  
+
   // Card Icons Colors
   static const Color cardIconBlue = UIPalette.portalBlue;
   static const Color cardIconGreen = UIPalette.successGreen;
   static const Color cardIconPurple = UIPalette.purpleAccent;
-  
+
   // ============================================
   // INFORMATION CARDS
   // ============================================
-  
+
   static BoxDecoration infoCardDecoration = BoxDecoration(
     color: UIPalette.darkGrey,
     borderRadius: BorderRadius.circular(UILayout.radiusLG),
   );
-  
-  static EdgeInsets infoCardPadding = const EdgeInsets.all(UILayout.cardPadding);
-  
+
+  static EdgeInsets infoCardPadding =
+      const EdgeInsets.all(UILayout.cardPadding);
+
   static const double infoCardIconSize = 24.0;
-  
+
   // ============================================
   // ACTION CARDS
   // ============================================
-  
+
   static BoxDecoration actionCardDecoration = BoxDecoration(
     color: UIPalette.darkGrey,
     borderRadius: BorderRadius.circular(UILayout.radiusLG),
   );
-  
-  static EdgeInsets actionCardPadding = const EdgeInsets.all(UILayout.cardPadding);
-  
+
+  static EdgeInsets actionCardPadding =
+      const EdgeInsets.all(UILayout.cardPadding);
+
   static const double actionCardIconSize = 24.0;
-  
+
   // Action Button (Text Button)
   static TextStyle actionButtonText = const TextStyle(
     fontSize: UITypography.fontSizeMD,
     fontWeight: UITypography.weightMedium,
     color: UIPalette.portalBlue,
   );
-  
+
   // ============================================
   // COMPLETION/ACTIVITY ENTRIES
   // ============================================
-  
+
   static BoxDecoration entryCardDecoration = BoxDecoration(
     color: UIPalette.darkGrey,
     borderRadius: BorderRadius.circular(UILayout.radiusLG),
   );
-  
-  static EdgeInsets entryCardPadding = const EdgeInsets.all(UILayout.cardPadding);
-  
+
+  static EdgeInsets entryCardPadding =
+      const EdgeInsets.all(UILayout.cardPadding);
+
   static const double entryIconSize = 20.0;
-  
+
   // ============================================
   // RIGHT SIDEBAR
   // ============================================
-  
+
   static BoxDecoration rightSidebarDecoration = const BoxDecoration(
     color: UIPalette.deepBlack,
   );
-  
-  static EdgeInsets rightSidebarPadding = const EdgeInsets.all(UILayout.spacingXL);
-  
+
+  static EdgeInsets rightSidebarPadding =
+      const EdgeInsets.all(UILayout.spacingXL);
+
   static TextStyle rightSidebarTitle = const TextStyle(
     fontSize: UITypography.fontSizeXL,
     fontWeight: UITypography.weightSemiBold,
     color: UIPalette.textWhite,
   );
-  
+
   static const double rightSidebarIconSize = 24.0;
 }
 
@@ -413,7 +426,7 @@ class UISpacing {
   static const SizedBox v24 = SizedBox(height: 24);
   static const SizedBox v32 = SizedBox(height: 32);
   static const SizedBox v48 = SizedBox(height: 48);
-  
+
   // Horizontal Spacing
   static const SizedBox h4 = SizedBox(width: 4);
   static const SizedBox h8 = SizedBox(width: 8);
@@ -434,7 +447,7 @@ class UIIcons {
   static const double sizeMD = 24.0;
   static const double sizeLG = 32.0;
   static const double sizeXL = 48.0;
-  
+
   // Icon Colors
   static const Color colorPrimary = UIPalette.portalBlue;
   static const Color colorSuccess = UIPalette.successGreen;
@@ -453,7 +466,7 @@ class UIGrid {
   // Card Grid Spacing
   static const double cardSpacing = 16.0;
   static const int cardsPerRow = 3; // For summary cards
-  
+
   // Responsive Breakpoints (if needed)
   static const double breakpointSM = 640.0;
   static const double breakpointMD = 768.0;
@@ -469,7 +482,7 @@ class UIAnimations {
   static const Duration durationFast = Duration(milliseconds: 150);
   static const Duration durationNormal = Duration(milliseconds: 300);
   static const Duration durationSlow = Duration(milliseconds: 500);
-  
+
   static const Curve curveDefault = Curves.easeInOut;
   static const Curve curveBounce = Curves.easeOutBack;
 }
@@ -486,7 +499,7 @@ class UIShadows {
       offset: const Offset(0, 2),
     ),
   ];
-  
+
   static List<BoxShadow> buttonShadow = [
     BoxShadow(
       color: UIPalette.portalBlue.withValues(alpha: 0.3),
@@ -494,7 +507,7 @@ class UIShadows {
       offset: const Offset(0, 4),
     ),
   ];
-  
+
   static List<BoxShadow> navItemShadow = [
     BoxShadow(
       color: UIPalette.portalBlue.withValues(alpha: 0.2),
@@ -503,4 +516,3 @@ class UIShadows {
     ),
   ];
 }
-

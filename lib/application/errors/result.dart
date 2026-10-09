@@ -83,7 +83,8 @@ sealed class Result<T> {
   }
 
   /// Chain another Result-returning operation.
-  Future<Result<R>> flatMap<R>(Future<Result<R>> Function(T value) transform) async {
+  Future<Result<R>> flatMap<R>(
+      Future<Result<R>> Function(T value) transform) async {
     switch (this) {
       case Ok(value: final v):
         return transform(v);

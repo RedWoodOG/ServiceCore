@@ -64,7 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
       final password = _passwordController.text;
 
       // Attempt login via AuthProvider
-      final success = await authProvider.login(username, password, rememberMe: _rememberMe);
+      final success =
+          await authProvider.login(username, password, rememberMe: _rememberMe);
 
       if (!success) {
         setState(() {
@@ -136,9 +137,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Title
                       Text(
                         'ServiceCore',
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
@@ -207,7 +211,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .error
+                                .withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                               color: Theme.of(context).colorScheme.error,

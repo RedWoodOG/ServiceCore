@@ -73,7 +73,8 @@ class LocationService {
       return Err(ValidationFailure('Client is required', field: 'clientId'));
     }
     if (cmd.branchName.trim().isEmpty) {
-      return Err(ValidationFailure('Branch name is required', field: 'branchName'));
+      return Err(
+          ValidationFailure('Branch name is required', field: 'branchName'));
     }
     if (cmd.address.trim().isEmpty) {
       return Err(ValidationFailure('Address is required', field: 'address'));
@@ -92,32 +93,35 @@ class LocationService {
         return Err(NotFoundFailure('Client ${cmd.clientId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to verify client', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to verify client', cause: e, stackTrace: st));
     }
 
     // Insert
     try {
       final siteId = await _db.transaction(() async {
         return await _db.into(_db.sites).insert(
-          SitesCompanion.insert(
-            clientId: cmd.clientId,
-            branchName: cmd.branchName.trim(),
-            address: cmd.address.trim(),
-            latitude: cmd.latitude,
-            longitude: cmd.longitude,
-            region: cmd.region.trim(),
-          ),
-        );
+              SitesCompanion.insert(
+                clientId: cmd.clientId,
+                branchName: cmd.branchName.trim(),
+                address: cmd.address.trim(),
+                latitude: cmd.latitude,
+                longitude: cmd.longitude,
+                region: cmd.region.trim(),
+              ),
+            );
       });
 
       Log.info('LocationService: Created site $siteId');
       return Ok(siteId);
     } catch (e, st) {
       if (e.toString().contains('UNIQUE constraint')) {
-        return Err(ConflictFailure('Site with this name already exists for this client'));
+        return Err(ConflictFailure(
+            'Site with this name already exists for this client'));
       }
       Log.error('LocationService: Failed to create site', e, st);
-      return Err(StorageFailure('Failed to create site', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to create site', cause: e, stackTrace: st));
     }
   }
 
@@ -134,27 +138,40 @@ class LocationService {
         return Err(NotFoundFailure('Site ${cmd.siteId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch site', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to fetch site', cause: e, stackTrace: st));
     }
 
     // Validate coordinates if provided
     if (cmd.latitude != null && (cmd.latitude! < -90 || cmd.latitude! > 90)) {
       return Err(ValidationFailure('Invalid latitude', field: 'latitude'));
     }
-    if (cmd.longitude != null && (cmd.longitude! < -180 || cmd.longitude! > 180)) {
+    if (cmd.longitude != null &&
+        (cmd.longitude! < -180 || cmd.longitude! > 180)) {
       return Err(ValidationFailure('Invalid longitude', field: 'longitude'));
     }
 
     // Update
     try {
       await _db.transaction(() async {
-        await (_db.update(_db.sites)..where((t) => t.id.equals(cmd.siteId))).write(
+        await (_db.update(_db.sites)..where((t) => t.id.equals(cmd.siteId)))
+            .write(
           SitesCompanion(
-            branchName: cmd.branchName != null ? Value(cmd.branchName!.trim()) : const Value.absent(),
-            address: cmd.address != null ? Value(cmd.address!.trim()) : const Value.absent(),
-            latitude: cmd.latitude != null ? Value(cmd.latitude!) : const Value.absent(),
-            longitude: cmd.longitude != null ? Value(cmd.longitude!) : const Value.absent(),
-            region: cmd.region != null ? Value(cmd.region!.trim()) : const Value.absent(),
+            branchName: cmd.branchName != null
+                ? Value(cmd.branchName!.trim())
+                : const Value.absent(),
+            address: cmd.address != null
+                ? Value(cmd.address!.trim())
+                : const Value.absent(),
+            latitude: cmd.latitude != null
+                ? Value(cmd.latitude!)
+                : const Value.absent(),
+            longitude: cmd.longitude != null
+                ? Value(cmd.longitude!)
+                : const Value.absent(),
+            region: cmd.region != null
+                ? Value(cmd.region!.trim())
+                : const Value.absent(),
           ),
         );
       });
@@ -163,7 +180,8 @@ class LocationService {
       return const Ok(null);
     } catch (e, st) {
       Log.error('LocationService: Failed to update site', e, st);
-      return Err(StorageFailure('Failed to update site', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to update site', cause: e, stackTrace: st));
     }
   }
 
@@ -176,17 +194,21 @@ class LocationService {
     // Check for active work orders
     try {
       final workOrders = await _db.getWorkOrdersBySite(cmd.siteId);
-      final activeOrders = workOrders.where((wo) => wo.status != 'completed' && wo.status != 'cancelled');
+      final activeOrders = workOrders
+          .where((wo) => wo.status != 'completed' && wo.status != 'cancelled');
       if (activeOrders.isNotEmpty) {
-        return Err(ConflictFailure('Cannot archive site with ${activeOrders.length} active work orders'));
+        return Err(ConflictFailure(
+            'Cannot archive site with ${activeOrders.length} active work orders'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to check work orders', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to check work orders',
+          cause: e, stackTrace: st));
     }
 
     // TODO: Implement soft delete when schema supports it
     // For now, just log the intent
-    Log.warn('LocationService: Archive requested for site ${cmd.siteId} - soft delete not yet implemented');
+    Log.warn(
+        'LocationService: Archive requested for site ${cmd.siteId} - soft delete not yet implemented');
     return Err(ValidationFailure('Archive not yet implemented'));
   }
 }

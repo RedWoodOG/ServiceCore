@@ -173,8 +173,7 @@ class WorkOrders extends Table {
   // Service Contract
   BoolColumn get onServiceContract =>
       boolean().withDefault(const Constant(false))();
-  TextColumn get contractType =>
-      text().nullable()(); // e.g., 'client_standard'
+  TextColumn get contractType => text().nullable()(); // e.g., 'client_standard'
 
   // Reference/PO
   TextColumn get referenceNumber => text().nullable()();
@@ -965,12 +964,14 @@ class AppDatabase extends _$AppDatabase {
 
     // Batch fetch all sites in one query
     final siteIds = orders.map((o) => o.siteId).toSet().toList();
-    final sitesResult = await (select(sites)..where((s) => s.id.isIn(siteIds))).get();
+    final sitesResult =
+        await (select(sites)..where((s) => s.id.isIn(siteIds))).get();
     final sitesMap = {for (final s in sitesResult) s.id: s};
 
     // Batch fetch all clients in one query
     final clientIds = sitesResult.map((s) => s.clientId).toSet().toList();
-    final clientsResult = await (select(clients)..where((c) => c.id.isIn(clientIds))).get();
+    final clientsResult =
+        await (select(clients)..where((c) => c.id.isIn(clientIds))).get();
     final clientsMap = {for (final c in clientsResult) c.id: c};
 
     // Batch fetch all equipment links in one query
@@ -978,10 +979,12 @@ class AppDatabase extends _$AppDatabase {
     final equipmentLinks = await (select(workOrderEquipment)
           ..where((w) => w.workOrderId.isIn(orderIds)))
         .get();
-    final equipmentIds = equipmentLinks.map((l) => l.equipmentId).toSet().toList();
+    final equipmentIds =
+        equipmentLinks.map((l) => l.equipmentId).toSet().toList();
     final equipmentResult = equipmentIds.isEmpty
         ? <EquipmentData>[]
-        : await (select(equipment)..where((e) => e.id.isIn(equipmentIds))).get();
+        : await (select(equipment)..where((e) => e.id.isIn(equipmentIds)))
+            .get();
     final equipmentMap = {for (final e in equipmentResult) e.id: e};
 
     // Build equipment-per-order lookup
@@ -1061,12 +1064,14 @@ class AppDatabase extends _$AppDatabase {
 
     // Batch fetch all sites in one query
     final siteIds = orders.map((o) => o.siteId).toSet().toList();
-    final sitesResult = await (select(sites)..where((s) => s.id.isIn(siteIds))).get();
+    final sitesResult =
+        await (select(sites)..where((s) => s.id.isIn(siteIds))).get();
     final sitesMap = {for (final s in sitesResult) s.id: s};
 
     // Batch fetch all clients in one query
     final clientIds = sitesResult.map((s) => s.clientId).toSet().toList();
-    final clientsResult = await (select(clients)..where((c) => c.id.isIn(clientIds))).get();
+    final clientsResult =
+        await (select(clients)..where((c) => c.id.isIn(clientIds))).get();
     final clientsMap = {for (final c in clientsResult) c.id: c};
 
     // Batch fetch all equipment links in one query
@@ -1074,10 +1079,12 @@ class AppDatabase extends _$AppDatabase {
     final equipmentLinks = await (select(workOrderEquipment)
           ..where((w) => w.workOrderId.isIn(orderIds)))
         .get();
-    final equipmentIds = equipmentLinks.map((l) => l.equipmentId).toSet().toList();
+    final equipmentIds =
+        equipmentLinks.map((l) => l.equipmentId).toSet().toList();
     final equipmentResult = equipmentIds.isEmpty
         ? <EquipmentData>[]
-        : await (select(equipment)..where((e) => e.id.isIn(equipmentIds))).get();
+        : await (select(equipment)..where((e) => e.id.isIn(equipmentIds)))
+            .get();
     final equipmentMap = {for (final e in equipmentResult) e.id: e};
 
     // Build equipment-per-order lookup

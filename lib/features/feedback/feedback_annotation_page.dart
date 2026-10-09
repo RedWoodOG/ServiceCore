@@ -47,7 +47,8 @@ class _FeedbackAnnotationPageState extends State<FeedbackAnnotationPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Material(
-            color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
+            color: theme.colorScheme.surfaceContainerHighest
+                .withValues(alpha: 0.35),
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Text(
@@ -118,12 +119,14 @@ class _FeedbackAnnotationPageState extends State<FeedbackAnnotationPage> {
                       child: Text(
                         'No regions yet — drag on the image above.',
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.6),
                         ),
                       ),
                     )
                   : ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       itemCount: _regions.length,
                       separatorBuilder: (_, __) => const Divider(height: 1),
                       itemBuilder: (context, i) {
@@ -141,7 +144,8 @@ class _FeedbackAnnotationPageState extends State<FeedbackAnnotationPage> {
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete_outline),
-                            onPressed: () => setState(() => _regions.removeAt(i)),
+                            onPressed: () =>
+                                setState(() => _regions.removeAt(i)),
                           ),
                         );
                       },
@@ -334,8 +338,12 @@ Future<void> openAiFeedbackAnnotationFlow(BuildContext context) async {
         'Step 2 opens next: drag on that image to draw boxes and add a short note for each spot you want changed.',
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-        FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Capture')),
+        TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel')),
+        FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Capture')),
       ],
     ),
   );
@@ -343,7 +351,8 @@ Future<void> openAiFeedbackAnnotationFlow(BuildContext context) async {
 
   final messenger = ScaffoldMessenger.maybeOf(context);
   messenger?.showSnackBar(
-    const SnackBar(content: Text('Capturing…'), duration: Duration(milliseconds: 600)),
+    const SnackBar(
+        content: Text('Capturing…'), duration: Duration(milliseconds: 600)),
   );
 
   await WidgetsBinding.instance.endOfFrame;
@@ -353,7 +362,9 @@ Future<void> openAiFeedbackAnnotationFlow(BuildContext context) async {
 
   if (payload == null) {
     messenger?.showSnackBar(
-      const SnackBar(content: Text('Could not capture screen (try again after the view paints).')),
+      const SnackBar(
+          content: Text(
+              'Could not capture screen (try again after the view paints).')),
     );
     return;
   }

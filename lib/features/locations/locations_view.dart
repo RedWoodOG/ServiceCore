@@ -202,10 +202,10 @@ class _LocationsViewState extends State<LocationsView> {
                   children: [
                     if (online)
                       TileLayer(
-                        urlTemplate:
-                            Theme.of(context).brightness == Brightness.dark
-                                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-                                : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        urlTemplate: Theme.of(context).brightness ==
+                                Brightness.dark
+                            ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                            : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                         subdomains: const ['a', 'b', 'c', 'd'],
                         userAgentPackageName: 'com.vyrevault.servicecore',
                       ),
@@ -438,7 +438,8 @@ class _LocationsViewState extends State<LocationsView> {
                   Text(
                     'PM Route Planning',
                     style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.7),
                         fontSize: 11),
                   ),
                 ],
@@ -473,7 +474,8 @@ class _LocationsViewState extends State<LocationsView> {
                   dropdownColor: theme.colorScheme.surface,
                   borderRadius: BorderRadius.circular(12),
                   icon: Icon(Icons.arrow_drop_down,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                   items: startingPoints.map((sp) {
                     return DropdownMenuItem(
                       value: sp,

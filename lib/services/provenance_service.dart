@@ -36,9 +36,7 @@ class ProvenanceService {
       final userName = authService.getWindowsUsername();
 
       // Record provenance entry
-      await db
-          .into(db.provenanceLog)
-          .insert(
+      await db.into(db.provenanceLog).insert(
             ProvenanceLogCompanion.insert(
               recordType: recordType,
               recordId: recordId,
@@ -85,13 +83,12 @@ class ProvenanceService {
   /// Get previous hash for chaining
   /// Returns null if this is the first entry
   Future<String?> _getPreviousHash(String recordType, int recordId) async {
-    final previous =
-        await (db.select(db.provenanceLog)
-              ..where((log) => log.recordType.equals(recordType))
-              ..where((log) => log.recordId.equals(recordId))
-              ..orderBy([(log) => OrderingTerm.desc(log.timestamp)])
-              ..limit(1))
-            .getSingleOrNull();
+    final previous = await (db.select(db.provenanceLog)
+          ..where((log) => log.recordType.equals(recordType))
+          ..where((log) => log.recordId.equals(recordId))
+          ..orderBy([(log) => OrderingTerm.desc(log.timestamp)])
+          ..limit(1))
+        .getSingleOrNull();
 
     return previous?.contentHash;
   }
@@ -99,12 +96,11 @@ class ProvenanceService {
   /// Verify integrity of provenance chain
   /// Returns true if chain is intact, false if tampering detected
   Future<bool> verifyIntegrity(String recordType, int recordId) async {
-    final chain =
-        await (db.select(db.provenanceLog)
-              ..where((log) => log.recordType.equals(recordType))
-              ..where((log) => log.recordId.equals(recordId))
-              ..orderBy([(log) => OrderingTerm.asc(log.timestamp)]))
-            .get();
+    final chain = await (db.select(db.provenanceLog)
+          ..where((log) => log.recordType.equals(recordType))
+          ..where((log) => log.recordId.equals(recordId))
+          ..orderBy([(log) => OrderingTerm.asc(log.timestamp)]))
+        .get();
 
     if (chain.isEmpty) {
       Log.info('No provenance history for $recordType#$recordId');

@@ -120,7 +120,7 @@ class ImportService {
   /// PDF parsing runs in an isolate to avoid blocking the UI.
   Future<Result<ImportResult>> importPdf(ImportPdfCommand cmd) async {
     final stopwatch = Stopwatch()..start();
-    
+
     // Validate file exists
     final file = File(cmd.filePath);
     if (!await file.exists()) {
@@ -140,11 +140,13 @@ class ImportService {
       parseResult = await _parsePdfInIsolate(cmd.filePath, cmd.onProgress);
     } catch (e, st) {
       Log.error('ImportService: PDF parse failed', e, st);
-      return Err(ExternalFailure('PDF parsing failed', cause: e, stackTrace: st));
+      return Err(
+          ExternalFailure('PDF parsing failed', cause: e, stackTrace: st));
     }
 
     if (!parseResult.success) {
-      return Err(ExternalFailure(parseResult.error ?? 'Unknown PDF parse error'));
+      return Err(
+          ExternalFailure(parseResult.error ?? 'Unknown PDF parse error'));
     }
 
     cmd.onProgress?.call(0.7, 'Processing extracted text...');
@@ -157,7 +159,8 @@ class ImportService {
 
     final fileName = cmd.filePath.split(Platform.pathSeparator).last;
     final baseName = fileName.replaceAll('.pdf', '');
-    final entryId = 'pdf-${baseName.toLowerCase().replaceAll(' ', '-').replaceAll(RegExp(r'[^a-zA-Z0-9-]'), '')}-${DateTime.now().millisecondsSinceEpoch}';
+    final entryId =
+        'pdf-${baseName.toLowerCase().replaceAll(' ', '-').replaceAll(RegExp(r'[^a-zA-Z0-9-]'), '')}-${DateTime.now().millisecondsSinceEpoch}';
 
     try {
       cmd.onProgress?.call(0.9, 'Saving to database...');
@@ -165,20 +168,20 @@ class ImportService {
       final now = DateTime.now();
       await _db.transaction(() async {
         await _db.into(_db.knowledgeEntries).insert(
-          KnowledgeEntriesCompanion.insert(
-            id: entryId,
-            title: baseName,
-            category: cmd.targetCategory,
-            equipmentType: cmd.equipmentType ?? 'General',
-            content: extractedText,
-            sourceType: 'pdf_import',
-            sourceFile: fileName,
-            version: '1.0.0',
-            status: 'active',
-            createdAt: now,
-            updatedAt: now,
-          ),
-        );
+              KnowledgeEntriesCompanion.insert(
+                id: entryId,
+                title: baseName,
+                category: cmd.targetCategory,
+                equipmentType: cmd.equipmentType ?? 'General',
+                content: extractedText,
+                sourceType: 'pdf_import',
+                sourceFile: fileName,
+                version: '1.0.0',
+                status: 'active',
+                createdAt: now,
+                updatedAt: now,
+              ),
+            );
       });
 
       stopwatch.stop();
@@ -195,7 +198,8 @@ class ImportService {
       ));
     } catch (e, st) {
       Log.error('ImportService: Failed to save PDF content', e, st);
-      return Err(StorageFailure('Failed to save imported content', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to save imported content',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -212,7 +216,8 @@ class ImportService {
     // Validate target table
     final validTables = ['sites', 'equipment', 'work_orders'];
     if (!validTables.contains(cmd.targetTable)) {
-      return Err(ValidationFailure('Invalid target table: ${cmd.targetTable}. Must be one of: ${validTables.join(', ')}'));
+      return Err(ValidationFailure(
+          'Invalid target table: ${cmd.targetTable}. Must be one of: ${validTables.join(', ')}'));
     }
 
     cmd.onProgress?.call(0.1, 'Reading CSV file...');
@@ -223,7 +228,8 @@ class ImportService {
       final content = await file.readAsString();
       lines = content.split('\n').where((l) => l.trim().isNotEmpty).toList();
     } catch (e, st) {
-      return Err(StorageFailure('Failed to read CSV file', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to read CSV file', cause: e, stackTrace: st));
     }
 
     if (lines.isEmpty) {
@@ -249,7 +255,7 @@ class ImportService {
       try {
         final values = _parseCsvLine(dataLines[i]);
         final rowMap = <String, String>{};
-        
+
         for (int j = 0; j < headers.length && j < values.length; j++) {
           final targetColumn = cmd.columnMapping?[headers[j]] ?? headers[j];
           rowMap[targetColumn] = values[j];
@@ -259,7 +265,8 @@ class ImportService {
         successCount++;
 
         if (i % 50 == 0) {
-          cmd.onProgress?.call(0.2 + (0.7 * i / dataLines.length), 'Processed $i of ${dataLines.length} rows');
+          cmd.onProgress?.call(0.2 + (0.7 * i / dataLines.length),
+              'Processed $i of ${dataLines.length} rows');
         }
       } catch (e) {
         errors.add('Row ${i + 1}: $e');
@@ -269,7 +276,8 @@ class ImportService {
     stopwatch.stop();
     cmd.onProgress?.call(1.0, 'Import complete');
 
-    Log.info('ImportService: CSV import complete - $successCount/${dataLines.length} rows');
+    Log.info(
+        'ImportService: CSV import complete - $successCount/${dataLines.length} rows');
 
     return Ok(ImportResult(
       totalRecords: dataLines.length,
@@ -363,15 +371,16 @@ class ImportService {
           throw ArgumentError('client_id is required for sites import');
         }
         await _db.into(_db.sites).insert(
-          SitesCompanion.insert(
-            clientId: clientId,
-            branchName: row['branch_name'] ?? row['name'] ?? 'Unknown Branch',
-            address: row['address'] ?? '',
-            latitude: double.tryParse(row['latitude'] ?? '') ?? 0.0,
-            longitude: double.tryParse(row['longitude'] ?? '') ?? 0.0,
-            region: row['region'] ?? 'Unknown',
-          ),
-        );
+              SitesCompanion.insert(
+                clientId: clientId,
+                branchName:
+                    row['branch_name'] ?? row['name'] ?? 'Unknown Branch',
+                address: row['address'] ?? '',
+                latitude: double.tryParse(row['latitude'] ?? '') ?? 0.0,
+                longitude: double.tryParse(row['longitude'] ?? '') ?? 0.0,
+                region: row['region'] ?? 'Unknown',
+              ),
+            );
         break;
 
       case 'equipment':
@@ -380,11 +389,11 @@ class ImportService {
           throw ArgumentError('site_id is required for equipment import');
         }
         await _db.into(_db.equipment).insert(
-          EquipmentCompanion.insert(
-            siteId: siteId,
-            equipmentType: row['equipment_type'] ?? row['type'] ?? 'Other',
-          ),
-        );
+              EquipmentCompanion.insert(
+                siteId: siteId,
+                equipmentType: row['equipment_type'] ?? row['type'] ?? 'Other',
+              ),
+            );
         break;
 
       case 'work_orders':
@@ -393,12 +402,12 @@ class ImportService {
           throw ArgumentError('site_id is required for work order import');
         }
         await _db.into(_db.workOrders).insert(
-          WorkOrdersCompanion.insert(
-            siteId: siteId,
-            status: row['status'] ?? 'open',
-            createdAt: now,
-          ),
-        );
+              WorkOrdersCompanion.insert(
+                siteId: siteId,
+                status: row['status'] ?? 'open',
+                createdAt: now,
+              ),
+            );
         break;
 
       default:

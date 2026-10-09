@@ -11,7 +11,8 @@ class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      activeBorderColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+      activeBorderColor:
+          Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
       onTap: () {
         showDialog(
           context: context,
@@ -109,7 +110,10 @@ class UserCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Row(
@@ -144,8 +148,10 @@ class UserCard extends StatelessWidget {
               children: [
                 Icon(Icons.location_on,
                     size: 12,
-                    color:
-                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.5)),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.5)),
                 const SizedBox(width: 4),
                 Flexible(
                   child: Text(

@@ -158,7 +158,10 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.3),
                   blurRadius: 15,
                   spreadRadius: 2,
                 ),
@@ -199,8 +202,10 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color:
-                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(
                         color: Theme.of(context)
@@ -263,7 +268,8 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
         Text(
           label.toUpperCase(),
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
             fontSize: 10,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.0,
@@ -291,7 +297,8 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
         Text(
           'EXPERT PROFILE & BIO',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
             fontSize: 10,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.0,
@@ -305,7 +312,10 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.03),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.03),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                   color: Theme.of(context)
@@ -316,8 +326,10 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
             child: Text(
               _user.bio ?? 'Technical expert profile not yet drafted.',
               style: TextStyle(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.8),
                   height: 1.5,
                   fontSize: 14),
             ),
@@ -334,8 +346,10 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: Text('DISMISS',
               style: TextStyle(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.5),
                   letterSpacing: 1.2)),
         ),
         const SizedBox(width: 16),
@@ -379,12 +393,15 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
             fontSize: 10),
         enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color:
-                    Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1))),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.1))),
         focusedBorder: UnderlineInputBorder(
             borderSide:
                 BorderSide(color: Theme.of(context).colorScheme.primary)),

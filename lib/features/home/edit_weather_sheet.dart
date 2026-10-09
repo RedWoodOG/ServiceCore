@@ -337,8 +337,10 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -360,7 +362,8 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                     const Spacer(),
                     IconButton(
                       icon: Icon(Icons.close,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
@@ -379,11 +382,12 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                          color:
+                              theme.colorScheme.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                              color:
-                                  theme.colorScheme.primary.withValues(alpha: 0.3)),
+                              color: theme.colorScheme.primary
+                                  .withValues(alpha: 0.3)),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -474,7 +478,8 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                       Text(
                         'Or Enter Manually',
                         style: TextStyle(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7),
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
@@ -484,7 +489,8 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                       Text(
                         'Region',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -499,8 +505,8 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                           ),
                           hintText: 'North Region',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                         validator: (value) {
@@ -515,7 +521,8 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                       Text(
                         'Temperature (°F)',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -532,8 +539,8 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                           ),
                           hintText: '72',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                         validator: (value) {
@@ -552,7 +559,8 @@ class _EditWeatherSheetState extends State<EditWeatherSheet> {
                       Text(
                         'Condition',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),

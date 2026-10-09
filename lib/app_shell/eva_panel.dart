@@ -160,7 +160,8 @@ class _EvaPanelState extends State<EvaPanel> {
                       Text(
                         'Embedded Intelligence',
                         style: TextStyle(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7),
                           fontSize: 12,
                         ),
                       ),
@@ -244,7 +245,8 @@ class _EvaPanelState extends State<EvaPanel> {
                 const SizedBox(width: 8),
                 Text('EVA is thinking...',
                     style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.54))),
+                        color: theme.colorScheme.onSurface
+                            .withValues(alpha: 0.54))),
               ],
             ),
           );

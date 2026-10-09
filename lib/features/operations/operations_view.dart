@@ -250,7 +250,8 @@ class _OperationsViewState extends State<OperationsView> {
                 Text(
                   'No equipment found',
                   style: TextStyle(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                 ),
               ],
             ),
@@ -399,7 +400,8 @@ class _OperationsViewState extends State<OperationsView> {
                 Text(
                   snapshot.error.toString(),
                   style: TextStyle(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -419,7 +421,8 @@ class _OperationsViewState extends State<OperationsView> {
                 Text(
                   'No clients found',
                   style: TextStyle(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                 ),
               ],
             ),
@@ -492,7 +495,8 @@ class _OperationsViewState extends State<OperationsView> {
                 Text(
                   '$sitesCount ${sitesCount == 1 ? 'location' : 'locations'}',
                   style: TextStyle(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                 ),
               ],
             ),
@@ -592,7 +596,8 @@ class _OperationsViewState extends State<OperationsView> {
                         Text(
                           'Client Details',
                           style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12,
                           ),
                         ),
@@ -622,8 +627,8 @@ class _OperationsViewState extends State<OperationsView> {
                         children: [
                           Icon(Icons.location_off,
                               size: 64,
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                           const SizedBox(height: 16),
                           Text(
                             'No locations found for this client',
@@ -704,12 +709,14 @@ class _OperationsViewState extends State<OperationsView> {
                 children: [
                   Icon(Icons.map,
                       size: 16,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                   const SizedBox(width: 4),
                   Text(
                     'Region: ${site.region}',
                     style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.7),
                         fontSize: 12),
                   ),
                 ],
@@ -719,12 +726,14 @@ class _OperationsViewState extends State<OperationsView> {
                 children: [
                   Icon(Icons.location_on,
                       size: 16,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                   const SizedBox(width: 4),
                   Text(
                     '${site.latitude.toStringAsFixed(4)}, ${site.longitude.toStringAsFixed(4)}',
                     style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.7),
                         fontSize: 12),
                   ),
                 ],
@@ -757,8 +766,8 @@ class _OperationsViewState extends State<OperationsView> {
                       children: [
                         Icon(Icons.circle,
                             size: 6,
-                            color:
-                                theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7)),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(

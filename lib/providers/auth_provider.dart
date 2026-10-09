@@ -50,7 +50,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   /// Login with username and password
-  Future<bool> login(String username, String password, {bool rememberMe = false}) async {
+  Future<bool> login(String username, String password,
+      {bool rememberMe = false}) async {
     try {
       final user = await database.getUserByUsername(username);
 

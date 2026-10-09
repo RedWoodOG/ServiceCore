@@ -89,7 +89,8 @@ class _KnowledgeHomeViewState extends State<KnowledgeHomeView> {
           decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.05))),
+                    color:
+                        theme.colorScheme.onSurface.withValues(alpha: 0.05))),
           ),
         ),
       ),
@@ -377,7 +378,8 @@ class _KnowledgeHomeViewState extends State<KnowledgeHomeView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.search_off,
-                size: 64, color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                size: 64,
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
             const SizedBox(height: 16),
             Text(
               'No results for "$_searchQuery"',
@@ -442,7 +444,8 @@ class _KnowledgeHomeViewState extends State<KnowledgeHomeView> {
                         child: Text(
                           entry.equipmentType,
                           style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.5),
                             fontSize: 11,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -470,7 +473,8 @@ class _KnowledgeHomeViewState extends State<KnowledgeHomeView> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontSize: 12,
                         height: 1.4,
                       ),
@@ -480,7 +484,8 @@ class _KnowledgeHomeViewState extends State<KnowledgeHomeView> {
                     Text(
                       entry.equipmentModel!,
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontSize: 12,
                       ),
                     ),
@@ -492,26 +497,28 @@ class _KnowledgeHomeViewState extends State<KnowledgeHomeView> {
                       children: [
                         Icon(Icons.schedule,
                             size: 13,
-                            color:
-                                theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.4)),
                         const SizedBox(width: 4),
                         Text(
                           '~${entry.estimatedTime} min',
                           style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.4),
                             fontSize: 11,
                           ),
                         ),
                         const SizedBox(width: 12),
                         Icon(Icons.folder_outlined,
                             size: 13,
-                            color:
-                                theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.4)),
                         const SizedBox(width: 4),
                         Text(
                           entry.category,
                           style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.4),
                             fontSize: 11,
                           ),
                         ),

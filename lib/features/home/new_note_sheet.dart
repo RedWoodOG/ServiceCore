@@ -113,8 +113,10 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -137,7 +139,8 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                     const Spacer(),
                     IconButton(
                       icon: Icon(Icons.close,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
@@ -156,7 +159,8 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                       Text(
                         'Note Type',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -180,7 +184,8 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                       Text(
                         'Site *',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -215,7 +220,8 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                       Text(
                         'Work Order (Optional)',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -230,8 +236,8 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                           ),
                           hintText: 'None',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         dropdownColor: theme.colorScheme.surface,
                         style: TextStyle(color: theme.colorScheme.onSurface),
@@ -259,7 +265,8 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                       Text(
                         'Note Text *',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -275,8 +282,8 @@ class _NewNoteSheetState extends State<NewNoteSheet> {
                           ),
                           hintText: 'Enter your note...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                         validator: (value) {

@@ -69,9 +69,7 @@ class WorkOrderWorkflowService {
     // Perform transition in transaction
     await db.transaction(() async {
       // Update work order
-      await db
-          .update(db.workOrders)
-          .replace(
+      await db.update(db.workOrders).replace(
             current.copyWith(
               status: newStatus,
               previousStatus: Value(workOrder.status),
@@ -82,9 +80,7 @@ class WorkOrderWorkflowService {
           );
 
       // Log transition
-      await db
-          .into(db.workOrderStatusTransitions)
-          .insert(
+      await db.into(db.workOrderStatusTransitions).insert(
             WorkOrderStatusTransitionsCompanion.insert(
               workOrderId: workOrder.id,
               fromStatus: workOrder.status,
@@ -95,9 +91,7 @@ class WorkOrderWorkflowService {
           );
 
       // Audit log
-      await db
-          .into(db.workOrderAuditLog)
-          .insert(
+      await db.into(db.workOrderAuditLog).insert(
             WorkOrderAuditLogCompanion.insert(
               workOrderId: workOrder.id,
               userId: userId,
@@ -144,7 +138,7 @@ class WorkOrderWorkflowService {
             'Work order ${workOrder.id} completed without parts logged',
           );
         }
-              break;
+        break;
 
       case 'closed':
         if (workOrder.status != 'completed') {

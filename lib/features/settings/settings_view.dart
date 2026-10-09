@@ -51,8 +51,8 @@ class _SettingsViewState extends State<SettingsView> {
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor.withValues(alpha: 0.2),
         border: Border(
-          bottom:
-              BorderSide(color: theme.colorScheme.onSurface.withValues(alpha: 0.05)),
+          bottom: BorderSide(
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.05)),
         ),
       ),
       child: Row(
@@ -519,7 +519,8 @@ class _SettingsViewState extends State<SettingsView> {
         padding: const EdgeInsets.symmetric(vertical: 20),
         backgroundColor: theme.colorScheme.onSurface.withValues(alpha: 0.1),
         foregroundColor: theme.colorScheme.onSurface,
-        side: BorderSide(color: theme.colorScheme.onSurface.withValues(alpha: 0.2)),
+        side: BorderSide(
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.2)),
       ),
     );
   }

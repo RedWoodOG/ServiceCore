@@ -152,7 +152,8 @@ class _AddLocationSheetState extends State<AddLocationSheet> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withValues(alpha: 0.15),
+                        color:
+                            theme.colorScheme.primary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(Icons.add_location_alt,
@@ -174,8 +175,8 @@ class _AddLocationSheetState extends State<AddLocationSheet> {
                           Text(
                             'New site will appear on all maps',
                             style: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.5),
                               fontSize: 12,
                             ),
                           ),
@@ -184,7 +185,8 @@ class _AddLocationSheetState extends State<AddLocationSheet> {
                     ),
                     IconButton(
                       icon: Icon(Icons.close,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.5)),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
@@ -331,7 +333,8 @@ class _AddLocationSheetState extends State<AddLocationSheet> {
       filled: true,
       fillColor: theme.colorScheme.surface.withValues(alpha: 0.5),
       hintText: hint,
-      hintStyle: TextStyle(color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
+      hintStyle:
+          TextStyle(color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(color: theme.dividerColor),

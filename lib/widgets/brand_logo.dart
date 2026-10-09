@@ -33,7 +33,7 @@ class BrandLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
     final systemBrightness = MediaQuery.platformBrightnessOf(context);
-    
+
     final resolver = AssetResolver(
       settings: themeProvider.settings,
       systemBrightness: systemBrightness,

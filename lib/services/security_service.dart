@@ -122,9 +122,7 @@ class SecurityService {
 
     // In production, send to security monitoring system
     // For now, just log to database audit table
-    await db
-        .into(db.workOrderAuditLog)
-        .insert(
+    await db.into(db.workOrderAuditLog).insert(
           WorkOrderAuditLogCompanion.insert(
             workOrderId: 0, // Special: security events
             userId: userId,

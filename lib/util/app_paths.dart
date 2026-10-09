@@ -48,7 +48,8 @@ class AppPaths {
 
   /// Directory for app-owned user files, created if missing.
   static Future<Directory> appDir(List<String> segments) async {
-    final dir = Directory(p.joinAll([documentsRoot.path, appDirName, ...segments]));
+    final dir =
+        Directory(p.joinAll([documentsRoot.path, appDirName, ...segments]));
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }

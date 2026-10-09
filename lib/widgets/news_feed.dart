@@ -66,7 +66,8 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                       ),
                     ),
                     Icon(Icons.rss_feed,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.4),
                         size: 20),
                   ],
                 ),
@@ -131,7 +132,8 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                       ),
                     ),
                     Icon(Icons.rss_feed,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.4),
                         size: 20),
                   ],
                 ),
@@ -175,7 +177,8 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                           "• ${briefings.length} items • Updated ${_formatTimeAgo(lastUpdate)}",
                           style: theme.textTheme.bodySmall?.copyWith(
                             fontSize: AppTypography.fontSizeXS,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.4),
                           ),
                         ),
                       ],
@@ -436,8 +439,8 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                           Text(
                             item.timeAgo,
                             style: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.4),
                               fontSize: AppTypography.fontSizeXS,
                             ),
                           ),

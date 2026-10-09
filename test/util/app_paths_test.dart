@@ -18,7 +18,8 @@ void main() {
 
   group('toStorable', () {
     test('makes a path under the documents root root-relative', () {
-      final abs = p.join(tempRoot.path, AppPaths.appDirName, 'expenses', '7', 'r.jpg');
+      final abs =
+          p.join(tempRoot.path, AppPaths.appDirName, 'expenses', '7', 'r.jpg');
       expect(
         AppPaths.toStorable(abs),
         p.join(AppPaths.appDirName, 'expenses', '7', 'r.jpg'),
@@ -33,13 +34,15 @@ void main() {
 
   group('resolveSync', () {
     test('joins a relative path onto the current root', () {
-      final stored = p.join(AppPaths.appDirName, 'work_orders', '3', 'photo.png');
+      final stored =
+          p.join(AppPaths.appDirName, 'work_orders', '3', 'photo.png');
       expect(AppPaths.resolveSync(stored), p.join(tempRoot.path, stored));
     });
 
     test('returns an absolute legacy path that still exists', () {
-      final dir = Directory(p.join(tempRoot.path, AppPaths.appDirName, 'sites', '2'))
-        ..createSync(recursive: true);
+      final dir =
+          Directory(p.join(tempRoot.path, AppPaths.appDirName, 'sites', '2'))
+            ..createSync(recursive: true);
       final file = File(p.join(dir.path, 'doc.pdf'))..writeAsStringSync('x');
       expect(AppPaths.resolveSync(file.path), file.path);
     });
@@ -56,7 +59,8 @@ void main() {
       );
       expect(
         AppPaths.resolveSync(stale),
-        p.join(tempRoot.path, AppPaths.appDirName, 'expenses', '4', 'receipt.jpg'),
+        p.join(
+            tempRoot.path, AppPaths.appDirName, 'expenses', '4', 'receipt.jpg'),
       );
     });
 

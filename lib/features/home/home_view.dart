@@ -213,7 +213,8 @@ class _HomeViewState extends State<HomeView> {
       child: Row(
         children: [
           Icon(Icons.search,
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.6), size: 18),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+              size: 18),
           const SizedBox(width: 12),
           Text(
             "Quick Search (CTRL + K)",
@@ -268,7 +269,8 @@ class _HomeViewState extends State<HomeView> {
                     Text(
                       "ATMOSPHERIC CONDITIONS",
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontSize: 10,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.5,
@@ -328,7 +330,8 @@ class _HomeViewState extends State<HomeView> {
                     Text(
                       "LOGISTIC FEEDBACK",
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontSize: 10,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.5,

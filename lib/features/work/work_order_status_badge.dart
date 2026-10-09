@@ -65,13 +65,17 @@ class WorkOrderStatusBadge extends StatelessWidget {
     final parsed = WorkOrderStatusX.fromDbValue(status);
     switch (parsed) {
       case WorkOrderStatus.draft:
-        return _StatusConfig(Icons.edit_note, Colors.grey, parsed.label.toUpperCase());
+        return _StatusConfig(
+            Icons.edit_note, Colors.grey, parsed.label.toUpperCase());
       case WorkOrderStatus.open:
-        return _StatusConfig(Icons.folder_open, Colors.blue, parsed.label.toUpperCase());
+        return _StatusConfig(
+            Icons.folder_open, Colors.blue, parsed.label.toUpperCase());
       case WorkOrderStatus.onHold:
-        return _StatusConfig(Icons.pause_circle, Colors.red, parsed.label.toUpperCase());
+        return _StatusConfig(
+            Icons.pause_circle, Colors.red, parsed.label.toUpperCase());
       case WorkOrderStatus.completed:
-        return _StatusConfig(Icons.check_circle, Colors.green, parsed.label.toUpperCase());
+        return _StatusConfig(
+            Icons.check_circle, Colors.green, parsed.label.toUpperCase());
     }
   }
 }

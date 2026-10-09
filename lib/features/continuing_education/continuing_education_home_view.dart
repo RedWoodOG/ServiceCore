@@ -56,9 +56,11 @@ class _ContinuingEducationHomeViewState
                     decoration: InputDecoration(
                       hintText: 'Search courses...',
                       hintStyle: TextStyle(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       prefixIcon: Icon(Icons.search,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       filled: true,
                       fillColor: theme.colorScheme.surface,
                       border: OutlineInputBorder(
@@ -149,8 +151,8 @@ class _ContinuingEducationHomeViewState
                         children: [
                           Icon(Icons.school_outlined,
                               size: 64,
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.4)),
                           const SizedBox(height: 16),
                           Text(
                             'No courses available',
@@ -187,8 +189,8 @@ class _ContinuingEducationHomeViewState
                         children: [
                           Icon(Icons.search_off,
                               size: 64,
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.4)),
                           const SizedBox(height: 16),
                           Text(
                             'No courses match your search',

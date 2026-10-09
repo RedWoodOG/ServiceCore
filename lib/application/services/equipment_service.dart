@@ -78,7 +78,8 @@ class EquipmentService {
       return Err(ValidationFailure('Site is required', field: 'siteId'));
     }
     if (cmd.equipmentType.trim().isEmpty) {
-      return Err(ValidationFailure('Equipment type is required', field: 'equipmentType'));
+      return Err(ValidationFailure('Equipment type is required',
+          field: 'equipmentType'));
     }
 
     // Verify site exists
@@ -88,41 +89,45 @@ class EquipmentService {
         return Err(NotFoundFailure('Site ${cmd.siteId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to verify site', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to verify site', cause: e, stackTrace: st));
     }
 
     // Insert
     try {
       final equipmentId = await _db.transaction(() async {
         return await _db.into(_db.equipment).insert(
-          EquipmentCompanion.insert(
-            siteId: cmd.siteId,
-            equipmentType: cmd.equipmentType.trim(),
-            manufacturer: Value(cmd.manufacturer?.trim()),
-            model: Value(cmd.model?.trim()),
-            serialNumber: Value(cmd.serialNumber?.trim()),
-            underWarranty: Value(cmd.underWarranty),
-            underServiceContract: Value(cmd.underServiceContract),
-            active: const Value(true),
-          ),
-        );
+              EquipmentCompanion.insert(
+                siteId: cmd.siteId,
+                equipmentType: cmd.equipmentType.trim(),
+                manufacturer: Value(cmd.manufacturer?.trim()),
+                model: Value(cmd.model?.trim()),
+                serialNumber: Value(cmd.serialNumber?.trim()),
+                underWarranty: Value(cmd.underWarranty),
+                underServiceContract: Value(cmd.underServiceContract),
+                active: const Value(true),
+              ),
+            );
       });
 
       Log.info('EquipmentService: Created equipment $equipmentId');
       return Ok(equipmentId);
     } catch (e, st) {
       if (e.toString().contains('UNIQUE constraint')) {
-        return Err(ConflictFailure('Equipment with this serial number already exists'));
+        return Err(ConflictFailure(
+            'Equipment with this serial number already exists'));
       }
       Log.error('EquipmentService: Failed to create equipment', e, st);
-      return Err(StorageFailure('Failed to create equipment', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to create equipment',
+          cause: e, stackTrace: st));
     }
   }
 
   /// Updates existing equipment.
   Future<Result<void>> update(UpdateEquipment cmd) async {
     if (cmd.equipmentId <= 0) {
-      return Err(ValidationFailure('Invalid equipment ID', field: 'equipmentId'));
+      return Err(
+          ValidationFailure('Invalid equipment ID', field: 'equipmentId'));
     }
 
     // Verify exists
@@ -135,20 +140,35 @@ class EquipmentService {
         return Err(ConflictFailure('Cannot update retired equipment'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch equipment', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch equipment',
+          cause: e, stackTrace: st));
     }
 
     // Update
     try {
       await _db.transaction(() async {
-        await (_db.update(_db.equipment)..where((t) => t.id.equals(cmd.equipmentId))).write(
+        await (_db.update(_db.equipment)
+              ..where((t) => t.id.equals(cmd.equipmentId)))
+            .write(
           EquipmentCompanion(
-            equipmentType: cmd.equipmentType != null ? Value(cmd.equipmentType!.trim()) : const Value.absent(),
-            manufacturer: cmd.manufacturer != null ? Value(cmd.manufacturer!.trim()) : const Value.absent(),
-            model: cmd.model != null ? Value(cmd.model!.trim()) : const Value.absent(),
-            serialNumber: cmd.serialNumber != null ? Value(cmd.serialNumber!.trim()) : const Value.absent(),
-            underWarranty: cmd.underWarranty != null ? Value(cmd.underWarranty!) : const Value.absent(),
-            underServiceContract: cmd.underServiceContract != null ? Value(cmd.underServiceContract!) : const Value.absent(),
+            equipmentType: cmd.equipmentType != null
+                ? Value(cmd.equipmentType!.trim())
+                : const Value.absent(),
+            manufacturer: cmd.manufacturer != null
+                ? Value(cmd.manufacturer!.trim())
+                : const Value.absent(),
+            model: cmd.model != null
+                ? Value(cmd.model!.trim())
+                : const Value.absent(),
+            serialNumber: cmd.serialNumber != null
+                ? Value(cmd.serialNumber!.trim())
+                : const Value.absent(),
+            underWarranty: cmd.underWarranty != null
+                ? Value(cmd.underWarranty!)
+                : const Value.absent(),
+            underServiceContract: cmd.underServiceContract != null
+                ? Value(cmd.underServiceContract!)
+                : const Value.absent(),
           ),
         );
       });
@@ -157,14 +177,16 @@ class EquipmentService {
       return const Ok(null);
     } catch (e, st) {
       Log.error('EquipmentService: Failed to update equipment', e, st);
-      return Err(StorageFailure('Failed to update equipment', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to update equipment',
+          cause: e, stackTrace: st));
     }
   }
 
   /// Retires equipment (soft deactivate).
   Future<Result<void>> retire(RetireEquipment cmd) async {
     if (cmd.equipmentId <= 0) {
-      return Err(ValidationFailure('Invalid equipment ID', field: 'equipmentId'));
+      return Err(
+          ValidationFailure('Invalid equipment ID', field: 'equipmentId'));
     }
 
     // Verify exists and is active
@@ -177,22 +199,27 @@ class EquipmentService {
         return Err(ConflictFailure('Equipment is already retired'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch equipment', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch equipment',
+          cause: e, stackTrace: st));
     }
 
     // Retire
     try {
       await _db.transaction(() async {
-        await (_db.update(_db.equipment)..where((t) => t.id.equals(cmd.equipmentId))).write(
+        await (_db.update(_db.equipment)
+              ..where((t) => t.id.equals(cmd.equipmentId)))
+            .write(
           const EquipmentCompanion(active: Value(false)),
         );
       });
 
-      Log.info('EquipmentService: Retired equipment ${cmd.equipmentId}${cmd.reason != null ? " - ${cmd.reason}" : ""}');
+      Log.info(
+          'EquipmentService: Retired equipment ${cmd.equipmentId}${cmd.reason != null ? " - ${cmd.reason}" : ""}');
       return const Ok(null);
     } catch (e, st) {
       Log.error('EquipmentService: Failed to retire equipment', e, st);
-      return Err(StorageFailure('Failed to retire equipment', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to retire equipment',
+          cause: e, stackTrace: st));
     }
   }
 }
