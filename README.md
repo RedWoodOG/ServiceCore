@@ -38,7 +38,9 @@ docs/            development guide, design system, security audit
 ## Requirements and decisions
 
 - [`docs/requirements/overhaul-requirements.md`](docs/requirements/overhaul-requirements.md):
-  the accepted overhaul requirements (R1–R36), flows, phasing and resolved decisions.
+  the overhaul requirements (R1–R36), flows, phasing and resolved decisions, merged per the
+  owner's decisions of 2026-10-09. Owner review of the merged text is pending, and one point
+  (R34) is open.
 - [`docs/adr/`](docs/adr/README.md): architecture decision records, including ADR-0001
   (organizations promote `clients` in place) and ADR-0002 (at-rest encryption required for
   the first release).
@@ -73,7 +75,7 @@ breaks or destroys data in existing installs:
 |---|---|---|
 | `fsc_portal_v1_2026_security` | `services/encryption_service.dart` | Key-derivation salt for the master key that wraps the stored database key. Changing it makes the stored key undecryptable unless the original value is restored or a prior key export is imported. No database is encrypted at this revision, so no data is lost today. Once encryption is enabled, it would make the encrypted database unreadable. |
 | `fsc_portal_db_key_encrypted` | `services/encryption_service.dart` | Secure-storage entry holding the stored database key. Renaming orphans that key: the next read generates a new random key that does not match earlier key exports. No database is encrypted at this revision. Once encryption is enabled, the encrypted database could not be opened with the new key. |
-| `fsc_export_salt_v1` | `services/encryption_service.dart` | Nonce for encrypted exports. Changing it breaks decryption of prior exports. |
+| `fsc_export_salt_v1` | `services/encryption_service.dart` | PBKDF2 salt for the key derived from the admin password when the database key is exported or imported. The `cryptography` API takes it as `nonce:` (lines 171 and 215). Changing it breaks decryption of prior key exports. |
 | `fsc_portal_dev.sqlite` | `main.dart`, `database/` | On-disk path of the live database. Renaming orphans existing databases. |
 | `fsc_portal/`, `fsc_portal.db` | `application/boot/` | Path that boot checks and that safe-mode recovery backs up and deletes. It is not the live database (see Known issues). Renaming it orphans any file already at that path. |
 | `portal_offline/` | `util/app_paths.dart` (`AppPaths.appDirName`) | On-disk directory for attachments and receipts. |

@@ -28,9 +28,10 @@ assigned; see the versioning note at the end of this section.
   and a Windows release build. (#3, `cddc752`)
 - `dart_test.yaml` registers a `perf` tag. Tests tagged `perf` are excluded from CI and run
   locally with `flutter test --tags perf`. (#3, `c348240`)
-- `docs/requirements/overhaul-requirements.md`: the accepted overhaul requirements (R1–R36,
-  flows F1–F9, phasing). It merges the 2026-05-07 local draft and the 2026-05-03 GitHub
-  version per owner decision of 2026-10-09. It keeps the fleet GPS deferral (R32 waits for
+- `docs/requirements/overhaul-requirements.md`: the overhaul requirements (R1–R36, flows
+  F1–F9, phasing). It merges the 2026-05-07 local draft and the 2026-05-03 GitHub version per
+  the owner's decisions of 2026-10-09. The owner has not yet reviewed the merged text, and one
+  point (R34) is open. It keeps the fleet GPS deferral (R32 waits for
   live system access; R31 and R33 proceed without a GPS vendor), and Appendix A records how
   each section was reconciled. (branch `docs/overhaul-spec-and-adrs`; commit not yet
   assigned)

@@ -2,9 +2,9 @@
 title: ServiceCore Overhaul Requirements
 date: 2026-05-01
 topic: servicecore-overhaul
-status: accepted
-accepted: 2026-10-09
-accepted_by: owner
+status: adopted
+adopted: 2026-10-09
+adopted_basis: "Merged per owner decisions of 2026-10-09; owner review of the merged text pending; one open point (R34)."
 updated: 2026-10-09
 decisions_resolved: 2026-05-03
 owner_decisions: 2026-10-09
@@ -16,11 +16,14 @@ roadmap_note: "2026-05-03: GPS/fleet integration deferred until live system acce
 
 # ServiceCore Overhaul Requirements
 
-> **Status: Accepted** (owner, 2026-10-09).
-> This document merges two versions of the overhaul requirements brief, per owner decision of
-> 2026-10-09: the local draft last edited 2026-05-07 (the merge base) and the GitHub version
-> updated 2026-05-03. [Appendix A](#appendix-a-merge-record) records how each section was
-> reconciled.
+> **Status: Adopted; owner review of the merged text pending.**
+> On 2026-10-09 the owner decided how to merge the two versions of this brief and made the
+> decisions recorded here. The owner has not yet reviewed this merged text. One point is
+> still open for the owner (R34; see
+> [Open point for owner confirmation](#open-point-for-owner-confirmation)).
+> The merge combines the local draft last edited 2026-05-07 (the merge base) and the GitHub
+> version updated 2026-05-03. [Appendix A](#appendix-a-merge-record) records how each section
+> was reconciled.
 >
 > **Origin:** the brief was written in May 2026 for FSC Portal, the predecessor product from
 > which ServiceCore was extracted. Where the text names the product, it now says ServiceCore.
@@ -137,7 +140,8 @@ The upgraded ServiceCore should become the local-first operating system for fiel
   - **Steps:** Portal checks backup configuration, creates versioned local backup, verifies integrity, records metadata, exposes recovery path, and warns when backup health is poor.
   - **Outcome:** Installed systems can recover from local database corruption, accidental deletion, or machine failure scenarios.
   - **Covered by:** R17, R18
-  - **Owner decision 2026-10-09:** backups are not plaintext, and a restore on a different machine must open (ADR-0002).
+  - **Owner decision 2026-10-09:** a restore on a different machine must open, through a key-recovery path (ADR-0002).
+  - *Derived consequence, not the owner's wording:* backups are not plaintext, because the owner made at-rest encryption required (ADR-0002).
 
 - F7. Dispatcher Reroute With Field and Vehicle Awareness
   - **Trigger:** Traffic, SLA risk, cancellation, or new urgent work requires changing today’s assignments.
@@ -203,7 +207,8 @@ The upgraded ServiceCore should become the local-first operating system for fiel
 **Local Backup and Recovery**
 
 - R17. The installed app must create local backups on the machine where it is installed, with configurable location, retention, integrity checks, and recovery visibility.
-  - **Owner decision 2026-10-09:** at-rest database encryption is required for the first release and is delivered with backup and recovery. Backups must not be plaintext, and a restore on another machine must open through a key-recovery path. See [ADR-0002](../adr/0002-at-rest-encryption-required.md).
+  - **Owner decision 2026-10-09:** at-rest database encryption is required for the first release and is delivered with backup and recovery. A restore on another machine must open through a key-recovery path. See [ADR-0002](../adr/0002-at-rest-encryption-required.md).
+  - *Derived consequence, not the owner's wording:* backups must not be plaintext, because a plaintext backup would bypass at-rest encryption (ADR-0002).
 - R18. Backup health must appear in admin/settings and surface warnings on the Landing Pad when backups are stale, failing, or unconfigured.
 
 **Sales Platform**
@@ -382,7 +387,13 @@ If business reality changes (e.g. signed OEM requires mobile day one, or sales-l
 
 ### Open point for owner confirmation
 
-- **Does the R34 sales gate wait for deferred R32?** R34 and the Sales row above sequence sales after the R27–R33 tranche. Roadmap sequencing says that inventory, the equipment dossier, dispatch UX without third-party GPS "and other overhaul items" proceed without blocking on telematics. Read together, they suggest the sales gate covers R27–R31 and R33 but not deferred R32. That reading is this merge's interpretation; the owner decision of 2026-10-09 does not state it. R34 is unchanged until the owner confirms or corrects it.
+- **Does the R34 sales gate wait for deferred R32?** Four places state the sales gate:
+  - R34: "after the inventory / parts / fleet-visibility tranche (R27–R33)";
+  - the R19–R20 Sales row in the table above: "sequenced after … R27–R33";
+  - Key Decisions: sales ships "after … the inventory + dispatch visibility tranche (R27–R33)";
+  - Phase 6 in Recommended Phasing: "after 3b–3c per R34".
+
+  Roadmap sequencing says that inventory, the equipment dossier, dispatch UX without third-party GPS "and other overhaul items" proceed without blocking on telematics. Read together, they suggest the sales gate covers R27–R31 and R33 but not deferred R32. That reading is this merge's interpretation; the owner decision of 2026-10-09 does not state it. All four statements are unchanged until the owner confirms or corrects it.
 
 ## Outstanding Questions
 
@@ -399,7 +410,7 @@ The GitHub version listed these three questions as open. The local draft resolve
 - [Affects R6-R10][Technical] Determine whether the existing `clients` and `sites` model is enough or whether a dedicated organizations model is required. **Resolved 2026-10-09 (owner):** promote `clients` in place; see [ADR-0001](../adr/0001-organizations-promote-clients.md).
 - [Affects R11-R13][Technical] Determine how much of the documented work order workflow is implemented versus only documented.
 - [Affects R14-R16][Technical] Determine whether expense receipts should be stored as local file paths, managed documents, or backup-aware attachments.
-- [Affects R17-R18][Technical] Determine which local backup format and retention strategy best fits installed-machine use. **Constrained 2026-10-09 (owner):** backups must not be plaintext and must restore on another machine ([ADR-0002](../adr/0002-at-rest-encryption-required.md)). Format and retention remain open.
+- [Affects R17-R18][Technical] Determine which local backup format and retention strategy best fits installed-machine use. **Constrained 2026-10-09:** a backup must restore on another machine (owner decision). Backups must not be plaintext (a consequence derived from the owner's encryption decision). See [ADR-0002](../adr/0002-at-rest-encryption-required.md). Format and retention remain open.
 - [Affects R23-R25][Needs research] Compare viable small local EVA strategies: improved FTS/ranking, embeddings, tiny ONNX model, llama.cpp-compatible local model, or hybrid retrieval plus deterministic templates.
 
 ---
@@ -446,7 +457,7 @@ base. Nothing from either version was dropped; superseded items are kept and mar
 
 | Section | Source | Resolution |
 | :--- | :--- | :--- |
-| Front matter | Both | Local `decisions_resolved` and GitHub `roadmap_note` both kept. Status set to accepted (owner, 2026-10-09). `topic` renamed to `servicecore-overhaul`. |
+| Front matter | Both | Local `decisions_resolved` and GitHub `roadmap_note` both kept. Status set to adopted: merged per owner decisions of 2026-10-09, with owner review of the merged text pending. `topic` renamed to `servicecore-overhaul`. |
 | Title, product name | Both | "FSC Portal" renamed to ServiceCore; origin noted once in the header. |
 | Problem Frame | Local adds inventory, technician/vehicle visibility, sales timing | Local text kept. Path prefix `FSC-Portal/` removed. |
 | Current Product Signals | Both (identical) | Kept as a dated snapshot with "*At `f211688`*" notes. |

@@ -27,11 +27,14 @@ All code citations below were checked at ServiceCore commit `f211688`.
   no SQLCipher or other cipher library.
 - `lib/main.dart:106` labels the startup database "Temporary database for auth (will be
   replaced with encrypted one)". Line 118 says the key step "doesn't encrypt yet, just
-  prepares". Line 119 calls `getKeyFingerprint()`, which is the only caller of the key code.
+  prepares". Line 119 calls `getKeyFingerprint()`. It is the only call into the key code from
+  outside `EncryptionService`.
 - `EncryptionService.getDatabaseKey` (`lib/services/encryption_service.dart:59-89`) creates
-  and stores a database key. Its only caller is `getKeyFingerprint` (lines 255-268).
+  and stores a database key. It is called by `getKeyFingerprint` (line 257) and
+  `exportDatabaseKey` (line 160).
   - `exportDatabaseKey` (lines 155-196) and `importDatabaseKey` (lines 199-244) have no
-    callers in `lib/`, `test/` or `integration_test/`.
+    callers in `lib/`, `test/` or `integration_test/`. The only live path to the key is
+    therefore `main.dart:119` → `getKeyFingerprint`.
 - The `EncryptionKeyStore` table (`app_database.dart:490-499`) is created by the v13
   migration step (line 639). No other code reads or writes it.
 - **No backup of the live database exists.** The only copy mechanism is boot safe-mode
@@ -118,8 +121,9 @@ All code citations below were checked at ServiceCore commit `f211688`.
   first market-ready release.
 - **Delivered with backup and recovery.** Encryption ships together with local backup and
   recovery (R17–R18; delivery milestone M3, "local backup/restore with key-escrow design").
-  No build may encrypt the database without a tested backup and key-recovery path, and no
-  backup may be written as plaintext.
+  - *Derived from this decision; not the owner's wording:* no build may encrypt the
+    database without a tested backup and key-recovery path, and no backup may be written as
+    plaintext. See Consequences.
 - **Use the existing key.** The database key is the one `EncryptionService.getDatabaseKey`
   already generates and stores under `fsc_portal_db_key_encrypted`. A second database key is
   not introduced.
@@ -148,7 +152,9 @@ The M3 implementation must meet all of these:
 
 ## Consequences
 
-- **Backups must not be plaintext.**
+- **Backups must not be plaintext.** This follows from the owner's encryption decision
+  (E0063): a plaintext backup would bypass at-rest encryption. The owner did not state it
+  separately.
   - A file copy of an encrypted database stays encrypted. Any method that exports or
     rewrites the database must produce ciphertext under the same key or a recovery-wrapped
     key; for example, a `VACUUM INTO` approach needs an explicit check.
