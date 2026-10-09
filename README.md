@@ -35,6 +35,16 @@ lib/
 docs/            development guide, design system, security audit
 ```
 
+## Requirements and decisions
+
+- [`docs/requirements/overhaul-requirements.md`](docs/requirements/overhaul-requirements.md):
+  the overhaul requirements (R1–R36), flows, phasing and resolved decisions, merged per the
+  owner's decisions of 2026-10-09. Owner review of the merged text is pending, and one point
+  (R34) is open.
+- [`docs/adr/`](docs/adr/README.md): architecture decision records, including ADR-0001
+  (organizations promote `clients` in place) and ADR-0002 (at-rest encryption required for
+  the first release).
+
 ## Getting started
 
 ```bash
@@ -65,7 +75,7 @@ breaks or destroys data in existing installs:
 |---|---|---|
 | `fsc_portal_v1_2026_security` | `services/encryption_service.dart` | Key-derivation salt for the master key that wraps the stored database key. Changing it makes the stored key undecryptable unless the original value is restored or a prior key export is imported. No database is encrypted at this revision, so no data is lost today. Once encryption is enabled, it would make the encrypted database unreadable. |
 | `fsc_portal_db_key_encrypted` | `services/encryption_service.dart` | Secure-storage entry holding the stored database key. Renaming orphans that key: the next read generates a new random key that does not match earlier key exports. No database is encrypted at this revision. Once encryption is enabled, the encrypted database could not be opened with the new key. |
-| `fsc_export_salt_v1` | `services/encryption_service.dart` | Nonce for encrypted exports. Changing it breaks decryption of prior exports. |
+| `fsc_export_salt_v1` | `services/encryption_service.dart` | PBKDF2 salt for the key derived from the admin password when the database key is exported or imported. The `cryptography` API takes it as `nonce:` (lines 171 and 215). Changing it breaks decryption of prior key exports. |
 | `fsc_portal_dev.sqlite` | `main.dart`, `database/` | On-disk path of the live database. Renaming orphans existing databases. |
 | `fsc_portal/`, `fsc_portal.db` | `application/boot/` | Path that boot checks and that safe-mode recovery backs up and deletes. It is not the live database (see Known issues). Renaming it orphans any file already at that path. |
 | `portal_offline/` | `util/app_paths.dart` (`AppPaths.appDirName`) | On-disk directory for attachments and receipts. |
@@ -79,25 +89,27 @@ a migration path, or not at all.
 See `docs/` and the issue tracker. The items below were checked against the source at
 this revision.
 
-- **The database is not encrypted at rest.** `AppDatabase` opens
+- **The database is not encrypted at rest yet.** At-rest encryption is required for the
+  first release and is planned together with local backup and recovery
+  ([ADR-0002](docs/adr/0002-at-rest-encryption-required.md)). Today `AppDatabase` opens
   `fsc_portal_dev.sqlite` in the application documents directory with a plain
   `NativeDatabase.createInBackground`
-  (`lib/database/app_database.dart:1664-1676`). `pubspec.yaml` ships `sqlite3_flutter_libs`
+  (`lib/database/app_database.dart:1671-1683`). `pubspec.yaml` ships `sqlite3_flutter_libs`
   and no SQLCipher, and `lib/main.dart:118` says the key step "doesn't encrypt yet".
   `EncryptionService.getDatabaseKey` (`lib/services/encryption_service.dart:59`) creates
   and stores a key, but it is used only for the startup fingerprint (`lib/main.dart:119`)
   and the key export/import methods (`lib/services/encryption_service.dart:155-244`).
 - **Expense amounts: a comma is dropped, not read as a decimal separator.** `12,50` is
-  saved as `1250` (`lib/features/expenses/expenses_home_view.dart:269`). A thousands
+  saved as `1250` (`lib/features/expenses/expenses_home_view.dart:284`). A thousands
   separator such as `1,234.50` parses as intended.
 - **Safe-mode recovery targets the wrong file.** Boot looks for
   `fsc_portal/fsc_portal.db` under the application documents directory and reads its size
-  (`lib/application/boot/boot_service.dart:146-154`, existence check at `:149-150`), and
-  recovery backs that file up and deletes it (`boot_service.dart:106-123`). The live
+  (`lib/application/boot/boot_service.dart:148-156`, existence check at `:151-152`), and
+  recovery backs that file up and deletes it (`boot_service.dart:107-125`). The live
   database is `fsc_portal_dev.sqlite` directly in that directory
-  (`lib/database/app_database.dart:1667`). Recovery therefore cannot repair the real
+  (`lib/database/app_database.dart:1674`). Recovery therefore cannot repair the real
   database.
 - **Search is a case-insensitive substring match, not a full-text index.**
-  `searchKnowledge` (`lib/database/app_database.dart:1401-1414`) and `searchWorkOrders`
-  (`lib/database/app_database.dart:1166-1177`) lowercase the query and apply `contains`
+  `searchKnowledge` (`lib/database/app_database.dart:1408-1421`) and `searchWorkOrders`
+  (`lib/database/app_database.dart:1173-1184`) lowercase the query and apply `contains`
   to lowercased columns.
