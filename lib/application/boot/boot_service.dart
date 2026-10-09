@@ -71,7 +71,7 @@ class BootService extends ChangeNotifier {
     } catch (e, st) {
       Log.error('BootService: Boot failed at ${_state.name}', e, st);
       _errorLog.add('${_state.name}: $e');
-      
+
       final diagnostics = BootDiagnostics(
         dbPath: _dbPath,
         dbExists: _dbExists,
@@ -101,17 +101,19 @@ class BootService extends ChangeNotifier {
       return _state;
     }
 
-    Log.info('BootService: Attempting recovery (resetDatabase: $resetDatabase)');
+    Log.info(
+        'BootService: Attempting recovery (resetDatabase: $resetDatabase)');
 
     if (resetDatabase && _dbPath.isNotEmpty) {
       try {
         final dbFile = File(_dbPath);
         if (await dbFile.exists()) {
           // Create backup first
-          final backupPath = '$_dbPath.backup.${DateTime.now().millisecondsSinceEpoch}';
+          final backupPath =
+              '$_dbPath.backup.${DateTime.now().millisecondsSinceEpoch}';
           await dbFile.copy(backupPath);
           Log.info('BootService: Created backup at $backupPath');
-          
+
           // Delete corrupted database
           await dbFile.delete();
           Log.info('BootService: Deleted corrupted database');
@@ -136,7 +138,7 @@ class BootService extends ChangeNotifier {
     // Get app documents directory
     final appDir = await getApplicationDocumentsDirectory();
     final appDataDir = Directory('${appDir.path}/fsc_portal');
-    
+
     // Ensure directory exists
     if (!await appDataDir.exists()) {
       await appDataDir.create(recursive: true);
@@ -144,11 +146,11 @@ class BootService extends ChangeNotifier {
     }
 
     _dbPath = '${appDataDir.path}/fsc_portal.db';
-    
+
     // Check if database file exists
     final dbFile = File(_dbPath);
     _dbExists = await dbFile.exists();
-    
+
     if (_dbExists) {
       final stat = await dbFile.stat();
       _dbSizeBytes = stat.size;
@@ -162,10 +164,12 @@ class BootService extends ChangeNotifier {
       _dbWritable = true;
     } catch (e) {
       _dbWritable = false;
-      throw StateError('Database directory is not writable: ${appDataDir.path}');
+      throw StateError(
+          'Database directory is not writable: ${appDataDir.path}');
     }
 
-    Log.info('BootService: Filesystem OK - dbExists: $_dbExists, size: $_dbSizeBytes bytes');
+    Log.info(
+        'BootService: Filesystem OK - dbExists: $_dbExists, size: $_dbSizeBytes bytes');
   }
 
   Future<void> _openDatabase() async {
@@ -177,10 +181,13 @@ class BootService extends ChangeNotifier {
 
     // Open database - migrations are handled by Drift
     _database = AppDatabase();
-    
+
     // Get schema version
-    _dbVersion = await _database!.customSelect('PRAGMA user_version').map((row) => row.read<int>('user_version')).getSingleOrNull();
-    
+    _dbVersion = await _database!
+        .customSelect('PRAGMA user_version')
+        .map((row) => row.read<int>('user_version'))
+        .getSingleOrNull();
+
     Log.info('BootService: Database opened - version: $_dbVersion');
   }
 
@@ -190,18 +197,20 @@ class BootService extends ChangeNotifier {
     }
 
     // 1. Run SQLite integrity check
-    final result = await _database!.customSelect('PRAGMA integrity_check').getSingle();
+    final result =
+        await _database!.customSelect('PRAGMA integrity_check').getSingle();
     final checkResult = result.read<String>('integrity_check');
-    
+
     _integrityCheckPassed = checkResult == 'ok';
-    
+
     if (!_integrityCheckPassed!) {
       throw StateError('Database integrity check failed: $checkResult');
     }
     Log.info('BootService: PRAGMA integrity_check = ok');
 
     // 2. Check foreign key integrity
-    final fkResult = await _database!.customSelect('PRAGMA foreign_key_check').get();
+    final fkResult =
+        await _database!.customSelect('PRAGMA foreign_key_check').get();
     if (fkResult.isNotEmpty) {
       final violations = fkResult.length;
       Log.warn('BootService: $violations foreign key violations found');
@@ -211,30 +220,41 @@ class BootService extends ChangeNotifier {
     }
 
     // 3. Quick sanity check on critical tables
-    final tables = await _database!.customSelect(
-      "SELECT name FROM sqlite_master WHERE type='table'"
-    ).get();
-    
+    final tables = await _database!
+        .customSelect("SELECT name FROM sqlite_master WHERE type='table'")
+        .get();
+
     final tableNames = tables.map((r) => r.read<String>('name')).toSet();
-    final requiredTables = {'sites', 'equipment', 'work_orders', 'users', 'clients'};
+    final requiredTables = {
+      'sites',
+      'equipment',
+      'work_orders',
+      'users',
+      'clients'
+    };
     final missingTables = <String>[];
-    
+
     for (final required in requiredTables) {
       if (!tableNames.contains(required)) {
         missingTables.add(required);
       }
     }
-    
+
     if (missingTables.isNotEmpty) {
       // This is likely a fresh database - migrations will create tables
-      Log.info('BootService: Tables pending migration: ${missingTables.join(", ")}');
+      Log.info(
+          'BootService: Tables pending migration: ${missingTables.join(", ")}');
     }
 
     // 4. Verify we can read from critical tables
     try {
-      final userCount = await _database!.customSelect('SELECT COUNT(*) as cnt FROM users').getSingle();
+      final userCount = await _database!
+          .customSelect('SELECT COUNT(*) as cnt FROM users')
+          .getSingle();
       final users = userCount.read<int>('cnt');
-      final siteCount = await _database!.customSelect('SELECT COUNT(*) as cnt FROM sites').getSingle();
+      final siteCount = await _database!
+          .customSelect('SELECT COUNT(*) as cnt FROM sites')
+          .getSingle();
       final sites = siteCount.read<int>('cnt');
       Log.info('BootService: Table counts - users: $users, sites: $sites');
     } catch (e) {
@@ -244,14 +264,16 @@ class BootService extends ChangeNotifier {
 
     // 5. Check journal mode (informational)
     try {
-      final journalMode = await _database!.customSelect('PRAGMA journal_mode').getSingle();
+      final journalMode =
+          await _database!.customSelect('PRAGMA journal_mode').getSingle();
       final mode = journalMode.read<String>('journal_mode');
       Log.info('BootService: Journal mode: $mode');
     } catch (e) {
       // Non-critical
     }
 
-    Log.info('BootService: Integrity checks completed - ${tables.length} tables');
+    Log.info(
+        'BootService: Integrity checks completed - ${tables.length} tables');
   }
 
   Future<void> _seedDataIfNeeded() async {
@@ -261,30 +283,31 @@ class BootService extends ChangeNotifier {
 
     // Check if users table is empty (first run indicator)
     final userCount = await _database!.select(_database!.users).get();
-    
+
     if (userCount.isEmpty) {
       Log.info('BootService: First run detected - seeding initial data');
-      
+
       // Create default admin user
       await _database!.into(_database!.users).insert(
-        UsersCompanion.insert(
-          username: 'admin',
-          fullName: 'Administrator',
-          email: 'admin@fscportal.local',
-          role: 'admin',
-        ),
-      );
-      
+            UsersCompanion.insert(
+              username: 'admin',
+              fullName: 'Administrator',
+              email: 'admin@fscportal.local',
+              role: 'admin',
+            ),
+          );
+
       Log.info('BootService: Created default admin user');
     } else {
-      Log.info('BootService: Database already seeded - ${userCount.length} users');
+      Log.info(
+          'BootService: Database already seeded - ${userCount.length} users');
     }
   }
 
   Future<void> _initializeServices() async {
     // Services are now initialized via Provider in main.dart
     // This step validates they can be constructed
-    
+
     // In a more complex app, this would:
     // - Start background sync managers
     // - Initialize caches
@@ -302,7 +325,7 @@ class BootService extends ChangeNotifier {
     Log.debug('BootService: ${_state.name} -> ${newState.name}');
     _state = newState;
     notifyListeners();
-    
+
     // Small delay to allow UI updates
     await Future.delayed(const Duration(milliseconds: 50));
   }

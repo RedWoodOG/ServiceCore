@@ -81,7 +81,8 @@ class DocumentService {
     // Validate source file exists
     final sourceFile = File(cmd.sourceFilePath);
     if (!await sourceFile.exists()) {
-      return Err(ValidationFailure('Source file not found: ${cmd.sourceFilePath}'));
+      return Err(
+          ValidationFailure('Source file not found: ${cmd.sourceFilePath}'));
     }
 
     // Validate at least one parent
@@ -94,7 +95,8 @@ class DocumentService {
       if (cmd.workOrderId != null) {
         final wo = await _db.getWorkOrderById(cmd.workOrderId!);
         if (wo == null) {
-          return Err(NotFoundFailure('Work order ${cmd.workOrderId} not found'));
+          return Err(
+              NotFoundFailure('Work order ${cmd.workOrderId} not found'));
         }
       }
       if (cmd.siteId != null) {
@@ -104,7 +106,8 @@ class DocumentService {
         }
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to verify parent entities', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to verify parent entities',
+          cause: e, stackTrace: st));
     }
 
     // Create storage directory
@@ -115,7 +118,8 @@ class DocumentService {
           : await AppPaths.appDir(['sites', cmd.siteId.toString()]);
       targetDir = dir.path;
     } catch (e, st) {
-      return Err(StorageFailure('Failed to create storage directory', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to create storage directory',
+          cause: e, stackTrace: st));
     }
 
     // Copy file to storage
@@ -129,22 +133,23 @@ class DocumentService {
 
       await sourceFile.copy(targetPath);
     } catch (e, st) {
-      return Err(StorageFailure('Failed to copy file', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to copy file', cause: e, stackTrace: st));
     }
 
     // Insert database record
     try {
       final documentId = await _db.transaction(() async {
         return await _db.into(_db.documents).insert(
-          DocumentsCompanion.insert(
-            workOrderId: Value(cmd.workOrderId),
-            siteId: Value(cmd.siteId),
-            fileName: cmd.fileName,
-            filePath: AppPaths.toStorable(targetPath),
-            uploadedAt: DateTime.now(),
-            uploadedBy: Value(_currentUser?.fullName ?? 'System'),
-          ),
-        );
+              DocumentsCompanion.insert(
+                workOrderId: Value(cmd.workOrderId),
+                siteId: Value(cmd.siteId),
+                fileName: cmd.fileName,
+                filePath: AppPaths.toStorable(targetPath),
+                uploadedAt: DateTime.now(),
+                uploadedBy: Value(_currentUser?.fullName ?? 'System'),
+              ),
+            );
       });
 
       Log.info('DocumentService: Attached document $documentId');
@@ -154,9 +159,10 @@ class DocumentService {
       try {
         await File(targetPath).delete();
       } catch (_) {}
-      
+
       Log.error('DocumentService: Failed to attach document', e, st);
-      return Err(StorageFailure('Failed to save document record', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to save document record',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -164,7 +170,7 @@ class DocumentService {
   Future<Result<int>> attachPhoto(AttachPhoto cmd) async {
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final extension = path.extension(cmd.sourceFilePath);
-    
+
     return attachDocument(AttachDocument(
       sourceFilePath: cmd.sourceFilePath,
       fileName: 'photo_$timestamp$extension',
@@ -182,12 +188,15 @@ class DocumentService {
     // Fetch document to get file path
     Document? doc;
     try {
-      doc = await (_db.select(_db.documents)..where((t) => t.id.equals(cmd.documentId))).getSingleOrNull();
+      doc = await (_db.select(_db.documents)
+            ..where((t) => t.id.equals(cmd.documentId)))
+          .getSingleOrNull();
       if (doc == null) {
         return Err(NotFoundFailure('Document ${cmd.documentId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch document', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to fetch document', cause: e, stackTrace: st));
     }
 
     // Delete file
@@ -203,13 +212,16 @@ class DocumentService {
 
     // Delete database record
     try {
-      await (_db.delete(_db.documents)..where((t) => t.id.equals(cmd.documentId))).go();
-      
+      await (_db.delete(_db.documents)
+            ..where((t) => t.id.equals(cmd.documentId)))
+          .go();
+
       Log.info('DocumentService: Deleted document ${cmd.documentId}');
       return const Ok(null);
     } catch (e, st) {
       Log.error('DocumentService: Failed to delete document', e, st);
-      return Err(StorageFailure('Failed to delete document', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to delete document',
+          cause: e, stackTrace: st));
     }
   }
 }

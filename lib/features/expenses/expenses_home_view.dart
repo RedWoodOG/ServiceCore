@@ -72,7 +72,8 @@ class ExpensesHomeView extends StatelessWidget {
                           Icon(
                             Icons.receipt_long,
                             size: 72,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.35),
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -85,7 +86,8 @@ class ExpensesHomeView extends StatelessWidget {
                             'Entries stay on this device until you sync or export.',
                             textAlign: TextAlign.center,
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7),
                             ),
                           ),
                         ],
@@ -115,7 +117,8 @@ class ExpensesHomeView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                NumberFormat.currency(symbol: r'$').format(e.amount),
+                                NumberFormat.currency(symbol: r'$')
+                                    .format(e.amount),
                                 style: theme.textTheme.titleSmall?.copyWith(
                                   color: theme.colorScheme.primary,
                                   fontWeight: FontWeight.bold,
@@ -125,12 +128,16 @@ class ExpensesHomeView extends StatelessWidget {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            DateFormat.yMMMd().add_jm().format(e.expenseDate.toLocal()),
+                            DateFormat.yMMMd()
+                                .add_jm()
+                                .format(e.expenseDate.toLocal()),
                             style: theme.textTheme.bodySmall?.copyWith(
-                              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.6),
                             ),
                           ),
-                          if (e.description != null && e.description!.trim().isNotEmpty) ...[
+                          if (e.description != null &&
+                              e.description!.trim().isNotEmpty) ...[
                             const SizedBox(height: 8),
                             Text(
                               e.description!.trim(),
@@ -146,14 +153,16 @@ class ExpensesHomeView extends StatelessWidget {
                               ),
                             ),
                           ],
-                          if (e.receiptPath != null && e.receiptPath!.isNotEmpty) ...[
+                          if (e.receiptPath != null &&
+                              e.receiptPath!.isNotEmpty) ...[
                             const SizedBox(height: 8),
                             Row(
                               children: [
                                 Icon(
                                   Icons.image_outlined,
                                   size: 18,
-                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                                  color: theme.colorScheme.onSurface
+                                      .withValues(alpha: 0.6),
                                 ),
                                 const SizedBox(width: 6),
                                 Expanded(
@@ -178,7 +187,10 @@ class ExpensesHomeView extends StatelessWidget {
   }
 
   static String _categoryLabel(String c) {
-    return c.split('_').map((w) => w.isEmpty ? w : '${w[0].toUpperCase()}${w.substring(1)}').join(' ');
+    return c
+        .split('_')
+        .map((w) => w.isEmpty ? w : '${w[0].toUpperCase()}${w.substring(1)}')
+        .join(' ');
   }
 
   static Future<void> _openAddExpense(BuildContext context) async {
@@ -245,12 +257,14 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
     if (uid == 0) return;
 
     final picker = ImagePicker();
-    final shot = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+    final shot =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
     if (shot == null || !context.mounted) return;
     try {
       final dir = await AppPaths.appDir(['expenses', '$uid']);
       final ext = p.extension(shot.path);
-      final dest = p.join(dir.path, 'receipt_${DateTime.now().millisecondsSinceEpoch}$ext');
+      final dest = p.join(
+          dir.path, 'receipt_${DateTime.now().millisecondsSinceEpoch}$ext');
       await File(shot.path).copy(dest);
       if (mounted) {
         // Persist root-relative so the path survives an app-container move.
@@ -266,7 +280,8 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
   }
 
   Future<void> _submit() async {
-    final amount = double.tryParse(_amountController.text.trim().replaceAll(',', ''));
+    final amount =
+        double.tryParse(_amountController.text.trim().replaceAll(',', ''));
     if (amount == null || amount <= 0) {
       setState(() => _error = 'Enter a valid amount.');
       return;
@@ -283,7 +298,9 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
         expenseDate: _date,
         category: _category,
         amount: amount,
-        description: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
+        description: _notesController.text.trim().isEmpty
+            ? null
+            : _notesController.text.trim(),
         receiptPath: _receiptCopyPath,
         workOrderId: _workOrderId,
       ),
@@ -348,7 +365,8 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     _error!,
-                    style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error),
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(color: theme.colorScheme.error),
                   ),
                 ),
               Expanded(
@@ -359,7 +377,8 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: const Text('Date & time'),
-                      subtitle: Text(DateFormat.yMMMd().add_jm().format(_date.toLocal())),
+                      subtitle: Text(
+                          DateFormat.yMMMd().add_jm().format(_date.toLocal())),
                       trailing: const Icon(Icons.calendar_today_outlined),
                       onTap: () async {
                         final d = await showDatePicker(
@@ -406,7 +425,8 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
                     const SizedBox(height: 16),
                     TextField(
                       controller: _amountController,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       decoration: const InputDecoration(
                         labelText: 'Amount',
                         prefixText: r'$ ',
@@ -454,7 +474,9 @@ class _AddExpenseSheetState extends State<_AddExpenseSheet> {
                     OutlinedButton.icon(
                       onPressed: _pickReceipt,
                       icon: const Icon(Icons.receipt_long_outlined),
-                      label: Text(_receiptCopyPath == null ? 'Attach receipt photo' : 'Receipt attached'),
+                      label: Text(_receiptCopyPath == null
+                          ? 'Attach receipt photo'
+                          : 'Receipt attached'),
                     ),
                     const SizedBox(height: 24),
                     FilledButton(

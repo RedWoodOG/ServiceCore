@@ -42,6 +42,7 @@ class UpdateWorkOrder {
   });
 
   final int workOrderId;
+
   /// Version from the last read [WorkOrder]; must match DB row for update to apply.
   final int expectedVersion;
   final String descriptionOfWork;
@@ -137,7 +138,8 @@ class WorkOrderService {
         return Err(NotFoundFailure('Site ${cmd.siteId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to verify site', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to verify site', cause: e, stackTrace: st));
     }
 
     // 4. Execute in transaction
@@ -147,17 +149,17 @@ class WorkOrderService {
 
       final workOrderId = await _db.transaction(() async {
         final id = await _db.into(_db.workOrders).insert(
-          WorkOrdersCompanion.insert(
-            siteId: cmd.siteId,
-            status: cmd.status,
-            priority: Value(cmd.priority),
-            descriptionOfWork: Value(cmd.descriptionOfWork),
-            internalNotes: Value(cmd.internalNotes),
-            assignedTechnician: Value(cmd.assignedTechnician),
-            createdAt: now,
-            createdBy: Value(createdBy),
-          ),
-        );
+              WorkOrdersCompanion.insert(
+                siteId: cmd.siteId,
+                status: cmd.status,
+                priority: Value(cmd.priority),
+                descriptionOfWork: Value(cmd.descriptionOfWork),
+                internalNotes: Value(cmd.internalNotes),
+                assignedTechnician: Value(cmd.assignedTechnician),
+                createdAt: now,
+                createdBy: Value(createdBy),
+              ),
+            );
         return id;
       });
 
@@ -165,7 +167,8 @@ class WorkOrderService {
       return Ok(workOrderId);
     } catch (e, st) {
       Log.error('WorkOrderService: Failed to create work order', e, st);
-      return Err(StorageFailure('Failed to create work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to create work order',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -182,7 +185,8 @@ class WorkOrderService {
   Future<Result<void>> update(UpdateWorkOrder cmd) async {
     // 1. Validate inputs
     if (cmd.workOrderId <= 0) {
-      return Err(ValidationFailure('Invalid work order ID', field: 'workOrderId'));
+      return Err(
+          ValidationFailure('Invalid work order ID', field: 'workOrderId'));
     }
 
     // 2. Check permissions
@@ -199,7 +203,8 @@ class WorkOrderService {
         return Err(NotFoundFailure('Work order ${cmd.workOrderId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch work order',
+          cause: e, stackTrace: st));
     }
 
     final wo = existing;
@@ -219,7 +224,8 @@ class WorkOrderService {
 
     final trimmedDesc = cmd.descriptionOfWork.trim();
     if (trimmedDesc.isEmpty) {
-      return Err(ValidationFailure('Description is required', field: 'descriptionOfWork'));
+      return Err(ValidationFailure('Description is required',
+          field: 'descriptionOfWork'));
     }
 
     // 5. Execute update with optimistic locking (version bump) + audit in one transaction
@@ -232,7 +238,9 @@ class WorkOrderService {
             descriptionOfWork: Value(trimmedDesc),
             internalNotes: Value(cmd.internalNotes.trim()),
             resolution: Value(
-              cmd.resolution?.trim().isEmpty ?? true ? null : cmd.resolution?.trim(),
+              cmd.resolution?.trim().isEmpty ?? true
+                  ? null
+                  : cmd.resolution?.trim(),
             ),
             priority: Value(cmd.priority),
             assignedTechnician: Value(cmd.assignedTechnician),
@@ -263,7 +271,8 @@ class WorkOrderService {
       return const Ok(null);
     } catch (e, st) {
       Log.error('WorkOrderService: Failed to update work order', e, st);
-      return Err(StorageFailure('Failed to update work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to update work order',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -308,12 +317,14 @@ class WorkOrderService {
 
     final workOrderId = fieldUpdate?.workOrderId ?? transition!.workOrderId;
     if (workOrderId <= 0) {
-      return Err(ValidationFailure('Invalid work order ID', field: 'workOrderId'));
+      return Err(
+          ValidationFailure('Invalid work order ID', field: 'workOrderId'));
     }
     if (fieldUpdate != null &&
         transition != null &&
         fieldUpdate.workOrderId != transition.workOrderId) {
-      return Err(ValidationFailure('Mismatched work order IDs', field: 'workOrderId'));
+      return Err(
+          ValidationFailure('Mismatched work order IDs', field: 'workOrderId'));
     }
 
     final permissionError = await _checkUpdatePermission(workOrderId);
@@ -328,13 +339,15 @@ class WorkOrderService {
         return Err(NotFoundFailure('Work order $workOrderId not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch work order',
+          cause: e, stackTrace: st));
     }
     final wo = existing;
 
     // ---- Validate everything up front, before any write. ----
     if (_isFullyLocked(wo.status)) {
-      return Err(ConflictFailure('This work order is closed and cannot be changed.'));
+      return Err(
+          ConflictFailure('This work order is closed and cannot be changed.'));
     }
 
     String trimmedDesc = '';
@@ -348,20 +361,23 @@ class WorkOrderService {
       }
       if (fieldUpdate.expectedVersion != wo.version) {
         return Err(
-          ConflictFailure('Work order was modified elsewhere. Refresh and try again.'),
+          ConflictFailure(
+              'Work order was modified elsewhere. Refresh and try again.'),
         );
       }
       trimmedDesc = fieldUpdate.descriptionOfWork.trim();
       if (trimmedDesc.isEmpty) {
         return Err(
-          ValidationFailure('Description is required', field: 'descriptionOfWork'),
+          ValidationFailure('Description is required',
+              field: 'descriptionOfWork'),
         );
       }
     }
 
     if (transition != null) {
       if (transition.newStatus.isEmpty) {
-        return Err(ValidationFailure('New status is required', field: 'newStatus'));
+        return Err(
+            ValidationFailure('New status is required', field: 'newStatus'));
       }
       if (!_workflowService.canTransition(wo.status, transition.newStatus)) {
         return Err(
@@ -413,7 +429,8 @@ class WorkOrderService {
           // inside the transaction, so it observes the uncommitted write.
           final refreshed = await _db.getWorkOrderById(workOrderId);
           if (refreshed == null) {
-            throw WorkOrderNotFoundException('Work order $workOrderId not found');
+            throw WorkOrderNotFoundException(
+                'Work order $workOrderId not found');
           }
           current = refreshed;
         }
@@ -441,7 +458,8 @@ class WorkOrderService {
       return Err(ValidationFailure(e.message));
     } catch (e, st) {
       Log.error('WorkOrderService: Failed to save work order edit', e, st);
-      return Err(StorageFailure('Failed to save work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to save work order',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -455,10 +473,12 @@ class WorkOrderService {
   Future<Result<void>> transition(TransitionWorkOrder cmd) async {
     // 1. Validate inputs
     if (cmd.workOrderId <= 0) {
-      return Err(ValidationFailure('Invalid work order ID', field: 'workOrderId'));
+      return Err(
+          ValidationFailure('Invalid work order ID', field: 'workOrderId'));
     }
     if (cmd.newStatus.isEmpty) {
-      return Err(ValidationFailure('New status is required', field: 'newStatus'));
+      return Err(
+          ValidationFailure('New status is required', field: 'newStatus'));
     }
 
     // 2. Check permissions
@@ -475,7 +495,8 @@ class WorkOrderService {
         return Err(NotFoundFailure('Work order ${cmd.workOrderId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch work order',
+          cause: e, stackTrace: st));
     }
 
     // 4. Check transition validity
@@ -495,7 +516,8 @@ class WorkOrderService {
         reason: cmd.reason,
       );
 
-      Log.info('WorkOrderService: Transitioned work order ${cmd.workOrderId} to ${cmd.newStatus}');
+      Log.info(
+          'WorkOrderService: Transitioned work order ${cmd.workOrderId} to ${cmd.newStatus}');
       return const Ok(null);
     } on InvalidStatusTransitionException catch (e) {
       return Err(ConflictFailure(e.message));
@@ -507,7 +529,8 @@ class WorkOrderService {
       return Err(ValidationFailure(e.message));
     } catch (e, st) {
       Log.error('WorkOrderService: Failed to transition work order', e, st);
-      return Err(StorageFailure('Failed to transition work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to transition work order',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -519,7 +542,8 @@ class WorkOrderService {
   Future<Result<int>> addNote(AddWorkOrderNote cmd) async {
     // 1. Validate inputs
     if (cmd.workOrderId <= 0) {
-      return Err(ValidationFailure('Invalid work order ID', field: 'workOrderId'));
+      return Err(
+          ValidationFailure('Invalid work order ID', field: 'workOrderId'));
     }
     if (cmd.noteText.trim().isEmpty) {
       return Err(ValidationFailure('Note text is required', field: 'noteText'));
@@ -538,7 +562,8 @@ class WorkOrderService {
         return Err(NotFoundFailure('Work order ${cmd.workOrderId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to verify work order', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to verify work order',
+          cause: e, stackTrace: st));
     }
 
     // 4. Insert note (using Notes table with workOrderId)
@@ -551,22 +576,24 @@ class WorkOrderService {
 
       final noteId = await _db.transaction(() async {
         return await _db.into(_db.notes).insert(
-          NotesCompanion.insert(
-            siteId: workOrder.siteId,
-            workOrderId: Value(cmd.workOrderId),
-            noteType: cmd.noteType,
-            noteText: cmd.noteText.trim(),
-            createdAt: DateTime.now(),
-            createdBy: Value(_currentUser?.fullName ?? 'System'),
-          ),
-        );
+              NotesCompanion.insert(
+                siteId: workOrder.siteId,
+                workOrderId: Value(cmd.workOrderId),
+                noteType: cmd.noteType,
+                noteText: cmd.noteText.trim(),
+                createdAt: DateTime.now(),
+                createdBy: Value(_currentUser?.fullName ?? 'System'),
+              ),
+            );
       });
 
-      Log.info('WorkOrderService: Added note $noteId to work order ${cmd.workOrderId}');
+      Log.info(
+          'WorkOrderService: Added note $noteId to work order ${cmd.workOrderId}');
       return Ok(noteId);
     } catch (e, st) {
       Log.error('WorkOrderService: Failed to add note', e, st);
-      return Err(StorageFailure('Failed to add note', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to add note', cause: e, stackTrace: st));
     }
   }
 
@@ -578,10 +605,12 @@ class WorkOrderService {
   Future<Result<void>> linkEquipment(LinkEquipment cmd) async {
     // 1. Validate inputs
     if (cmd.workOrderId <= 0) {
-      return Err(ValidationFailure('Invalid work order ID', field: 'workOrderId'));
+      return Err(
+          ValidationFailure('Invalid work order ID', field: 'workOrderId'));
     }
     if (cmd.equipmentId <= 0) {
-      return Err(ValidationFailure('Invalid equipment ID', field: 'equipmentId'));
+      return Err(
+          ValidationFailure('Invalid equipment ID', field: 'equipmentId'));
     }
 
     // 2. Check permissions
@@ -602,7 +631,8 @@ class WorkOrderService {
         return Err(NotFoundFailure('Equipment ${cmd.equipmentId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to verify entities', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to verify entities',
+          cause: e, stackTrace: st));
     }
 
     // 4. Create link
@@ -611,15 +641,18 @@ class WorkOrderService {
         await _db.linkEquipmentToWorkOrder(cmd.workOrderId, cmd.equipmentId);
       });
 
-      Log.info('WorkOrderService: Linked equipment ${cmd.equipmentId} to work order ${cmd.workOrderId}');
+      Log.info(
+          'WorkOrderService: Linked equipment ${cmd.equipmentId} to work order ${cmd.workOrderId}');
       return const Ok(null);
     } catch (e, st) {
       // Check for duplicate
       if (e.toString().contains('UNIQUE constraint')) {
-        return Err(ConflictFailure('Equipment already linked to this work order'));
+        return Err(
+            ConflictFailure('Equipment already linked to this work order'));
       }
       Log.error('WorkOrderService: Failed to link equipment', e, st);
-      return Err(StorageFailure('Failed to link equipment', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to link equipment', cause: e, stackTrace: st));
     }
   }
 
@@ -637,7 +670,8 @@ class WorkOrderService {
     // Validate status is a known value
     final validStatuses = ['draft', 'open', 'on_hold', 'completed'];
     if (!validStatuses.contains(cmd.status)) {
-      return ValidationFailure('Invalid status: ${cmd.status}', field: 'status');
+      return ValidationFailure('Invalid status: ${cmd.status}',
+          field: 'status');
     }
     return null;
   }

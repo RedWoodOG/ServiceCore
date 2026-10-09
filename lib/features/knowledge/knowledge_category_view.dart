@@ -46,12 +46,14 @@ class _KnowledgeCategoryViewState extends State<KnowledgeCategoryView> {
                   children: [
                     Icon(Icons.article_outlined,
                         size: 64,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.4)),
                     const SizedBox(height: 16),
                     Text(
                       'No entries in ${widget.category}',
                       style: TextStyle(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.4),
                           fontSize: 16),
                     ),
                   ],
@@ -119,7 +121,8 @@ class _KnowledgeCategoryViewState extends State<KnowledgeCategoryView> {
                     child: Text(
                       entry.equipmentType,
                       style: TextStyle(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontSize: 11,
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -131,14 +134,14 @@ class _KnowledgeCategoryViewState extends State<KnowledgeCategoryView> {
                       children: [
                         Icon(Icons.schedule,
                             size: 12,
-                            color:
-                                theme.colorScheme.onSurface.withValues(alpha: 0.35)),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.35)),
                         const SizedBox(width: 3),
                         Text(
                           '${entry.estimatedTime}m',
                           style: TextStyle(
-                            color:
-                                theme.colorScheme.onSurface.withValues(alpha: 0.35),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.35),
                             fontSize: 11,
                           ),
                         ),
@@ -146,7 +149,8 @@ class _KnowledgeCategoryViewState extends State<KnowledgeCategoryView> {
                     ),
                   Icon(Icons.chevron_right,
                       size: 18,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.25)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.25)),
                 ],
               ),
               const SizedBox(height: 6),

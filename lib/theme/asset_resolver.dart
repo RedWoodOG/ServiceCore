@@ -48,7 +48,7 @@ class AssetResolver {
   SemanticTokens get tokens => TokenRegistry.resolve(resolvedBrightness);
 
   /// Resolve logo path based on settings and background context
-  /// 
+  ///
   /// [backgroundContext] - Optional override for specific background scenarios.
   /// If null, uses the resolved theme brightness.
   String resolveLogo({Brightness? backgroundContext}) {

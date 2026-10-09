@@ -50,7 +50,8 @@ class ExpenseService {
     }
 
     if (cmd.amount <= 0 || cmd.amount.isNaN || cmd.amount.isInfinite) {
-      return Err(ValidationFailure('Enter a valid amount greater than zero', field: 'amount'));
+      return Err(ValidationFailure('Enter a valid amount greater than zero',
+          field: 'amount'));
     }
 
     final cat = cmd.category.toLowerCase().trim();
@@ -62,10 +63,12 @@ class ExpenseService {
       try {
         final wo = await _db.getWorkOrderById(cmd.workOrderId!);
         if (wo == null) {
-          return Err(NotFoundFailure('Work order ${cmd.workOrderId} not found'));
+          return Err(
+              NotFoundFailure('Work order ${cmd.workOrderId} not found'));
         }
       } catch (e, st) {
-        return Err(StorageFailure('Failed to verify work order', cause: e, stackTrace: st));
+        return Err(StorageFailure('Failed to verify work order',
+            cause: e, stackTrace: st));
       }
     }
 
@@ -77,7 +80,9 @@ class ExpenseService {
               category: cat,
               amount: cmd.amount,
               description: Value(
-                cmd.description?.trim().isEmpty ?? true ? null : cmd.description?.trim(),
+                cmd.description?.trim().isEmpty ?? true
+                    ? null
+                    : cmd.description?.trim(),
               ),
               receiptPath: Value(cmd.receiptPath),
               workOrderId: Value(cmd.workOrderId),
@@ -87,7 +92,8 @@ class ExpenseService {
       return Ok(id);
     } catch (e, st) {
       Log.error('ExpenseService: insert failed', e, st);
-      return Err(StorageFailure('Could not save expense', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Could not save expense', cause: e, stackTrace: st));
     }
   }
 }

@@ -65,7 +65,9 @@ void main() {
         expect(noteId, greaterThan(0));
 
         // Verify in database
-        final note = await (db.select(db.notes)..where((t) => t.id.equals(noteId))).getSingleOrNull();
+        final note = await (db.select(db.notes)
+              ..where((t) => t.id.equals(noteId)))
+            .getSingleOrNull();
         expect(note, isNotNull);
         expect(note!.noteText, 'This is a test note');
         expect(note.noteType, 'general');
@@ -130,7 +132,9 @@ void main() {
         expect(result, isA<Ok<int>>());
         final noteId = (result as Ok<int>).value;
 
-        final note = await (db.select(db.notes)..where((t) => t.id.equals(noteId))).getSingleOrNull();
+        final note = await (db.select(db.notes)
+              ..where((t) => t.id.equals(noteId)))
+            .getSingleOrNull();
         expect(note!.workOrderId, wo.id);
       });
     });
@@ -155,7 +159,9 @@ void main() {
         expect(result, isA<Ok<void>>());
 
         // Verify
-        final note = await (db.select(db.notes)..where((t) => t.id.equals(noteId))).getSingleOrNull();
+        final note = await (db.select(db.notes)
+              ..where((t) => t.id.equals(noteId)))
+            .getSingleOrNull();
         expect(note!.noteText, 'Updated text');
         expect(note.noteType, 'warning');
       });
@@ -184,7 +190,9 @@ void main() {
         expect(result, isA<Ok<void>>());
 
         // Verify deleted
-        final note = await (db.select(db.notes)..where((t) => t.id.equals(noteId))).getSingleOrNull();
+        final note = await (db.select(db.notes)
+              ..where((t) => t.id.equals(noteId)))
+            .getSingleOrNull();
         expect(note, isNull);
       });
     });
@@ -247,7 +255,8 @@ void main() {
 
     group('acknowledge', () {
       test('acknowledges announcement', () async {
-        final createResult = await announcementService.create(CreateAnnouncement(
+        final createResult =
+            await announcementService.create(CreateAnnouncement(
           category: 'hr',
           title: 'Policy Update',
           body: 'New policy details...',
@@ -268,14 +277,16 @@ void main() {
       });
 
       test('is idempotent (acknowledging twice succeeds)', () async {
-        final createResult = await announcementService.create(CreateAnnouncement(
+        final createResult =
+            await announcementService.create(CreateAnnouncement(
           category: 'fleet',
           title: 'Fleet Update',
           body: 'Vehicle maintenance schedule',
         ));
         final id = (createResult as Ok<int>).value;
 
-        await announcementService.acknowledge(AcknowledgeAnnouncement(announcementId: id));
+        await announcementService
+            .acknowledge(AcknowledgeAnnouncement(announcementId: id));
         final result = await announcementService.acknowledge(
           AcknowledgeAnnouncement(announcementId: id),
         );
@@ -361,7 +372,8 @@ void main() {
     });
 
     group('archive', () {
-      test('archive returns not-implemented error (soft delete pending)', () async {
+      test('archive returns not-implemented error (soft delete pending)',
+          () async {
         final createResult = await locationService.create(CreateSite(
           clientId: testSite.clientId,
           branchName: 'To Archive',
@@ -373,7 +385,8 @@ void main() {
         final siteId = (createResult as Ok<int>).value;
 
         // Archive not yet implemented - returns validation error
-        final result = await locationService.archive(ArchiveSite(siteId: siteId));
+        final result =
+            await locationService.archive(ArchiveSite(siteId: siteId));
         expect(result, isA<Err<void>>());
       });
     });
@@ -402,7 +415,9 @@ void main() {
         expect(result, isA<Ok<int>>());
         final equipId = (result as Ok<int>).value;
 
-        final equip = await (db.select(db.equipment)..where((t) => t.id.equals(equipId))).getSingleOrNull();
+        final equip = await (db.select(db.equipment)
+              ..where((t) => t.id.equals(equipId)))
+            .getSingleOrNull();
         expect(equip, isNotNull);
         expect(equip!.manufacturer, 'Carrier');
         expect(equip.model, 'XR15');
@@ -453,8 +468,11 @@ void main() {
 
         expect(result, isA<Ok<void>>());
 
-        final equip = await (db.select(db.equipment)..where((t) => t.id.equals(equipId))).getSingleOrNull();
-        expect(equip!.active, false); // Equipment uses 'active' flag for retirement
+        final equip = await (db.select(db.equipment)
+              ..where((t) => t.id.equals(equipId)))
+            .getSingleOrNull();
+        expect(equip!.active,
+            false); // Equipment uses 'active' flag for retirement
       });
 
       test('cannot retire already retired equipment', () async {
@@ -471,7 +489,8 @@ void main() {
         await equipmentService.retire(RetireEquipment(equipmentId: equipId));
 
         // Try to retire again - should fail
-        final result = await equipmentService.retire(RetireEquipment(equipmentId: equipId));
+        final result = await equipmentService
+            .retire(RetireEquipment(equipmentId: equipId));
         expect(result, isA<Err<void>>());
         expect((result as Err<void>).failure, isA<ConflictFailure>());
       });

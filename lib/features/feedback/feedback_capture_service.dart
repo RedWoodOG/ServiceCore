@@ -12,8 +12,8 @@ class FeedbackCaptureService {
     required BuildContext context,
     double? pixelRatio,
   }) async {
-    final boundary = aiFeedbackPortalCaptureKey.currentContext?.findRenderObject()
-        as RenderRepaintBoundary?;
+    final boundary = aiFeedbackPortalCaptureKey.currentContext
+        ?.findRenderObject() as RenderRepaintBoundary?;
     if (boundary == null) {
       return null;
     }

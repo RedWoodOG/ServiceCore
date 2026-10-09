@@ -112,9 +112,7 @@ class AuthService {
       // Create new user from Windows identity
       Log.info('Creating new user from Windows identity: $username');
 
-      final userId = await db
-          .into(db.users)
-          .insert(
+      final userId = await db.into(db.users).insert(
             UsersCompanion.insert(
               username: username,
               fullName: username, // Can be updated later in settings
@@ -135,9 +133,7 @@ class AuthService {
       // Update login tracking
       Log.info('User found: ${user.fullName} (ID: ${user.id})');
 
-      await db
-          .update(db.users)
-          .replace(
+      await db.update(db.users).replace(
             user.copyWith(
               lastLoginAt: Value(DateTime.now()),
               loginCount: user.loginCount + 1,

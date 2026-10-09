@@ -33,8 +33,8 @@ class EvaCollapseRail extends StatelessWidget {
                   color: theme.colorScheme.primary.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: evaState.hasUnread 
-                        ? theme.colorScheme.primary 
+                    color: evaState.hasUnread
+                        ? theme.colorScheme.primary
                         : theme.dividerColor,
                     width: evaState.hasUnread ? 2 : 1,
                   ),
@@ -79,4 +79,3 @@ class EvaCollapseRail extends StatelessWidget {
     );
   }
 }
-

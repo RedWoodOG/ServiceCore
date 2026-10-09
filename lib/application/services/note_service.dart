@@ -80,7 +80,8 @@ class NoteService {
         return Err(NotFoundFailure('Site ${cmd.siteId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to verify site', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to verify site', cause: e, stackTrace: st));
     }
 
     // Verify work order exists if provided
@@ -88,10 +89,12 @@ class NoteService {
       try {
         final wo = await _db.getWorkOrderById(cmd.workOrderId!);
         if (wo == null) {
-          return Err(NotFoundFailure('Work order ${cmd.workOrderId} not found'));
+          return Err(
+              NotFoundFailure('Work order ${cmd.workOrderId} not found'));
         }
       } catch (e, st) {
-        return Err(StorageFailure('Failed to verify work order', cause: e, stackTrace: st));
+        return Err(StorageFailure('Failed to verify work order',
+            cause: e, stackTrace: st));
       }
     }
 
@@ -99,22 +102,23 @@ class NoteService {
     try {
       final noteId = await _db.transaction(() async {
         return await _db.into(_db.notes).insert(
-          NotesCompanion.insert(
-            siteId: cmd.siteId,
-            workOrderId: Value(cmd.workOrderId),
-            noteType: cmd.noteType,
-            noteText: cmd.noteText.trim(),
-            createdAt: DateTime.now(),
-            createdBy: Value(_currentUser?.fullName ?? 'System'),
-          ),
-        );
+              NotesCompanion.insert(
+                siteId: cmd.siteId,
+                workOrderId: Value(cmd.workOrderId),
+                noteType: cmd.noteType,
+                noteText: cmd.noteText.trim(),
+                createdAt: DateTime.now(),
+                createdBy: Value(_currentUser?.fullName ?? 'System'),
+              ),
+            );
       });
 
       Log.info('NoteService: Created note $noteId');
       return Ok(noteId);
     } catch (e, st) {
       Log.error('NoteService: Failed to create note', e, st);
-      return Err(StorageFailure('Failed to create note', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to create note', cause: e, stackTrace: st));
     }
   }
 
@@ -133,21 +137,29 @@ class NoteService {
 
     // Verify exists
     try {
-      final note = await (_db.select(_db.notes)..where((t) => t.id.equals(cmd.noteId))).getSingleOrNull();
+      final note = await (_db.select(_db.notes)
+            ..where((t) => t.id.equals(cmd.noteId)))
+          .getSingleOrNull();
       if (note == null) {
         return Err(NotFoundFailure('Note ${cmd.noteId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch note', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to fetch note', cause: e, stackTrace: st));
     }
 
     // Update
     try {
       await _db.transaction(() async {
-        await (_db.update(_db.notes)..where((t) => t.id.equals(cmd.noteId))).write(
+        await (_db.update(_db.notes)..where((t) => t.id.equals(cmd.noteId)))
+            .write(
           NotesCompanion(
-            noteText: cmd.noteText != null ? Value(cmd.noteText!.trim()) : const Value.absent(),
-            noteType: cmd.noteType != null ? Value(cmd.noteType!) : const Value.absent(),
+            noteText: cmd.noteText != null
+                ? Value(cmd.noteText!.trim())
+                : const Value.absent(),
+            noteType: cmd.noteType != null
+                ? Value(cmd.noteType!)
+                : const Value.absent(),
           ),
         );
       });
@@ -156,7 +168,8 @@ class NoteService {
       return const Ok(null);
     } catch (e, st) {
       Log.error('NoteService: Failed to update note', e, st);
-      return Err(StorageFailure('Failed to update note', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to update note', cause: e, stackTrace: st));
     }
   }
 
@@ -168,12 +181,15 @@ class NoteService {
 
     // Verify exists
     try {
-      final note = await (_db.select(_db.notes)..where((t) => t.id.equals(cmd.noteId))).getSingleOrNull();
+      final note = await (_db.select(_db.notes)
+            ..where((t) => t.id.equals(cmd.noteId)))
+          .getSingleOrNull();
       if (note == null) {
         return Err(NotFoundFailure('Note ${cmd.noteId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch note', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to fetch note', cause: e, stackTrace: st));
     }
 
     // Delete
@@ -184,7 +200,8 @@ class NoteService {
       return const Ok(null);
     } catch (e, st) {
       Log.error('NoteService: Failed to delete note', e, st);
-      return Err(StorageFailure('Failed to delete note', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to delete note', cause: e, stackTrace: st));
     }
   }
 }

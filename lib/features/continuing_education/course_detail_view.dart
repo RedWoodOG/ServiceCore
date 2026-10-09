@@ -105,14 +105,14 @@ class CourseDetailView extends StatelessWidget {
                         children: [
                           Icon(Icons.business,
                               size: 18,
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                           const SizedBox(width: 6),
                           Text(
                             course.provider,
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7),
                             ),
                           ),
                         ],

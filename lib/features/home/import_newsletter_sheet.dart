@@ -113,7 +113,8 @@ class _ImportNewsletterSheetState extends State<ImportNewsletterSheet> {
                 const Spacer(),
                 IconButton(
                   icon: Icon(Icons.close,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],

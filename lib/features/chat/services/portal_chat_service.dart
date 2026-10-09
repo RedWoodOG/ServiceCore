@@ -31,8 +31,8 @@ class PortalChatService {
 
         final reactions =
             (jsonDecode(row.reactionsJson) as Map<String, dynamic>).map(
-              (key, value) => MapEntry(key, List<String>.from(value)),
-            );
+          (key, value) => MapEntry(key, List<String>.from(value)),
+        );
 
         return model.ChatMessage(
           id: row.id,
@@ -70,9 +70,7 @@ class PortalChatService {
     );
 
     // Update channel timestamp
-    await _db
-        .into(_db.chatChannels)
-        .insertOnConflictUpdate(
+    await _db.into(_db.chatChannels).insertOnConflictUpdate(
           ChatChannelsCompanion(id: Value(channelId), updatedAt: Value(now)),
         );
   }

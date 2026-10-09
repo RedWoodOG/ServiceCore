@@ -120,8 +120,8 @@ class WeatherService {
             Log.error(
                 'WeatherService: Invalid response structure - missing or empty current_condition');
             if (response.body.isNotEmpty) {
-              final bodyPreview = response.body.length > 500 
-                  ? response.body.substring(0, 500) 
+              final bodyPreview = response.body.length > 500
+                  ? response.body.substring(0, 500)
                   : response.body;
               Log.error('WeatherService: Response body: $bodyPreview');
             } else {
@@ -136,8 +136,8 @@ class WeatherService {
       } else {
         Log.error('WeatherService: API returned status ${response.statusCode}');
         if (response.body.isNotEmpty) {
-          final bodyPreview = response.body.length > 200 
-              ? response.body.substring(0, 200) 
+          final bodyPreview = response.body.length > 200
+              ? response.body.substring(0, 200)
               : response.body;
           Log.error('WeatherService: Response body: $bodyPreview');
         }

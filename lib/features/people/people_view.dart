@@ -81,10 +81,12 @@ class _PeopleViewState extends State<PeopleView> {
                 decoration: InputDecoration(
                   hintText: 'Search directory...',
                   hintStyle: TextStyle(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.5)),
                   border: InputBorder.none,
                   icon: Icon(Icons.search,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.7)),
                 ),
               ),
             ),

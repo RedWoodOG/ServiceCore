@@ -122,7 +122,9 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
       switch (result) {
         case Err(failure: final f):
           messenger.showSnackBar(
-            SnackBar(content: Text('Error: ${f.message}'), backgroundColor: Colors.red),
+            SnackBar(
+                content: Text('Error: ${f.message}'),
+                backgroundColor: Colors.red),
           );
           return;
         case Ok():
@@ -232,8 +234,10 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -256,7 +260,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                     const Spacer(),
                     IconButton(
                       icon: Icon(Icons.close,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
@@ -275,7 +280,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                       Text(
                         'Receipt Photo *',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -339,7 +345,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                       Text(
                         'Amount',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -357,8 +364,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                           prefixText: '\$ ',
                           hintText: '0.00',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -367,7 +374,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                       Text(
                         'Category',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -382,8 +390,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                           ),
                           hintText: 'Select category',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         dropdownColor: theme.colorScheme.surface,
                         style: TextStyle(color: theme.colorScheme.onSurface),
@@ -404,7 +412,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                       Text(
                         'Receipt Date',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -444,7 +453,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                       Text(
                         'Vendor/Merchant',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -459,8 +469,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                           ),
                           hintText: 'Store name',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),
@@ -469,7 +479,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                       Text(
                         'Site (Optional)',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -484,8 +495,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                           ),
                           hintText: 'None',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         dropdownColor: theme.colorScheme.surface,
                         style: TextStyle(color: theme.colorScheme.onSurface),
@@ -514,8 +525,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                         Text(
                           'Work Order (Optional)',
                           style: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7),
                               fontSize: 12),
                         ),
                         const SizedBox(height: 8),
@@ -562,7 +573,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                       Text(
                         'Notes',
                         style: TextStyle(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                             fontSize: 12),
                       ),
                       const SizedBox(height: 8),
@@ -578,8 +590,8 @@ class _ScanReceiptSheetState extends State<ScanReceiptSheet> {
                           ),
                           hintText: 'Additional notes...',
                           hintStyle: TextStyle(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.7)),
                         ),
                         style: TextStyle(color: theme.colorScheme.onSurface),
                       ),

@@ -115,8 +115,10 @@ class _KnowledgeImportScreenState extends State<KnowledgeImportScreen> {
           Text(
             'Import all markdown files from the staging directory into the knowledge database.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.7),
                 ),
           ),
           AppSpacing.v16,
@@ -126,8 +128,10 @@ class _KnowledgeImportScreenState extends State<KnowledgeImportScreen> {
             decoration: InputDecoration(
               labelText: 'Staging Directory Path',
               labelStyle: TextStyle(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.7)),
             ),
           ),
           AppSpacing.v24,
@@ -180,7 +184,8 @@ class _KnowledgeImportScreenState extends State<KnowledgeImportScreen> {
   Widget _buildErrorCard() {
     return GlassCard(
       padding: const EdgeInsets.all(24.0),
-      activeBorderColor: Theme.of(context).colorScheme.error.withValues(alpha: 0.3),
+      activeBorderColor:
+          Theme.of(context).colorScheme.error.withValues(alpha: 0.3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -213,8 +218,10 @@ class _KnowledgeImportScreenState extends State<KnowledgeImportScreen> {
 
     return GlassCard(
       padding: const EdgeInsets.all(24.0),
-      activeBorderColor:
-          Theme.of(context).extension<StatusColors>()!.success.withValues(alpha: 0.3),
+      activeBorderColor: Theme.of(context)
+          .extension<StatusColors>()!
+          .success
+          .withValues(alpha: 0.3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -296,8 +303,10 @@ class _KnowledgeImportScreenState extends State<KnowledgeImportScreen> {
           subtitle: Text(
             error.error,
             style: TextStyle(
-                color:
-                    Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.7)),
           ),
         );
       }).toList(),

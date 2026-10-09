@@ -10,13 +10,13 @@ Future<void> main() async {
   print('=== Knowledge Entries Verification ===\n');
 
   final db = StandaloneDatabase();
-  
+
   try {
     // Get all knowledge entries
     final entries = await db.getAllKnowledgeEntries();
-    
+
     print('Total entries in database: ${entries.length}\n');
-    
+
     if (entries.isEmpty) {
       print('⚠️  WARNING: No entries found in database!');
       print('\nPossible issues:');
@@ -25,31 +25,33 @@ Future<void> main() async {
       print('3. Database file may be locked or corrupted');
     } else {
       print('✓ Entries found! Categories:');
-      
+
       // Group by category
       final categories = <String, int>{};
       for (final entry in entries) {
         categories[entry.category] = (categories[entry.category] ?? 0) + 1;
       }
-      
+
       categories.forEach((category, count) {
         print('  - $category: $count entries');
       });
-      
+
       print('\nSample entries (first 5):');
       for (var i = 0; i < entries.length && i < 5; i++) {
         final entry = entries[i];
         print('  ${i + 1}. ${entry.title} (${entry.category})');
       }
-      
+
       if (entries.length > 5) {
         print('  ... and ${entries.length - 5} more');
       }
     }
-    
+
     // Check database file path
     print('\n=== Database Info ===');
-    final userProfile = Platform.environment['USERPROFILE'] ?? Platform.environment['HOME'] ?? '';
+    final userProfile = Platform.environment['USERPROFILE'] ??
+        Platform.environment['HOME'] ??
+        '';
     if (userProfile.isNotEmpty) {
       // Check multiple possible locations
       final possiblePaths = [
@@ -57,7 +59,7 @@ Future<void> main() async {
         '$userProfile\\AppData\\Roaming\\portal_offline.sqlite',
         '$userProfile\\AppData\\Local\\portal_offline\\portal_offline.sqlite',
       ];
-      
+
       bool found = false;
       for (final dbPath in possiblePaths) {
         final dbFile = File(dbPath);
@@ -67,7 +69,7 @@ Future<void> main() async {
           print('File size: ${(size / 1024).toStringAsFixed(2)} KB');
           print('File exists: ✓');
           found = true;
-          
+
           // Check if this is the one we're using
           if (dbPath.contains('Documents')) {
             print('(This matches the expected Documents path)');
@@ -75,7 +77,7 @@ Future<void> main() async {
           break;
         }
       }
-      
+
       if (!found) {
         print('Database file NOT FOUND in any expected location:');
         for (final path in possiblePaths) {
@@ -85,7 +87,6 @@ Future<void> main() async {
     } else {
       print('Could not determine database path');
     }
-    
   } catch (e, stackTrace) {
     print('✗ ERROR: $e');
     print('\nStack trace:');

@@ -89,29 +89,31 @@ class AnnouncementService {
     try {
       final id = await _db.transaction(() async {
         return await _db.into(_db.companyAnnouncements).insert(
-          CompanyAnnouncementsCompanion.insert(
-            category: cmd.category,
-            title: cmd.title.trim(),
-            body: cmd.body.trim(),
-            actionLabel: Value(cmd.actionLabel?.trim()),
-            active: Value(cmd.active),
-            publishedAt: DateTime.now(),
-          ),
-        );
+              CompanyAnnouncementsCompanion.insert(
+                category: cmd.category,
+                title: cmd.title.trim(),
+                body: cmd.body.trim(),
+                actionLabel: Value(cmd.actionLabel?.trim()),
+                active: Value(cmd.active),
+                publishedAt: DateTime.now(),
+              ),
+            );
       });
 
       Log.info('AnnouncementService: Created announcement $id');
       return Ok(id);
     } catch (e, st) {
       Log.error('AnnouncementService: Failed to create announcement', e, st);
-      return Err(StorageFailure('Failed to create announcement', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to create announcement',
+          cause: e, stackTrace: st));
     }
   }
 
   /// Updates an existing announcement.
   Future<Result<void>> update(UpdateAnnouncement cmd) async {
     if (cmd.announcementId <= 0) {
-      return Err(ValidationFailure('Invalid announcement ID', field: 'announcementId'));
+      return Err(ValidationFailure('Invalid announcement ID',
+          field: 'announcementId'));
     }
 
     if (cmd.category != null && !_validCategories.contains(cmd.category)) {
@@ -127,10 +129,12 @@ class AnnouncementService {
             ..where((t) => t.id.equals(cmd.announcementId)))
           .getSingleOrNull();
       if (existing == null) {
-        return Err(NotFoundFailure('Announcement ${cmd.announcementId} not found'));
+        return Err(
+            NotFoundFailure('Announcement ${cmd.announcementId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch announcement', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch announcement',
+          cause: e, stackTrace: st));
     }
 
     // Update
@@ -140,27 +144,39 @@ class AnnouncementService {
               ..where((t) => t.id.equals(cmd.announcementId)))
             .write(
           CompanyAnnouncementsCompanion(
-            title: cmd.title != null ? Value(cmd.title!.trim()) : const Value.absent(),
-            body: cmd.body != null ? Value(cmd.body!.trim()) : const Value.absent(),
-            category: cmd.category != null ? Value(cmd.category!) : const Value.absent(),
-            actionLabel: cmd.actionLabel != null ? Value(cmd.actionLabel!.trim()) : const Value.absent(),
-            active: cmd.active != null ? Value(cmd.active!) : const Value.absent(),
+            title: cmd.title != null
+                ? Value(cmd.title!.trim())
+                : const Value.absent(),
+            body: cmd.body != null
+                ? Value(cmd.body!.trim())
+                : const Value.absent(),
+            category: cmd.category != null
+                ? Value(cmd.category!)
+                : const Value.absent(),
+            actionLabel: cmd.actionLabel != null
+                ? Value(cmd.actionLabel!.trim())
+                : const Value.absent(),
+            active:
+                cmd.active != null ? Value(cmd.active!) : const Value.absent(),
           ),
         );
       });
 
-      Log.info('AnnouncementService: Updated announcement ${cmd.announcementId}');
+      Log.info(
+          'AnnouncementService: Updated announcement ${cmd.announcementId}');
       return const Ok(null);
     } catch (e, st) {
       Log.error('AnnouncementService: Failed to update announcement', e, st);
-      return Err(StorageFailure('Failed to update announcement', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to update announcement',
+          cause: e, stackTrace: st));
     }
   }
 
   /// Acknowledges an announcement for the current user.
   Future<Result<void>> acknowledge(AcknowledgeAnnouncement cmd) async {
     if (cmd.announcementId <= 0) {
-      return Err(ValidationFailure('Invalid announcement ID', field: 'announcementId'));
+      return Err(ValidationFailure('Invalid announcement ID',
+          field: 'announcementId'));
     }
 
     // Verify exists
@@ -169,14 +185,16 @@ class AnnouncementService {
             ..where((t) => t.id.equals(cmd.announcementId)))
           .getSingleOrNull();
       if (existing == null) {
-        return Err(NotFoundFailure('Announcement ${cmd.announcementId} not found'));
+        return Err(
+            NotFoundFailure('Announcement ${cmd.announcementId} not found'));
       }
       if (existing.acknowledged) {
         // Already acknowledged - idempotent success
         return const Ok(null);
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch announcement', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch announcement',
+          cause: e, stackTrace: st));
     }
 
     // Mark as acknowledged
@@ -192,18 +210,22 @@ class AnnouncementService {
         );
       });
 
-      Log.info('AnnouncementService: Acknowledged announcement ${cmd.announcementId}');
+      Log.info(
+          'AnnouncementService: Acknowledged announcement ${cmd.announcementId}');
       return const Ok(null);
     } catch (e, st) {
-      Log.error('AnnouncementService: Failed to acknowledge announcement', e, st);
-      return Err(StorageFailure('Failed to acknowledge announcement', cause: e, stackTrace: st));
+      Log.error(
+          'AnnouncementService: Failed to acknowledge announcement', e, st);
+      return Err(StorageFailure('Failed to acknowledge announcement',
+          cause: e, stackTrace: st));
     }
   }
 
   /// Deletes an announcement.
   Future<Result<void>> delete(DeleteAnnouncement cmd) async {
     if (cmd.announcementId <= 0) {
-      return Err(ValidationFailure('Invalid announcement ID', field: 'announcementId'));
+      return Err(ValidationFailure('Invalid announcement ID',
+          field: 'announcementId'));
     }
 
     // Verify exists
@@ -212,21 +234,27 @@ class AnnouncementService {
             ..where((t) => t.id.equals(cmd.announcementId)))
           .getSingleOrNull();
       if (existing == null) {
-        return Err(NotFoundFailure('Announcement ${cmd.announcementId} not found'));
+        return Err(
+            NotFoundFailure('Announcement ${cmd.announcementId} not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch announcement', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to fetch announcement',
+          cause: e, stackTrace: st));
     }
 
     // Delete
     try {
-      await (_db.delete(_db.companyAnnouncements)..where((t) => t.id.equals(cmd.announcementId))).go();
+      await (_db.delete(_db.companyAnnouncements)
+            ..where((t) => t.id.equals(cmd.announcementId)))
+          .go();
 
-      Log.info('AnnouncementService: Deleted announcement ${cmd.announcementId}');
+      Log.info(
+          'AnnouncementService: Deleted announcement ${cmd.announcementId}');
       return const Ok(null);
     } catch (e, st) {
       Log.error('AnnouncementService: Failed to delete announcement', e, st);
-      return Err(StorageFailure('Failed to delete announcement', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to delete announcement',
+          cause: e, stackTrace: st));
     }
   }
 }

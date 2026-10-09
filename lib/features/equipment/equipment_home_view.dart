@@ -54,9 +54,11 @@ class _EquipmentHomeViewState extends State<EquipmentHomeView> {
                       hintText:
                           'Search by serial number, model, manufacturer...',
                       hintStyle: TextStyle(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       prefixIcon: Icon(Icons.search,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7)),
                       filled: true,
                       fillColor: theme.colorScheme.surface,
                       border: OutlineInputBorder(
@@ -160,8 +162,8 @@ class _EquipmentHomeViewState extends State<EquipmentHomeView> {
                         children: [
                           Icon(Icons.inventory_2_outlined,
                               size: 64,
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.4)),
                           const SizedBox(height: 16),
                           Text(
                             'No equipment found',
@@ -208,8 +210,8 @@ class _EquipmentHomeViewState extends State<EquipmentHomeView> {
                         children: [
                           Icon(Icons.search_off,
                               size: 64,
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                              color: theme.colorScheme.onSurface
+                                  .withValues(alpha: 0.4)),
                           const SizedBox(height: 16),
                           Text(
                             'No equipment matches your search',

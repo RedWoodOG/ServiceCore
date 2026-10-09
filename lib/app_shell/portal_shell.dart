@@ -28,11 +28,8 @@ class PortalShell extends StatelessWidget {
           child: child,
         ),
         // EVA Panel (RIGHT) - Always present, either expanded or collapsed
-        evaState.isExpanded
-            ? const EvaPanel()
-            : const EvaCollapseRail(),
+        evaState.isExpanded ? const EvaPanel() : const EvaCollapseRail(),
       ],
     );
   }
 }
-

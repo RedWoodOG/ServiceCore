@@ -18,7 +18,7 @@ class StorageService {
   Future<Directory> _getDirectory(StorageCategory category) async {
     final appDocDir = await getApplicationDocumentsDirectory();
     String subDirName;
-    
+
     switch (category) {
       case StorageCategory.sitePhoto:
         subDirName = 'site_photos';
@@ -55,12 +55,13 @@ class StorageService {
       if (pickedFile == null) return null;
 
       final saveDir = await _getDirectory(category);
-      final fileName = '${DateTime.now().millisecondsSinceEpoch}_${path.basename(pickedFile.path)}';
+      final fileName =
+          '${DateTime.now().millisecondsSinceEpoch}_${path.basename(pickedFile.path)}';
       final savedPath = path.join(saveDir.path, fileName);
 
       await File(pickedFile.path).copy(savedPath);
       Log.info('Photo saved to: $savedPath');
-      
+
       return savedPath;
     } catch (e) {
       Log.error('Error picking/saving photo: $e');
@@ -83,7 +84,8 @@ class StorageService {
 
       final originalPath = result.files.single.path!;
       final saveDir = await _getDirectory(category);
-      final fileName = '${DateTime.now().millisecondsSinceEpoch}_${result.files.single.name}';
+      final fileName =
+          '${DateTime.now().millisecondsSinceEpoch}_${result.files.single.name}';
       final savedPath = path.join(saveDir.path, fileName);
 
       await File(originalPath).copy(savedPath);
@@ -100,12 +102,13 @@ class StorageService {
   Future<String?> saveFile(File sourceFile, StorageCategory category) async {
     try {
       final saveDir = await _getDirectory(category);
-      final fileName = '${DateTime.now().millisecondsSinceEpoch}_${path.basename(sourceFile.path)}';
+      final fileName =
+          '${DateTime.now().millisecondsSinceEpoch}_${path.basename(sourceFile.path)}';
       final savedPath = path.join(saveDir.path, fileName);
 
       await sourceFile.copy(savedPath);
       Log.info('File moved to storage: $savedPath');
-      
+
       return savedPath;
     } catch (e) {
       Log.error('Error saving file: $e');

@@ -17,7 +17,8 @@ class ThemeProvider extends ChangeNotifier {
 
   /// Toggle between light and dark theme
   void toggleTheme() {
-    _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    _themeMode =
+        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     _saveThemePreference();
     notifyListeners();
   }
@@ -48,7 +49,7 @@ class ThemeProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedTheme = prefs.getString(_themePrefKey);
-      
+
       if (savedTheme != null) {
         _themeMode = ThemeMode.values.firstWhere(
           (e) => e.toString() == savedTheme,

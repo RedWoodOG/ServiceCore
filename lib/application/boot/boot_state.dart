@@ -93,14 +93,14 @@ class BootDiagnostics {
   final List<String> errorLog;
 
   Map<String, dynamic> toJson() => {
-    'dbPath': dbPath,
-    'dbExists': dbExists,
-    'dbSizeBytes': dbSizeBytes,
-    'dbWritable': dbWritable,
-    'dbVersion': dbVersion,
-    'integrityCheckPassed': integrityCheckPassed,
-    'errorLog': errorLog,
-  };
+        'dbPath': dbPath,
+        'dbExists': dbExists,
+        'dbSizeBytes': dbSizeBytes,
+        'dbWritable': dbWritable,
+        'dbVersion': dbVersion,
+        'integrityCheckPassed': integrityCheckPassed,
+        'errorLog': errorLog,
+      };
 }
 
 /// Extension for state names (useful for logging).

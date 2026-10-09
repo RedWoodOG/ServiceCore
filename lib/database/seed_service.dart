@@ -148,9 +148,9 @@ Future<void> seedDatabase(AppDatabase db) async {
     Log.info('- Clients already exist, skipping core client seed.');
   } else {
     // Insert Clients
-    final clientBlueId = await db
-        .into(db.clients)
-        .insert(ClientsCompanion.insert(name: 'Northwind Credit Union', themeColor: 'blue'));
+    final clientBlueId = await db.into(db.clients).insert(
+        ClientsCompanion.insert(
+            name: 'Northwind Credit Union', themeColor: 'blue'));
 
     final clientAmberId = await db.into(db.clients).insert(
           ClientsCompanion.insert(name: 'Lone Star Bank', themeColor: 'yellow'),

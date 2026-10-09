@@ -16,7 +16,8 @@ sealed class AppFailure {
 /// Input validation failed (bad data from user/caller).
 /// Examples: empty required field, invalid email format, negative quantity.
 class ValidationFailure extends AppFailure {
-  const ValidationFailure(super.message, {super.cause, super.stackTrace, this.field});
+  const ValidationFailure(super.message,
+      {super.cause, super.stackTrace, this.field});
 
   /// The specific field that failed validation, if applicable.
   final String? field;

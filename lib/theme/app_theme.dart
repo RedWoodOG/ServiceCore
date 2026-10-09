@@ -756,7 +756,10 @@ class AppGradients {
   static LinearGradient glassSurface = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Colors.white.withValues(alpha: 0.05), Colors.white.withValues(alpha: 0.02)],
+    colors: [
+      Colors.white.withValues(alpha: 0.05),
+      Colors.white.withValues(alpha: 0.02)
+    ],
   );
 
   static LinearGradient borderShine = LinearGradient(

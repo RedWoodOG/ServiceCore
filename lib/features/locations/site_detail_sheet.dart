@@ -80,8 +80,7 @@ class _SiteDetailSheetState extends State<SiteDetailSheet> {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-            content: Text('Update failed: $e'),
-            backgroundColor: errorColor),
+            content: Text('Update failed: $e'), backgroundColor: errorColor),
       );
     }
   }
@@ -182,8 +181,10 @@ class _SiteDetailSheetState extends State<SiteDetailSheet> {
             ),
             IconButton(
               icon: Icon(Icons.close,
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.6)),
               onPressed: () => Navigator.pop(context),
             ),
           ],
@@ -211,7 +212,10 @@ class _SiteDetailSheetState extends State<SiteDetailSheet> {
             Text(
               'SITE DOCUMENTATION',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.4),
                 fontSize: 10,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.5,
@@ -236,11 +240,16 @@ class _SiteDetailSheetState extends State<SiteDetailSheet> {
             width: double.infinity,
             padding: const EdgeInsets.all(32),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.03),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.03),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.05),
                   style: BorderStyle.solid),
             ),
             child: Column(
@@ -328,7 +337,8 @@ class _SiteDetailSheetState extends State<SiteDetailSheet> {
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
         prefixIcon: icon != null
             ? Icon(icon, color: Theme.of(context).colorScheme.primary, size: 20)
             : null,

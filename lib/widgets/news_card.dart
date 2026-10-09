@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // If you have your app_theme.dart, import it. If not, we use this fallback to guarantee it works.
-// import '../theme/app_theme.dart'; 
+// import '../theme/app_theme.dart';
 
 class NewsCard extends StatelessWidget {
   final String title;
@@ -29,9 +29,12 @@ class NewsCard extends StatelessWidget {
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
         // The "Portal" left border strip
-        border: Border(left: BorderSide(color: accentColor, width: 4)), 
+        border: Border(left: BorderSide(color: accentColor, width: 4)),
         boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 4, offset: const Offset(0, 2)),
+          BoxShadow(
+              color: Colors.black.withValues(alpha: 0.2),
+              blurRadius: 4,
+              offset: const Offset(0, 2)),
         ],
       ),
       child: Padding(
@@ -70,11 +73,13 @@ class NewsCard extends StatelessWidget {
                 child: InkWell(
                   onTap: onAction,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       color: accentColor.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: accentColor.withValues(alpha: 0.5)),
+                      border:
+                          Border.all(color: accentColor.withValues(alpha: 0.5)),
                     ),
                     child: Text(
                       actionLabel!,
@@ -94,4 +99,3 @@ class NewsCard extends StatelessWidget {
     );
   }
 }
-

@@ -106,10 +106,12 @@ class KnowledgeService {
     try {
       final existing = await _db.getKnowledgeEntryById(cmd.id);
       if (existing != null) {
-        return Err(ConflictFailure('Knowledge entry with ID "${cmd.id}" already exists'));
+        return Err(ConflictFailure(
+            'Knowledge entry with ID "${cmd.id}" already exists'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to check for existing entry', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to check for existing entry',
+          cause: e, stackTrace: st));
     }
 
     // Insert
@@ -117,33 +119,34 @@ class KnowledgeService {
       final now = DateTime.now();
       await _db.transaction(() async {
         await _db.into(_db.knowledgeEntries).insert(
-          KnowledgeEntriesCompanion.insert(
-            id: cmd.id.trim(),
-            title: cmd.title.trim(),
-            category: cmd.category.trim(),
-            equipmentType: cmd.equipmentType.trim(),
-            equipmentModel: Value(cmd.equipmentModel?.trim()),
-            content: cmd.content,
-            sourceType: 'manual_entry',
-            sourceFile: 'user_created',
-            version: '1.0.0',
-            status: 'active',
-            createdAt: now,
-            updatedAt: now,
-            contentType: Value(cmd.contentType),
-            difficulty: Value(cmd.difficulty),
-            estimatedTime: Value(cmd.estimatedTime),
-            keywords: Value(cmd.keywords ?? ''),
-            summary: Value(cmd.summary),
-          ),
-        );
+              KnowledgeEntriesCompanion.insert(
+                id: cmd.id.trim(),
+                title: cmd.title.trim(),
+                category: cmd.category.trim(),
+                equipmentType: cmd.equipmentType.trim(),
+                equipmentModel: Value(cmd.equipmentModel?.trim()),
+                content: cmd.content,
+                sourceType: 'manual_entry',
+                sourceFile: 'user_created',
+                version: '1.0.0',
+                status: 'active',
+                createdAt: now,
+                updatedAt: now,
+                contentType: Value(cmd.contentType),
+                difficulty: Value(cmd.difficulty),
+                estimatedTime: Value(cmd.estimatedTime),
+                keywords: Value(cmd.keywords ?? ''),
+                summary: Value(cmd.summary),
+              ),
+            );
       });
 
       Log.info('KnowledgeService: Created entry "${cmd.id}"');
       return Ok(cmd.id);
     } catch (e, st) {
       Log.error('KnowledgeService: Failed to create entry', e, st);
-      return Err(StorageFailure('Failed to create knowledge entry', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to create knowledge entry',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -158,10 +161,12 @@ class KnowledgeService {
     try {
       existing = await _db.getKnowledgeEntryById(cmd.entryId);
       if (existing == null) {
-        return Err(NotFoundFailure('Knowledge entry "${cmd.entryId}" not found'));
+        return Err(
+            NotFoundFailure('Knowledge entry "${cmd.entryId}" not found'));
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to fetch entry', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to fetch entry', cause: e, stackTrace: st));
     }
 
     // Update with version bump
@@ -169,28 +174,44 @@ class KnowledgeService {
       final currentVersion = existing.version;
       final versionParts = currentVersion.split('.');
       final newPatch = int.tryParse(versionParts.last) ?? 0;
-      final newVersion = '${versionParts.sublist(0, versionParts.length - 1).join('.')}.${newPatch + 1}';
+      final newVersion =
+          '${versionParts.sublist(0, versionParts.length - 1).join('.')}.${newPatch + 1}';
 
       await _db.transaction(() async {
-        await (_db.update(_db.knowledgeEntries)..where((t) => t.id.equals(cmd.entryId))).write(
+        await (_db.update(_db.knowledgeEntries)
+              ..where((t) => t.id.equals(cmd.entryId)))
+            .write(
           KnowledgeEntriesCompanion(
-            title: cmd.title != null ? Value(cmd.title!.trim()) : const Value.absent(),
-            category: cmd.category != null ? Value(cmd.category!.trim()) : const Value.absent(),
-            equipmentType: cmd.equipmentType != null ? Value(cmd.equipmentType!.trim()) : const Value.absent(),
-            content: cmd.content != null ? Value(cmd.content!) : const Value.absent(),
-            equipmentModel: cmd.equipmentModel != null ? Value(cmd.equipmentModel!.trim()) : const Value.absent(),
-            status: cmd.status != null ? Value(cmd.status!) : const Value.absent(),
+            title: cmd.title != null
+                ? Value(cmd.title!.trim())
+                : const Value.absent(),
+            category: cmd.category != null
+                ? Value(cmd.category!.trim())
+                : const Value.absent(),
+            equipmentType: cmd.equipmentType != null
+                ? Value(cmd.equipmentType!.trim())
+                : const Value.absent(),
+            content: cmd.content != null
+                ? Value(cmd.content!)
+                : const Value.absent(),
+            equipmentModel: cmd.equipmentModel != null
+                ? Value(cmd.equipmentModel!.trim())
+                : const Value.absent(),
+            status:
+                cmd.status != null ? Value(cmd.status!) : const Value.absent(),
             version: Value(newVersion),
             updatedAt: Value(DateTime.now()),
           ),
         );
       });
 
-      Log.info('KnowledgeService: Updated entry "${cmd.entryId}" to version $newVersion');
+      Log.info(
+          'KnowledgeService: Updated entry "${cmd.entryId}" to version $newVersion');
       return const Ok(null);
     } catch (e, st) {
       Log.error('KnowledgeService: Failed to update entry', e, st);
-      return Err(StorageFailure('Failed to update knowledge entry', cause: e, stackTrace: st));
+      return Err(StorageFailure('Failed to update knowledge entry',
+          cause: e, stackTrace: st));
     }
   }
 
@@ -200,7 +221,8 @@ class KnowledgeService {
   Future<Result<int>> ingestMarkdownBundle(IngestKnowledgeBundle cmd) async {
     final dir = Directory(cmd.directoryPath);
     if (!await dir.exists()) {
-      return Err(ValidationFailure('Directory does not exist: ${cmd.directoryPath}'));
+      return Err(
+          ValidationFailure('Directory does not exist: ${cmd.directoryPath}'));
     }
 
     // Clear if requested
@@ -209,7 +231,8 @@ class KnowledgeService {
         await _db.clearAllKnowledgeEntries();
         Log.info('KnowledgeService: Cleared existing knowledge entries');
       } catch (e, st) {
-        return Err(StorageFailure('Failed to clear existing entries', cause: e, stackTrace: st));
+        return Err(StorageFailure('Failed to clear existing entries',
+            cause: e, stackTrace: st));
       }
     }
 
@@ -228,11 +251,13 @@ class KnowledgeService {
         }
       }
     } catch (e, st) {
-      return Err(StorageFailure('Failed to scan directory', cause: e, stackTrace: st));
+      return Err(
+          StorageFailure('Failed to scan directory', cause: e, stackTrace: st));
     }
 
     if (mdFiles.isEmpty) {
-      return Err(ValidationFailure('No markdown files found in ${cmd.directoryPath}'));
+      return Err(
+          ValidationFailure('No markdown files found in ${cmd.directoryPath}'));
     }
 
     // Process files
@@ -244,7 +269,7 @@ class KnowledgeService {
         final content = await file.readAsString();
         final fileName = file.path.split(Platform.pathSeparator).last;
         final baseName = fileName.replaceAll('.md', '');
-        
+
         // Generate ID from filename
         final id = baseName
             .toLowerCase()
@@ -253,13 +278,15 @@ class KnowledgeService {
 
         // Extract title from content or use filename
         String title = baseName.replaceAll('_', ' ').replaceAll('-', ' ');
-        final h1Match = RegExp(r'^#\s+(.+)$', multiLine: true).firstMatch(content);
+        final h1Match =
+            RegExp(r'^#\s+(.+)$', multiLine: true).firstMatch(content);
         if (h1Match != null) {
           title = h1Match.group(1) ?? title;
         }
 
         // Guess metadata
-        final equipmentType = KnowledgeCategorizer.guessEquipmentType(file.path);
+        final equipmentType =
+            KnowledgeCategorizer.guessEquipmentType(file.path);
         final category = KnowledgeCategorizer.guessCategory(file.path);
 
         // Insert or update
@@ -269,7 +296,9 @@ class KnowledgeService {
         if (existing != null) {
           // Update if content changed
           if (existing.content != content) {
-            await (_db.update(_db.knowledgeEntries)..where((t) => t.id.equals(id))).write(
+            await (_db.update(_db.knowledgeEntries)
+                  ..where((t) => t.id.equals(id)))
+                .write(
               KnowledgeEntriesCompanion(
                 content: Value(content),
                 updatedAt: Value(now),
@@ -279,20 +308,20 @@ class KnowledgeService {
         } else {
           // Insert new
           await _db.into(_db.knowledgeEntries).insert(
-            KnowledgeEntriesCompanion.insert(
-              id: id,
-              title: title,
-              category: category,
-              equipmentType: equipmentType,
-              content: content,
-              sourceType: 'bundle_import',
-              sourceFile: fileName,
-              version: '1.0.0',
-              status: 'active',
-              createdAt: now,
-              updatedAt: now,
-            ),
-          );
+                KnowledgeEntriesCompanion.insert(
+                  id: id,
+                  title: title,
+                  category: category,
+                  equipmentType: equipmentType,
+                  content: content,
+                  sourceType: 'bundle_import',
+                  sourceFile: fileName,
+                  version: '1.0.0',
+                  status: 'active',
+                  createdAt: now,
+                  updatedAt: now,
+                ),
+              );
         }
 
         successCount++;
@@ -308,7 +337,8 @@ class KnowledgeService {
       }
     }
 
-    Log.info('KnowledgeService: Ingested $successCount of ${mdFiles.length} files');
+    Log.info(
+        'KnowledgeService: Ingested $successCount of ${mdFiles.length} files');
     return Ok(successCount);
   }
 }

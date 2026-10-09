@@ -39,7 +39,7 @@ class _BootScreenState extends State<BootScreen> {
   void _onBootStateChanged() {
     if (mounted) {
       setState(() {});
-      
+
       // Check if boot completed successfully
       if (widget.bootService.state is BootComplete) {
         widget.onBootComplete();
@@ -69,7 +69,8 @@ class _BootScreenState extends State<BootScreen> {
             BootCheckingFilesystem() => _buildLoading('Checking filesystem...'),
             BootOpeningDatabase() => _buildLoading('Opening database...'),
             BootRunningMigrations(:final fromVersion, :final toVersion) =>
-              _buildLoading('Migrating database ($fromVersion → $toVersion)...'),
+              _buildLoading(
+                  'Migrating database ($fromVersion → $toVersion)...'),
             BootCheckingIntegrity() => _buildLoading('Checking integrity...'),
             BootSeedingData() => _buildLoading('Preparing data...'),
             BootInitializingServices() => _buildLoading('Starting services...'),
@@ -111,7 +112,8 @@ class _BootScreenState extends State<BootScreen> {
         ),
         const SizedBox(height: 32),
         CircularProgressIndicator(
-          valueColor: const AlwaysStoppedAnimation<Color>(AppPalette.brandRoyalBlue),
+          valueColor:
+              const AlwaysStoppedAnimation<Color>(AppPalette.brandRoyalBlue),
         ),
         const SizedBox(height: 16),
         Text(
@@ -172,7 +174,8 @@ class _BootScreenState extends State<BootScreen> {
             decoration: BoxDecoration(
               color: AppPalette.darkGrey,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppPalette.alertRed.withValues(alpha: 0.5)),
+              border:
+                  Border.all(color: AppPalette.alertRed.withValues(alpha: 0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,13 +223,18 @@ class _BootScreenState extends State<BootScreen> {
                 ),
                 const SizedBox(height: 8),
                 _buildDiagnosticRow('Database Path', diagnostics.dbPath),
-                _buildDiagnosticRow('Database Exists', diagnostics.dbExists ? 'Yes' : 'No'),
-                _buildDiagnosticRow('Database Size', '${(diagnostics.dbSizeBytes / 1024).toStringAsFixed(1)} KB'),
-                _buildDiagnosticRow('Writable', diagnostics.dbWritable ? 'Yes' : 'No'),
+                _buildDiagnosticRow(
+                    'Database Exists', diagnostics.dbExists ? 'Yes' : 'No'),
+                _buildDiagnosticRow('Database Size',
+                    '${(diagnostics.dbSizeBytes / 1024).toStringAsFixed(1)} KB'),
+                _buildDiagnosticRow(
+                    'Writable', diagnostics.dbWritable ? 'Yes' : 'No'),
                 if (diagnostics.dbVersion != null)
-                  _buildDiagnosticRow('Schema Version', diagnostics.dbVersion.toString()),
+                  _buildDiagnosticRow(
+                      'Schema Version', diagnostics.dbVersion.toString()),
                 if (diagnostics.integrityCheckPassed != null)
-                  _buildDiagnosticRow('Integrity Check', diagnostics.integrityCheckPassed! ? 'Passed' : 'Failed'),
+                  _buildDiagnosticRow('Integrity Check',
+                      diagnostics.integrityCheckPassed! ? 'Passed' : 'Failed'),
               ],
             ),
           ),

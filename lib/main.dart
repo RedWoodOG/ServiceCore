@@ -142,7 +142,8 @@ void main() async {
   try {
     await AppPaths.init();
   } catch (e, stackTrace) {
-    Log.error('Failed to resolve application documents directory', e, stackTrace);
+    Log.error(
+        'Failed to resolve application documents directory', e, stackTrace);
     rethrow; // Attachments, receipts and the database all live under this root.
   }
 
@@ -444,298 +445,311 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               child: Scaffold(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 body: isMobile
-              ? Column(
-                  children: [
-                    _ConnectivityStatusBar(compact: true),
-                    Expanded(
-                      child: PortalShell(child: _screens[selectedIndex]),
-                    ),
-                  ],
-                )
-              : Row(
-                  children: [
-                    // Sidebar Navigation
-                    Container(
-                      width: AppLayout.sidebarWidth,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      child: Column(
+                    ? Column(
                         children: [
-                          // Logo/Brand
+                          _ConnectivityStatusBar(compact: true),
+                          Expanded(
+                            child: PortalShell(child: _screens[selectedIndex]),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          // Sidebar Navigation
                           Container(
-                            padding: const EdgeInsets.all(24),
-                            alignment: Alignment.centerLeft,
-                            child: Row(
+                            width: AppLayout.sidebarWidth,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            child: Column(
                               children: [
-                                Image.asset(
-                                  'assets/logo.webp',
-                                  height: AppLayout.logoSize,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      width: AppLayout.logoSize,
-                                      height: AppLayout.logoSize,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        borderRadius: BorderRadius.circular(
-                                          AppLayout.radiusMD,
+                                // Logo/Brand
+                                Container(
+                                  padding: const EdgeInsets.all(24),
+                                  alignment: Alignment.centerLeft,
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/logo.webp',
+                                        height: AppLayout.logoSize,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            width: AppLayout.logoSize,
+                                            height: AppLayout.logoSize,
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                AppLayout.radiusMD,
+                                              ),
+                                            ),
+                                            child: Icon(
+                                              Icons.bolt,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface,
+                                              size: AppIcons.sizeMD,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Builder(
+                                        builder: (context) => Text(
+                                          'Portal',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                  fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      child: Icon(
-                                        Icons.bolt,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface,
-                                        size: AppIcons.sizeMD,
-                                      ),
-                                    );
-                                  },
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(width: 12),
-                                Builder(
-                                  builder: (context) => Text(
-                                    'Portal',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(fontWeight: FontWeight.bold),
+                                Divider(
+                                  color: Theme.of(context).dividerColor,
+                                  height: 1,
+                                ),
+                                // Navigation Items
+                                Expanded(
+                                  child: ListView.builder(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    itemCount: _navItems.length,
+                                    itemBuilder: (context, index) {
+                                      final item = _navItems[index];
+                                      final isSelected = selectedIndex == index;
+                                      return _buildNavItem(
+                                        icon: item['icon'],
+                                        label: item['label'],
+                                        isSelected: isSelected,
+                                        onTap: () {
+                                          navigationState.navigateTo(index);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Divider(
+                                  color: Theme.of(context).dividerColor,
+                                  height: 1,
+                                ),
+                                const _ConnectivityStatusBar(compact: false),
+                                Divider(
+                                  color: Theme.of(context).dividerColor,
+                                  height: 1,
+                                ),
+                                // User Profile
+                                Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      if (_currentUser != null) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              UserDetailsDialog(
+                                                  user: _currentUser!),
+                                        );
+                                        _loadUser();
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: AppComponents
+                                                .userAvatarDecoration,
+                                            child: Center(
+                                              child: Text(
+                                                _currentUser?.fullName
+                                                            .isNotEmpty ==
+                                                        true
+                                                    ? _currentUser!.fullName[0]
+                                                    : 'A',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  _currentUser?.fullName ??
+                                                      'Loading...',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                Text(
+                                                  _currentUser?.role
+                                                          .toUpperCase() ??
+                                                      'OFFLINE',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall
+                                                      ?.copyWith(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .onSurface
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.5)),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.nights_stay,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withValues(alpha: 0.5),
+                                            size: AppIcons.sizeMD,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // LOGIN: Logout Button
+                                Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      // Capture context-dependent values before any async operations
+                                      final navigator = Navigator.of(context);
+                                      final authProvider =
+                                          context.read<AuthProvider>();
+
+                                      // Confirm logout
+                                      final confirmed = await showDialog<bool>(
+                                        context: context,
+                                        builder: (dialogContext) => AlertDialog(
+                                          title: const Text('Logout'),
+                                          content: const Text(
+                                            'Are you sure you want to logout?',
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  dialogContext, false),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  dialogContext, true),
+                                              child: const Text('Logout'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+
+                                      if (confirmed == true && mounted) {
+                                        await authProvider.logout();
+
+                                        // Navigate back to login screen
+                                        if (mounted) {
+                                          navigator.pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen(),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 12,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.logout,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withValues(alpha: 0.5),
+                                            size: AppIcons.sizeMD,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Text(
+                                            'Logout',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withValues(alpha: 0.5),
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Divider(
-                            color: Theme.of(context).dividerColor,
-                            height: 1,
-                          ),
-                          // Navigation Items
+                          // Main Content
                           Expanded(
-                            child: ListView.builder(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              itemCount: _navItems.length,
-                              itemBuilder: (context, index) {
-                                final item = _navItems[index];
-                                final isSelected = selectedIndex == index;
-                                return _buildNavItem(
-                                  icon: item['icon'],
-                                  label: item['label'],
-                                  isSelected: isSelected,
-                                  onTap: () {
-                                    navigationState.navigateTo(index);
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          Divider(
-                            color: Theme.of(context).dividerColor,
-                            height: 1,
-                          ),
-                          const _ConnectivityStatusBar(compact: false),
-                          Divider(
-                            color: Theme.of(context).dividerColor,
-                            height: 1,
-                          ),
-                          // User Profile
-                          Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () async {
-                                if (_currentUser != null) {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        UserDetailsDialog(user: _currentUser!),
-                                  );
-                                  _loadUser();
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration:
-                                          AppComponents.userAvatarDecoration,
-                                      child: Center(
-                                        child: Text(
-                                          _currentUser?.fullName.isNotEmpty ==
-                                                  true
-                                              ? _currentUser!.fullName[0]
-                                              : 'A',
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            _currentUser?.fullName ??
-                                                'Loading...',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            _currentUser?.role.toUpperCase() ??
-                                                'OFFLINE',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall
-                                                ?.copyWith(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onSurface
-                                                        .withValues(alpha: 0.5)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.nights_stay,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withValues(alpha: 0.5),
-                                      size: AppIcons.sizeMD,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          // LOGIN: Logout Button
-                          Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () async {
-                                // Capture context-dependent values before any async operations
-                                final navigator = Navigator.of(context);
-                                final authProvider =
-                                    context.read<AuthProvider>();
-
-                                // Confirm logout
-                                final confirmed = await showDialog<bool>(
-                                  context: context,
-                                  builder: (dialogContext) => AlertDialog(
-                                    title: const Text('Logout'),
-                                    content: const Text(
-                                      'Are you sure you want to logout?',
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(dialogContext, false),
-                                        child: const Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(dialogContext, true),
-                                        child: const Text('Logout'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-
-                                if (confirmed == true && mounted) {
-                                  await authProvider.logout();
-
-                                  // Navigate back to login screen
-                                  if (mounted) {
-                                    navigator.pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginScreen(),
-                                      ),
-                                    );
-                                  }
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.logout,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withValues(alpha: 0.5),
-                                      size: AppIcons.sizeMD,
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Text(
-                                      'Logout',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSurface
-                                                .withValues(alpha: 0.5),
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            child: PortalShell(child: _screens[selectedIndex]),
                           ),
                         ],
                       ),
-                    ),
-                    // Main Content
-                    Expanded(
-                      child: PortalShell(child: _screens[selectedIndex]),
-                    ),
-                  ],
-                ),
-          bottomNavigationBar: isMobile
-              ? Builder(
-                  builder: (context) {
-                    final theme = Theme.of(context);
-                    return BottomNavigationBar(
-                      items: _navItems
-                          .take(5)
-                          .map(
-                            (item) => BottomNavigationBarItem(
-                              icon: Icon(item['icon']),
-                              label: item['label'],
-                            ),
-                          )
-                          .toList(),
-                      currentIndex: selectedIndex >= 5 ? 0 : selectedIndex,
-                      onTap: (index) {
-                        navigationState.navigateTo(index);
-                      },
-                      backgroundColor: theme.scaffoldBackgroundColor,
-                      selectedItemColor: theme.colorScheme.primary,
-                      unselectedItemColor:
-                          theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                      type: BottomNavigationBarType.fixed,
-                    );
-                  },
-                )
-              : null,
+                bottomNavigationBar: isMobile
+                    ? Builder(
+                        builder: (context) {
+                          final theme = Theme.of(context);
+                          return BottomNavigationBar(
+                            items: _navItems
+                                .take(5)
+                                .map(
+                                  (item) => BottomNavigationBarItem(
+                                    icon: Icon(item['icon']),
+                                    label: item['label'],
+                                  ),
+                                )
+                                .toList(),
+                            currentIndex:
+                                selectedIndex >= 5 ? 0 : selectedIndex,
+                            onTap: (index) {
+                              navigationState.navigateTo(index);
+                            },
+                            backgroundColor: theme.scaffoldBackgroundColor,
+                            selectedItemColor: theme.colorScheme.primary,
+                            unselectedItemColor: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.6),
+                            type: BottomNavigationBarType.fixed,
+                          );
+                        },
+                      )
+                    : null,
               ),
             ),
             Positioned(
@@ -798,7 +812,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: isSelected
                             ? theme.colorScheme.onPrimary
-                            : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                            : theme.colorScheme.onSurface
+                                .withValues(alpha: 0.6),
                         fontWeight:
                             isSelected ? FontWeight.w600 : FontWeight.normal,
                       ),

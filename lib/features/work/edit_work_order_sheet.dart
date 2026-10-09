@@ -82,7 +82,8 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: builderTheme.colorScheme.onSurface.withValues(alpha: 0.3),
+                  color:
+                      builderTheme.colorScheme.onSurface.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -428,10 +429,10 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
           onChanged: _areFieldsLocked()
               ? null
               : (value) {
-            setState(() {
-              _selectedPriority = value;
-            });
-          },
+                  setState(() {
+                    _selectedPriority = value;
+                  });
+                },
         ),
       ],
     );
@@ -798,7 +799,8 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
             const Spacer(),
             if (canAdd)
               TextButton.icon(
-                onPressed: _isSubmitting ? null : () => _pickAndAttachPhoto(context),
+                onPressed:
+                    _isSubmitting ? null : () => _pickAndAttachPhoto(context),
                 icon: const Icon(Icons.add_a_photo_outlined, size: 20),
                 label: const Text('Add photo'),
               ),
@@ -914,7 +916,8 @@ class _EditWorkOrderSheetState extends State<EditWorkOrderSheet> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text('Remove', style: TextStyle(color: theme.colorScheme.error)),
+            child: Text('Remove',
+                style: TextStyle(color: theme.colorScheme.error)),
           ),
         ],
       ),

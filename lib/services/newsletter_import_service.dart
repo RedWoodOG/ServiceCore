@@ -52,10 +52,8 @@ class NewsletterImportService {
     final announcements = <CompanyAnnouncementsCompanion>[];
 
     // Split text into sections (look for headings, dates, or numbered items)
-    final lines = text
-        .split('\n')
-        .where((line) => line.trim().isNotEmpty)
-        .toList();
+    final lines =
+        text.split('\n').where((line) => line.trim().isNotEmpty).toList();
 
     String? currentTitle;
     String? currentCategory;
@@ -100,9 +98,8 @@ class NewsletterImportService {
       } else if (line.length > 20) {
         // If we don't have a title yet but this looks like content, use first part as title
         if (currentTitle == null) {
-          currentTitle = line.length > 60
-              ? '${line.substring(0, 60)}...'
-              : line;
+          currentTitle =
+              line.length > 60 ? '${line.substring(0, 60)}...' : line;
           currentBodyLines.add(line);
         }
       }
@@ -248,9 +245,8 @@ class NewsletterImportService {
     String? actionLabel,
   }) {
     // Truncate body if too long (keep first 500 chars)
-    final truncatedBody = body.length > 500
-        ? '${body.substring(0, 500)}...'
-        : body;
+    final truncatedBody =
+        body.length > 500 ? '${body.substring(0, 500)}...' : body;
 
     return CompanyAnnouncementsCompanion.insert(
       category: category,

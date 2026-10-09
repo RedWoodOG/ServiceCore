@@ -63,7 +63,8 @@ class GlassCard extends StatelessWidget {
               onTap: onTap,
               borderRadius: BorderRadius.circular(borderRadius),
               splashColor: theme.colorScheme.primary.withValues(alpha: 0.1),
-              highlightColor: theme.colorScheme.onSurface.withValues(alpha: 0.05),
+              highlightColor:
+                  theme.colorScheme.onSurface.withValues(alpha: 0.05),
               child: Padding(
                 padding: padding ?? AppLayout.cardPaddingAll,
                 child: child,
