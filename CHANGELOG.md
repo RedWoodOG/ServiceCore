@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to FSC Portal will be documented in this file.
+All notable changes to ServiceCore will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -28,6 +28,18 @@ assigned; see the versioning note at the end of this section.
   and a Windows release build. (#3, `cddc752`)
 - `dart_test.yaml` registers a `perf` tag. Tests tagged `perf` are excluded from CI and run
   locally with `flutter test --tags perf`. (#3, `c348240`)
+- `docs/requirements/overhaul-requirements.md`: the accepted overhaul requirements (R1–R36,
+  flows F1–F9, phasing). It merges the 2026-05-07 local draft and the 2026-05-03 GitHub
+  version per owner decision of 2026-10-09. It keeps the fleet GPS deferral (R32 waits for
+  live system access; R31 and R33 proceed without a GPS vendor), and Appendix A records how
+  each section was reconciled. (branch `docs/overhaul-spec-and-adrs`; commit not yet
+  assigned)
+- Architecture decision records in `docs/adr/`, with an index (branch
+  `docs/overhaul-spec-and-adrs`; commit not yet assigned):
+  - ADR-0001: organizations are delivered by promoting `clients` in place in an additive
+    schema v16 migration.
+  - ADR-0002: at-rest database encryption is required for the first release, delivered with
+    backup and key recovery.
 
 ### Changed
 
