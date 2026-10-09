@@ -40,6 +40,11 @@ jobs:
       - name: Resolve dependencies
         run: flutter pub get
 
+      # Runs after pub get so the formatter reads the package's language
+      # version. Generated *.g.dart files are excluded: build_runner writes them.
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed $(git ls-files '*.dart' ':!:*.g.dart')
+
       # app_database.g.dart is committed, but regenerating catches a schema
       # change that was made without re-running the generator.
       - name: Generate drift code
