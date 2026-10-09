@@ -73,4 +73,36 @@ void main() {
       expect(AppPaths.resolveSync(''), '');
     });
   });
+
+  group('live database path', () {
+    test('resolves under the documents root, not under appDirName', () {
+      final path = AppPaths.liveDatabasePathIn(tempRoot);
+
+      expect(path, p.join(tempRoot.path, AppPaths.liveDatabaseFileName));
+      expect(
+        p.split(path),
+        isNot(contains(AppPaths.appDirName)),
+        reason: 'the database is not inside the attachments directory',
+      );
+    });
+
+    test('file name is pinned', () {
+      // This string is in the README's do-not-rename table: renaming it orphans
+      // every existing installation's database. The test exists so a rename is
+      // a deliberate act with a failing test attached, not a refactor.
+      expect(AppPaths.liveDatabaseFileName, 'fsc_portal_dev.sqlite');
+    });
+
+    test('BootService and AppDatabase cannot drift apart', () {
+      // Both now derive the path from liveDatabasePathIn, so one call is the
+      // whole contract. Before this, boot built
+      // '<documents>/fsc_portal/fsc_portal.db' by hand while the database was
+      // opened at '<documents>/fsc_portal_dev.sqlite', and safe-mode recovery
+      // deleted a file that never existed.
+      expect(
+        AppPaths.liveDatabasePathIn(tempRoot),
+        isNot(p.join(tempRoot.path, 'fsc_portal', 'fsc_portal.db')),
+      );
+    });
+  });
 }

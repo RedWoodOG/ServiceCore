@@ -25,6 +25,32 @@ class AppPaths {
   /// historical name deliberately: renaming it orphans existing installs.
   static const String appDirName = 'portal_offline';
 
+  /// File name of the live application database, directly under the documents
+  /// root (NOT under [appDirName]).
+  ///
+  /// Declared here because this string was previously repeated in four places —
+  /// `AppDatabase._openConnection`, the standalone opener, a startup log line,
+  /// and `BootService` — and they drifted: boot pointed at a different file
+  /// entirely, so safe-mode recovery operated on a path nothing ever wrote.
+  /// Everything that needs the live database path now derives it from here.
+  ///
+  /// Renaming this orphans existing databases. See the README.
+  static const String liveDatabaseFileName = 'fsc_portal_dev.sqlite';
+
+  /// The live database path under an explicit [root]. Pure, so it is testable
+  /// without a `path_provider` platform channel.
+  static String liveDatabasePathIn(Directory root) =>
+      p.join(root.path, liveDatabaseFileName);
+
+  /// The live database path under the real documents directory.
+  ///
+  /// Resolves the documents directory itself rather than reading
+  /// [documentsRoot], so callers that run before [init] — such as
+  /// `BootService`, which runs during startup — do not have to order
+  /// themselves after it.
+  static Future<String> resolveLiveDatabasePath() async =>
+      liveDatabasePathIn(await getApplicationDocumentsDirectory());
+
   static Directory? _documentsRoot;
 
   /// Resolves and caches the documents root. Safe to call more than once.

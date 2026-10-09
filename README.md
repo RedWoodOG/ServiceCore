@@ -66,8 +66,7 @@ breaks or destroys data in existing installs:
 | `fsc_portal_v1_2026_security` | `services/encryption_service.dart` | Key-derivation salt for the master key that wraps the stored database key. Changing it makes the stored key undecryptable unless the original value is restored or a prior key export is imported. No database is encrypted at this revision, so no data is lost today. Once encryption is enabled, it would make the encrypted database unreadable. |
 | `fsc_portal_db_key_encrypted` | `services/encryption_service.dart` | Secure-storage entry holding the stored database key. Renaming orphans that key: the next read generates a new random key that does not match earlier key exports. No database is encrypted at this revision. Once encryption is enabled, the encrypted database could not be opened with the new key. |
 | `fsc_export_salt_v1` | `services/encryption_service.dart` | Nonce for encrypted exports. Changing it breaks decryption of prior exports. |
-| `fsc_portal_dev.sqlite` | `main.dart`, `database/` | On-disk path of the live database. Renaming orphans existing databases. |
-| `fsc_portal/`, `fsc_portal.db` | `application/boot/` | Path that boot checks and that safe-mode recovery backs up and deletes. It is not the live database (see Known issues). Renaming it orphans any file already at that path. |
+| `fsc_portal_dev.sqlite` | `util/app_paths.dart` (`AppPaths.liveDatabaseFileName`) | On-disk file name of the live database, directly under the documents root. Single source of truth: `AppDatabase`, the standalone opener, the startup log and `BootService` all derive from it. Renaming orphans existing databases; pinned by a test. |
 | `portal_offline/` | `util/app_paths.dart` (`AppPaths.appDirName`) | On-disk directory for attachments and receipts. |
 | `admin@fscportal.local` | `application/boot/boot_service.dart` | Seeded admin account identity. |
 
@@ -90,13 +89,6 @@ this revision.
 - **Expense amounts: a comma is dropped, not read as a decimal separator.** `12,50` is
   saved as `1250` (`lib/features/expenses/expenses_home_view.dart:269`). A thousands
   separator such as `1,234.50` parses as intended.
-- **Safe-mode recovery targets the wrong file.** Boot looks for
-  `fsc_portal/fsc_portal.db` under the application documents directory and reads its size
-  (`lib/application/boot/boot_service.dart:146-154`, existence check at `:149-150`), and
-  recovery backs that file up and deletes it (`boot_service.dart:106-123`). The live
-  database is `fsc_portal_dev.sqlite` directly in that directory
-  (`lib/database/app_database.dart:1667`). Recovery therefore cannot repair the real
-  database.
 - **Search is a case-insensitive substring match, not a full-text index.**
   `searchKnowledge` (`lib/database/app_database.dart:1401-1414`) and `searchWorkOrders`
   (`lib/database/app_database.dart:1166-1177`) lowercase the query and apply `contains`

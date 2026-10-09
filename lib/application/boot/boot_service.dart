@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../../database/app_database.dart';
+import '../../util/app_paths.dart';
 import '../../util/log.dart';
 import 'boot_state.dart';
 
@@ -135,17 +137,13 @@ class BootService extends ChangeNotifier {
   // ============================================
 
   Future<void> _checkFilesystem() async {
-    // Get app documents directory
+    // The database lives directly in the documents directory. Boot previously
+    // looked in a `fsc_portal/` subdirectory for a `fsc_portal.db` that nothing
+    // writes, so dbExists was always false and recovery's reset deleted a file
+    // that never existed — reporting success while leaving a corrupt database
+    // in place. Derive the path from one place instead.
     final appDir = await getApplicationDocumentsDirectory();
-    final appDataDir = Directory('${appDir.path}/fsc_portal');
-
-    // Ensure directory exists
-    if (!await appDataDir.exists()) {
-      await appDataDir.create(recursive: true);
-      Log.info('BootService: Created app directory at ${appDataDir.path}');
-    }
-
-    _dbPath = '${appDataDir.path}/fsc_portal.db';
+    _dbPath = AppPaths.liveDatabasePathIn(appDir);
 
     // Check if database file exists
     final dbFile = File(_dbPath);
@@ -156,16 +154,15 @@ class BootService extends ChangeNotifier {
       _dbSizeBytes = stat.size;
     }
 
-    // Check write permissions by creating temp file
+    // Writability of the directory that actually holds the database.
     try {
-      final testFile = File('${appDataDir.path}/.write_test');
+      final testFile = File(p.join(appDir.path, '.write_test'));
       await testFile.writeAsString('test');
       await testFile.delete();
       _dbWritable = true;
     } catch (e) {
       _dbWritable = false;
-      throw StateError(
-          'Database directory is not writable: ${appDataDir.path}');
+      throw StateError('Database directory is not writable: ${appDir.path}');
     }
 
     Log.info(

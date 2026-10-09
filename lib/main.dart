@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
 import 'database/app_database.dart';
 import 'database/seed_service.dart';
 import 'features/home/home_view.dart';
@@ -152,9 +150,7 @@ void main() async {
 
   // Debug: Print database path (for troubleshooting)
   try {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final dbPath = p.join(dbFolder.path, 'fsc_portal_dev.sqlite');
-    Log.info('Database path: $dbPath');
+    Log.info('Database path: ${await AppPaths.resolveLiveDatabasePath()}');
   } catch (e) {
     Log.info('Could not determine database path: $e');
   }
